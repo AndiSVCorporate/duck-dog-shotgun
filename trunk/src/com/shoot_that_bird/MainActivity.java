@@ -1,12 +1,5 @@
 package com.shoot_that_bird;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import com.example.shoot_that_bird.R;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.Bitmap;
