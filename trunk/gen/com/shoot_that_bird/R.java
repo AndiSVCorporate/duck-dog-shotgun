@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.example.shoot_that_bird;
+package com.shoot_that_bird;
 
 public final class R {
     public static final class attr {
