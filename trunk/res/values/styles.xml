@@ -1,0 +1,3 @@
+<resources>
+    <style name="DarkTheme" parent="android:Theme.Black.NoTitleBar" />
+</resources>
