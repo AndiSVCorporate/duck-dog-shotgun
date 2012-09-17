@@ -16,6 +16,7 @@ public class MainActivity extends Activity
         setTheme(R.style.DarkTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        new Route(this);
     }
 
     public void startGame(View view) {
