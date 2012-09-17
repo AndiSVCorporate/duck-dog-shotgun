@@ -6,9 +6,7 @@ import org.cocos2d.actions.interval.CCMoveTo;
 import org.cocos2d.actions.interval.CCSequence;
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
-import org.cocos2d.nodes.CCDirector;
-import org.cocos2d.nodes.CCSprite;
-import org.cocos2d.nodes.CCTextureCache;
+import org.cocos2d.nodes.*;
 import org.cocos2d.types.CGPoint;
 import org.cocos2d.types.CGSize;
 
@@ -18,6 +16,7 @@ import org.cocos2d.types.CGSize;
  * Time: 17:04
  */
 public class GameLayer extends CCLayer {
+    protected CCSpriteSheet duckSpriteSheet;
 
     public static CCScene scene()
     {
@@ -33,6 +32,9 @@ public class GameLayer extends CCLayer {
     public GameLayer() {
         CGSize winSize =  CCDirector.sharedDirector().displaySize();
 
+        CCSpriteFrameCache.sharedSpriteFrameCache().addSpriteFrames("duck_sprite.plist");
+        this.duckSpriteSheet = CCSpriteSheet.spriteSheet("duck_sprite.png");
+
         this.setIsTouchEnabled(true);
 
         this.schedule("gameLogic", 1.0f);
@@ -45,7 +47,7 @@ public class GameLayer extends CCLayer {
 
     protected void addTarget()
     {
-        CCSprite duck = new Duck();
+        CCSprite duck = new Duck(this.duckSpriteSheet);
 
         // Determine where to spawn the target along the Y axis
         CGSize winSize = CCDirector.sharedDirector().displaySize();
