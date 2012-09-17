@@ -2,6 +2,7 @@ package com.dds;
 
 import org.cocos2d.layers.CCScene;
 import org.cocos2d.nodes.CCSprite;
+import org.cocos2d.nodes.CCSpriteSheet;
 
 /**
  * @author Wouter
@@ -9,7 +10,7 @@ import org.cocos2d.nodes.CCSprite;
  *         Time: 11:53
  */
 public class Duck extends CCSprite {
-    public Duck() {
-        Duck.sprite("");
+    public Duck(CCSpriteSheet spriteSheet) {
+        this.addChild(spriteSheet);
     }
 }
