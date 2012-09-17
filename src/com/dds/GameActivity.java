@@ -30,12 +30,14 @@ public class GameActivity extends Activity {
         this.mGLSurfaceView = new CCGLSurfaceView(this);
 
         setContentView(this.mGLSurfaceView);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
 
         // attach the OpenGL view to a window
         CCDirector.sharedDirector().attachInView(this.mGLSurfaceView);
-
-        // no effect here because device orientation is controlled by manifest
-        CCDirector.sharedDirector().setDeviceOrientation(CCDirector.kCCDeviceOrientationPortrait);
 
         // show FPS
         // set false to disable FPS display, but don't delete fps_images.png!!
@@ -44,15 +46,10 @@ public class GameActivity extends Activity {
         // frames per second
         CCDirector.sharedDirector().setAnimationInterval(1.0f / 60);
 
-        CCScene scene = GameLayer.getScene();
+        CCScene scene = GameLayer.scene();
 
         // Make the Scene active
         CCDirector.sharedDirector().runWithScene(scene);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 
     @Override
