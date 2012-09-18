@@ -55,7 +55,7 @@ public class GameLayer extends CCLayer {
 
         this.setIsTouchEnabled(true);
 
-        this.schedule("gameLogic", 2.0f);
+        this.schedule("gameLogic", 1.0f);
     }
 
     public void gameLogic(float dt)
@@ -67,20 +67,27 @@ public class GameLayer extends CCLayer {
     {
         // Determine where to spawn the target along the Y axis
         CGSize winSize = CCDirector.sharedDirector().displaySize();
-        Duck duck = new Duck(CCSprite.sprite(this.flySprites.get(0)));
+//        Duck duck = new Duck(CCSprite.sprite(this.flySprites.get(0)));
+//        
+//        CGSize duckContentSize = duck.duckSprite.getContentSize();
 
-        CGSize duckContentSize = duck.duckSprite.getContentSize();
-
+        Duck duck = new Duck(this.flySprites.get(0));
+        Log.e("Duck", "Type" + duck.getClass());
+        CGSize duckContentSize = duck.getContentSize();
+        
         CCAction flyAction = CCRepeatForever.action(CCAnimate.action(this.flyAnimation, true));
 
         int y = (int) winSize.height/2;
 
         // Create the target slightly off-screen along the right edge,
         // and along a random position along the Y axis as calculated above
-        duck.duckSprite.setPosition(winSize.width + (duckContentSize.width / 2.0f), y);
+//        duck.duckSprite.setPosition(winSize.width + (duckContentSize.width / 2.0f), y);
+//
+//        addChild(duck.duckSprite);
 
-        addChild(duck.duckSprite);
-
+        duck.setPosition(winSize.width + (duckContentSize.width / 2.0f), y);
+        addChild(duck);
+        
         // Determine speed of the target
         int actualDuration = 2;
 
@@ -89,8 +96,11 @@ public class GameLayer extends CCLayer {
         CCCallFuncN actionMoveDone = CCCallFuncN.action(this, "spriteMoveFinished");
         CCSequence actions = CCSequence.actions(actionMove, actionMoveDone);
 
-        duck.duckSprite.runAction(actions);
-        duck.duckSprite.runAction(flyAction);
+//        duck.duckSprite.runAction(actions);
+//        duck.duckSprite.runAction(flyAction);
+        
+        duck.runAction(actions);
+        duck.runAction(flyAction);
     }
 
     public void spriteMoveFinished(Object sender)
@@ -100,7 +110,7 @@ public class GameLayer extends CCLayer {
     }
 
     public boolean ccTouchesBegan(MotionEvent event) {
-        List<CCNode> childrenList = this.getChildren();
+        /*List<CCNode> childrenList = this.getChildren();
 
         double touchX = event.getX();
         double touchY = event.getY();
@@ -114,7 +124,7 @@ public class GameLayer extends CCLayer {
                     }
                 }
             }
-        }
+        }*/
         return true;
     }
 
