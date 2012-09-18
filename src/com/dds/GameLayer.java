@@ -1,6 +1,11 @@
 package com.dds;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.Toast;
+import org.cocos2d.actions.base.CCAction;
+import org.cocos2d.actions.base.CCRepeatForever;
 import org.cocos2d.actions.instant.CCCallFuncN;
 import org.cocos2d.actions.interval.CCMoveTo;
 import org.cocos2d.actions.interval.CCSequence;
@@ -10,6 +15,8 @@ import org.cocos2d.nodes.*;
 import org.cocos2d.types.CGPoint;
 import org.cocos2d.types.CGSize;
 
+import java.util.ArrayList;
+
 /**
  * @author Wouter
  * Date: 14-09-12
@@ -17,6 +24,8 @@ import org.cocos2d.types.CGSize;
  */
 public class GameLayer extends CCLayer {
     protected CCSpriteSheet duckSpriteSheet;
+    protected ArrayList<CCSpriteFrame> flySprites;
+    protected CCAnimation flyAnimation;
 
     public static CCScene scene()
     {
@@ -30,10 +39,17 @@ public class GameLayer extends CCLayer {
     }
 
     public GameLayer() {
-        CGSize winSize =  CCDirector.sharedDirector().displaySize();
-
         CCSpriteFrameCache.sharedSpriteFrameCache().addSpriteFrames("duck_sprite.plist");
         this.duckSpriteSheet = CCSpriteSheet.spriteSheet("duck_sprite.png");
+
+        this.flySprites = new ArrayList<CCSpriteFrame>();
+
+        for(int i = 1; i <= 4; i++)
+        {
+            this.flySprites.add(CCSpriteFrameCache.sharedSpriteFrameCache().spriteFrameByName("xhdpi_retro" + i + ".png"));
+        }
+
+        this.flyAnimation = CCAnimation.animation("fly", 2f, this.flySprites);
 
         this.setIsTouchEnabled(true);
 
@@ -47,7 +63,9 @@ public class GameLayer extends CCLayer {
 
     protected void addTarget()
     {
-        CCSprite duck = new Duck(this.duckSpriteSheet);
+        Duck duck = new Duck(CCSprite.sprite(this.flySprites.get(0)));
+
+        CCAction flyAction = CCRepeatForever.action();
 
         // Determine where to spawn the target along the Y axis
         CGSize winSize = CCDirector.sharedDirector().displaySize();
@@ -56,18 +74,18 @@ public class GameLayer extends CCLayer {
 
         // Create the target slightly off-screen along the right edge,
         // and along a random position along the Y axis as calculated above
-        duck.setPosition(winSize.width + (duck.getContentSize().width / 2.0f), y);
-        addChild(duck);
+        duck.duckSprite.setPosition(winSize.width + (duck.duckSprite.getContentSize().width / 2.0f), y);
+        addChild(duck.duckSprite);
 
         // Determine speed of the target
-        int actualDuration = 2;
+        int actualDuration = 1;
 
         // Create the actions
-        CCMoveTo actionMove = CCMoveTo.action(actualDuration, CGPoint.ccp(-duck.getContentSize().width / 2.0f, y));
+        CCMoveTo actionMove = CCMoveTo.action(actualDuration, CGPoint.ccp(-duck.duckSprite.getContentSize().width / 2.0f, y));
         CCCallFuncN actionMoveDone = CCCallFuncN.action(this, "spriteMoveFinished");
         CCSequence actions = CCSequence.actions(actionMove, actionMoveDone);
 
-        duck.runAction(actions);
+        duck.duckSprite.runAction(actions);
     }
 
     public void spriteMoveFinished(Object sender)
