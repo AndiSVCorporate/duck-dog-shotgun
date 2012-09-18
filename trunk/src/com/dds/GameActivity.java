@@ -27,14 +27,16 @@ public class GameActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        this.mGLSurfaceView = new CCGLSurfaceView(this);
 
-        setContentView(this.mGLSurfaceView);
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
+        this.mGLSurfaceView = new CCGLSurfaceView(this);
+
+        setContentView(this.mGLSurfaceView);
 
         // attach the OpenGL view to a window
         CCDirector.sharedDirector().attachInView(this.mGLSurfaceView);

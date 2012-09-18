@@ -17,6 +17,7 @@ import org.cocos2d.types.CGPoint;
 import org.cocos2d.types.CGSize;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Wouter
@@ -64,18 +65,19 @@ public class GameLayer extends CCLayer {
 
     protected void addTarget()
     {
-        Duck duck = new Duck(CCSprite.sprite(this.flySprites.get(0)));
-
-        CCAction flyAction = CCRepeatForever.action(CCAnimate.action(this.flyAnimation, true));
-
         // Determine where to spawn the target along the Y axis
         CGSize winSize = CCDirector.sharedDirector().displaySize();
+        Duck duck = new Duck(CCSprite.sprite(this.flySprites.get(0)));
+
+        CGSize duckContentSize = duck.duckSprite.getContentSize();
+
+        CCAction flyAction = CCRepeatForever.action(CCAnimate.action(this.flyAnimation, true));
 
         int y = (int) winSize.height/2;
 
         // Create the target slightly off-screen along the right edge,
         // and along a random position along the Y axis as calculated above
-        duck.duckSprite.setPosition(winSize.width + (duck.duckSprite.getContentSize().width / 2.0f), y);
+        duck.duckSprite.setPosition(winSize.width + (duckContentSize.width / 2.0f), y);
 
         addChild(duck.duckSprite);
 
@@ -83,7 +85,7 @@ public class GameLayer extends CCLayer {
         int actualDuration = 2;
 
         // Create the actions
-        CCMoveTo actionMove = CCMoveTo.action(actualDuration, CGPoint.ccp(-duck.duckSprite.getContentSize().width / 2.0f, y));
+        CCMoveTo actionMove = CCMoveTo.action(actualDuration, CGPoint.ccp(-duckContentSize.width / 2.0f, y));
         CCCallFuncN actionMoveDone = CCCallFuncN.action(this, "spriteMoveFinished");
         CCSequence actions = CCSequence.actions(actionMove, actionMoveDone);
 
@@ -98,6 +100,21 @@ public class GameLayer extends CCLayer {
     }
 
     public boolean ccTouchesBegan(MotionEvent event) {
+        List<CCNode> childrenList = this.getChildren();
+
+        double touchX = event.getX();
+        double touchY = event.getY();
+
+        if(childrenList != null) {
+            for(CCNode child : childrenList) {
+                CGPoint childPosition = child.getPosition();
+                if((double) childPosition.x >= (touchX-40) && (double) childPosition.x <= (touchX+60)) {
+                    if((double) childPosition.y >= (touchY-40) && (double) childPosition.y <= (touchY+15)) {
+                        spriteMoveFinished(child);
+                    }
+                }
+            }
+        }
         return true;
     }
 
@@ -105,12 +122,12 @@ public class GameLayer extends CCLayer {
         return true;
     }
 
-    public void update(float gameTime) {
-
-    }
-
     public boolean ccTouchesEnded(MotionEvent event) {
         return true;
+    }
+
+    public void update(float gameTime) {
+
     }
 
     public void finalize() throws Throwable {
