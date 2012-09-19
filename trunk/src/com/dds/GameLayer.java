@@ -46,6 +46,13 @@ public class GameLayer extends CCLayer {
 
         this.flySprites = new ArrayList<CCSpriteFrame>();
 
+        CGSize winSize = CCDirector.sharedDirector().displaySize();
+
+        CCSprite background = CCSprite.sprite("background.png");
+
+        background.setPosition(winSize.width/2, winSize.height/2);
+        this.addChild(background);
+
         for(int i = 1; i <= 4; i++)
         {
             this.flySprites.add(CCSpriteFrameCache.sharedSpriteFrameCache().getSpriteFrame("xhdpi_retro" + i + ".png"));
