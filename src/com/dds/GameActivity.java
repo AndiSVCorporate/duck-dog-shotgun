@@ -46,7 +46,7 @@ public class GameActivity extends Activity {
         CCDirector.sharedDirector().setDisplayFPS(true);
 
         // frames per second
-        CCDirector.sharedDirector().setAnimationInterval(1.0f / 60);
+        CCDirector.sharedDirector().setAnimationInterval(1.0f / 80);
 
         CCScene scene = GameLayer.scene();
 

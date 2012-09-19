@@ -23,7 +23,7 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
         CCTouchDispatcher.sharedDispatcher().addDelegate(this, 0);
     }
     
-    public boolean ccTouchesBegan(MotionEvent e) 
+    public boolean ccTouchesBegan(MotionEvent e)
     {
         CGSize winSize = CCDirector.sharedDirector().displaySize();
         double touchX = e.getX();
