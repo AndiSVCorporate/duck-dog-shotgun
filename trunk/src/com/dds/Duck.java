@@ -21,6 +21,8 @@ import org.cocos2d.types.CGSize;
  */
 public class Duck extends CCSprite implements CCTouchDelegateProtocol 
 {
+    protected boolean alive = true;
+
     public Duck(CCSpriteFrame frame, CCAnimation flyAnimation) {
         super(frame);
         CCTouchDispatcher.sharedDispatcher().addDelegate(this, 0);
@@ -71,6 +73,10 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
         CCSequence actions = CCSequence.actions(fallToCertainDeath, fellToCertainDeath);
 
         runAction(actions);
+
+        CheckHitWithDogThread checkThread = new CheckHitWithDogThread();
+        Thread t = new Thread(checkThread);
+        t.start();
     }
     
     public void spriteMoveFinished() {
@@ -91,4 +97,20 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
 	{
 		return false;
 	}
+
+    class CheckHitWithDogThread implements Runnable {
+
+        @Override
+        public void run() {
+            while(alive) {
+                CGPoint dogPosition = getParent().getChildByTag(1).getPosition();
+                if(getPosition().y <= dogPosition.y+15) {
+                    if(dogPosition.x -10 < getPosition().x || getPosition().x < dogPosition.x + 30) {
+                        alive = false;
+                    }
+                }
+            }
+            spriteMoveFinished();
+        }
+    }
 }

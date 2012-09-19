@@ -55,6 +55,8 @@ public class GameLayer extends CCLayer {
 
         this.schedule("gameLogic", 2.0f);
 
+        dog.setTag(1);
+
         this.addChild(background);
         this.addChild(dog);
     }
