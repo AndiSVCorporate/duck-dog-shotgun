@@ -6,6 +6,7 @@ import org.cocos2d.protocols.CCTouchDelegateProtocol;
 import org.cocos2d.types.CGPoint;
 
 import android.view.MotionEvent;
+import org.cocos2d.types.CGSize;
 
 /**
  * @author Wouter
@@ -24,8 +25,9 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
     
     public boolean ccTouchesBegan(MotionEvent e) 
     {
+        CGSize winSize = CCDirector.sharedDirector().displaySize();
         double touchX = e.getX();
-        double touchY = e.getY();
+        double touchY = e.getY()+(winSize.height/2);
         
     	CGPoint pos = getPosition();
         if((double) pos.x >= (touchX-40) && (double) pos.x <= (touchX+60)) {
