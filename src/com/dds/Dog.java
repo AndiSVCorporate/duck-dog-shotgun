@@ -35,12 +35,22 @@ public class Dog extends CCSprite implements SensorEventListener
         sensorManager.registerListener(this, accelerometer, accelerometerUpdateRate);
     }
 
-	public void onAccuracyChanged(Sensor arg0, int arg1) {
+	public void onAccuracyChanged(Sensor s, int i) 
+	{
         Log.e("Error", "WORKS!");
 		
 	}
 
-	public void onSensorChanged(SensorEvent arg0) {
-        SensorEvent sensorEvent = arg0;
+	public void onSensorChanged(SensorEvent event) 
+	{
+		if(event.sensor.getType() == 1)
+        {
+            ccAccelerometerChanged(event.values[0], event.values[1], event.values[2]);
+        }
 	}
+	
+	public void ccAccelerometerChanged(float f1, float f2, float f3)
+    {
+		Log.e("Dog", f1 + " - " + f2 + " - " + f3);
+    }
 }
