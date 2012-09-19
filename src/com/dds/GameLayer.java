@@ -48,10 +48,11 @@ public class GameLayer extends CCLayer {
 
         CGSize winSize = CCDirector.sharedDirector().displaySize();
 
+        Dog dog = new Dog("dog.png");
+
         CCSprite background = CCSprite.sprite("background.png");
 
         background.setPosition(winSize.width/2, winSize.height/2);
-        this.addChild(background);
 
         for(int i = 1; i <= 4; i++)
         {
@@ -61,8 +62,12 @@ public class GameLayer extends CCLayer {
         this.flyAnimation = CCAnimation.animation("fly", 0.09f, this.flySprites);
 
         this.setIsTouchEnabled(true);
+        this.setIsAccelerometerEnabled(true);
 
         this.schedule("gameLogic", 2.0f);
+
+        this.addChild(background);
+        this.addChild(dog);
     }
 
     public void gameLogic(float dt)
@@ -72,42 +77,8 @@ public class GameLayer extends CCLayer {
 
     protected void addTarget()
     {
-        // Determine where to spawn the target along the Y axis
-        CGSize winSize = CCDirector.sharedDirector().displaySize();
-//        Duck duck = new Duck(CCSprite.sprite(this.flySprites.get(0)));
-//        
-//        CGSize duckContentSize = duck.duckSprite.getContentSize();
-
-        Duck duck = new Duck(this.flySprites.get(0));
-        Log.e("Duck", "Type" + duck.getClass());
-        CGSize duckContentSize = duck.getContentSize();
-        
-        CCAction flyAction = CCRepeatForever.action(CCAnimate.action(this.flyAnimation, true));
-
-        int y = (int) (winSize.height/1.3);
-
-        // Create the target slightly off-screen along the right edge,
-        // and along a random position along the Y axis as calculated above
-//        duck.duckSprite.setPosition(winSize.width + (duckContentSize.width / 2.0f), y);
-//
-//        addChild(duck.duckSprite);
-
-        duck.setPosition(winSize.width + (duckContentSize.width / 2.0f), y);
+        Duck duck = new Duck(this.flySprites.get(0), this.flyAnimation);
         addChild(duck);
-        
-        // Determine speed of the target
-        int actualDuration = 2;
-
-        // Create the actions
-        CCMoveTo actionMove = CCMoveTo.action(actualDuration, CGPoint.ccp(-duckContentSize.width / 2.0f, y));
-        CCCallFuncN actionMoveDone = CCCallFuncN.action(this, "spriteMoveFinished");
-        CCSequence actions = CCSequence.actions(actionMove, actionMoveDone);
-
-//        duck.duckSprite.runAction(actions);
-//        duck.duckSprite.runAction(flyAction);
-        
-        duck.runAction(actions);
-        duck.runAction(flyAction);
     }
 
     public void spriteMoveFinished(Object sender)
