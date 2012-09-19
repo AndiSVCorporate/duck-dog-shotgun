@@ -3,6 +3,7 @@ package com.dds;
 import android.util.Log;
 import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.nodes.CCSprite;
+import org.cocos2d.types.CGPoint;
 import org.cocos2d.types.CGSize;
 
 import android.hardware.Sensor;
@@ -17,14 +18,15 @@ import android.hardware.SensorManager;
  */
 public class Dog extends CCSprite implements SensorEventListener 
 {
+    protected CGSize winSize;
 
     public Dog(String path) 
     {
         super(path);
         
-        CGSize winSize = CCDirector.sharedDirector().displaySize();
+        this.winSize = CCDirector.sharedDirector().displaySize();
 
-        int x = (int) winSize.width /2;
+        int x = (int) this.winSize.width /2;
         int y = (int) this.getContentSize().getHeight() /2;
 
         setPosition(x, y);
@@ -35,11 +37,7 @@ public class Dog extends CCSprite implements SensorEventListener
         sensorManager.registerListener(this, accelerometer, accelerometerUpdateRate);
     }
 
-	public void onAccuracyChanged(Sensor s, int i) 
-	{
-        Log.e("Error", "WORKS!");
-		
-	}
+	public void onAccuracyChanged(Sensor s, int i) {}
 
 	public void onSensorChanged(SensorEvent event) 
 	{
@@ -51,6 +49,14 @@ public class Dog extends CCSprite implements SensorEventListener
 	
 	public void ccAccelerometerChanged(float f1, float f2, float f3)
     {
-		Log.e("Dog", f1 + " - " + f2 + " - " + f3);
+        CGPoint position = this.getPosition();
+        if(f1 < -1.20 && !(position.x > winSize.getWidth() - this.getContentSize().getWidth()/2))
+        {
+            this.setPosition(this.getPosition().x+6, this.getPosition().y);
+        }
+        else if(f1 > 1.2 && !(position.x < 0 + getContentSize().width/2))
+        {
+            this.setPosition(this.getPosition().x-6, this.getPosition().y);
+        }
     }
 }
