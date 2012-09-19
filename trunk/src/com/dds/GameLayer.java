@@ -51,11 +51,11 @@ public class GameLayer extends CCLayer {
             this.flySprites.add(CCSpriteFrameCache.sharedSpriteFrameCache().getSpriteFrame("xhdpi_retro" + i + ".png"));
         }
 
-        this.flyAnimation = CCAnimation.animation("fly", 0.25f, this.flySprites);
+        this.flyAnimation = CCAnimation.animation("fly", 0.09f, this.flySprites);
 
         this.setIsTouchEnabled(true);
 
-        this.schedule("gameLogic", 1.0f);
+        this.schedule("gameLogic", 2.0f);
     }
 
     public void gameLogic(float dt)
@@ -77,7 +77,7 @@ public class GameLayer extends CCLayer {
         
         CCAction flyAction = CCRepeatForever.action(CCAnimate.action(this.flyAnimation, true));
 
-        int y = (int) winSize.height/2;
+        int y = (int) (winSize.height/1.3);
 
         // Create the target slightly off-screen along the right edge,
         // and along a random position along the Y axis as calculated above
@@ -124,7 +124,7 @@ public class GameLayer extends CCLayer {
                     }
                 }
             }
-        }*/
+        } */
         return true;
     }
 
