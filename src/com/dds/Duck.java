@@ -53,7 +53,7 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
         
     	CGPoint pos = getPosition();
         if((double) pos.x >= (touchX-90) && (double) pos.x <= (touchX+20)) {
-            if((double) pos.y >= (touchY-20) && (double) pos.y <= (touchY+30)) {
+            if((double) pos.y >= (touchY-20) && (double) pos.y <= (touchY+50)) {
                 fallDown();
             }
         }
