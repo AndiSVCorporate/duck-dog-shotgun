@@ -1,23 +1,12 @@
 package com.dds;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Toast;
-import org.cocos2d.actions.base.CCAction;
-import org.cocos2d.actions.base.CCRepeatForever;
-import org.cocos2d.actions.instant.CCCallFuncN;
-import org.cocos2d.actions.interval.CCAnimate;
-import org.cocos2d.actions.interval.CCMoveTo;
-import org.cocos2d.actions.interval.CCSequence;
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
 import org.cocos2d.nodes.*;
-import org.cocos2d.types.CGPoint;
 import org.cocos2d.types.CGSize;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Wouter

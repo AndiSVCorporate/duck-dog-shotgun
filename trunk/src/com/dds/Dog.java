@@ -1,5 +1,6 @@
 package com.dds;
 
+import android.util.Log;
 import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.nodes.CCSprite;
 import org.cocos2d.types.CGSize;
@@ -35,12 +36,11 @@ public class Dog extends CCSprite implements SensorEventListener
     }
 
 	public void onAccuracyChanged(Sensor arg0, int arg1) {
-		// TODO Auto-generated method stub
+        Log.e("Error", "WORKS!");
 		
 	}
 
 	public void onSensorChanged(SensorEvent arg0) {
-		// TODO Auto-generated method stub
-		
+        SensorEvent sensorEvent = arg0;
 	}
 }
