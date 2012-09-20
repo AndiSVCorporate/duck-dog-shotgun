@@ -15,8 +15,11 @@ import java.util.ArrayList;
  */
 public class GameLayer extends CCLayer {
     protected CCSpriteSheet duckSpriteSheet;
+    protected CCSpriteSheet fallDuckSpriteSheet;
     protected ArrayList<CCSpriteFrame> flySprites;
+    protected CCAnimation fallAnimation;
     protected CCAnimation flyAnimation;
+    protected ArrayList<CCSpriteFrame> fallSprites;
 
     public static CCScene scene()
     {
@@ -32,8 +35,11 @@ public class GameLayer extends CCLayer {
     public GameLayer() {
         CCSpriteFrameCache.sharedSpriteFrameCache().addSpriteFrames("duck_sprite.plist");
         this.duckSpriteSheet = CCSpriteSheet.spriteSheet("duck_sprite.png");
+        CCSpriteFrameCache.sharedSpriteFrameCache().addSpriteFrames("duck_falling.plist");
+        this.fallDuckSpriteSheet = CCSpriteSheet.spriteSheet("duck_falling.png");
 
         this.flySprites = new ArrayList<CCSpriteFrame>();
+        this.fallSprites = new ArrayList<CCSpriteFrame>();
 
         CGSize winSize = CCDirector.sharedDirector().displaySize();
 
@@ -46,9 +52,11 @@ public class GameLayer extends CCLayer {
         for(int i = 1; i <= 4; i++)
         {
             this.flySprites.add(CCSpriteFrameCache.sharedSpriteFrameCache().getSpriteFrame("xhdpi_retro" + i + ".png"));
+            this.fallSprites.add(CCSpriteFrameCache.sharedSpriteFrameCache().getSpriteFrame("falling_duck" + i + ".png"));
         }
 
         this.flyAnimation = CCAnimation.animation("fly", 0.09f, this.flySprites);
+        this.fallAnimation = CCAnimation.animation("fall", 0.09f, this.fallSprites);
 
         this.setIsTouchEnabled(true);
         this.setIsAccelerometerEnabled(true);
@@ -68,32 +76,11 @@ public class GameLayer extends CCLayer {
 
     protected void addTarget()
     {
-        Duck duck = new Duck(this.flySprites.get(0), this.flyAnimation);
+        Duck duck = new Duck(this.flySprites.get(0), this.flyAnimation, this.fallAnimation);
         addChild(duck);
     }
 
-    public void spriteMoveFinished(Object sender)
-    {
-        CCSprite sprite = (CCSprite)sender;
-        this.removeChild(sprite, true);
-    }
-
     public boolean ccTouchesBegan(MotionEvent event) {
-        /*List<CCNode> childrenList = this.getChildren();
-
-        double touchX = event.getX();
-        double touchY = event.getY();
-
-        if(childrenList != null) {
-            for(CCNode child : childrenList) {
-                CGPoint childPosition = child.getPosition();
-                if((double) childPosition.x >= (touchX-40) && (double) childPosition.x <= (touchX+60)) {
-                    if((double) childPosition.y >= (touchY-40) && (double) childPosition.y <= (touchY+15)) {
-                        spriteMoveFinished(child);
-                    }
-                }
-            }
-        } */
         return true;
     }
 
@@ -103,10 +90,6 @@ public class GameLayer extends CCLayer {
 
     public boolean ccTouchesEnded(MotionEvent event) {
         return true;
-    }
-
-    public void update(float gameTime) {
-
     }
 
     public void finalize() throws Throwable {

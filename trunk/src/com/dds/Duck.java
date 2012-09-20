@@ -22,9 +22,12 @@ import org.cocos2d.types.CGSize;
 public class Duck extends CCSprite implements CCTouchDelegateProtocol 
 {
     protected boolean alive = true;
+    protected CCAnimation fallAnimation;
 
-    public Duck(CCSpriteFrame frame, CCAnimation flyAnimation) {
+    public Duck(CCSpriteFrame frame, CCAnimation flyAnimation, CCAnimation fallAnimation) {
         super(frame);
+        this.fallAnimation = fallAnimation;
+
         CCTouchDispatcher.sharedDispatcher().addDelegate(this, 0);
         CGSize duckContentSize = this.getContentSize();
         CGSize winSize = CCDirector.sharedDirector().displaySize();
@@ -64,6 +67,10 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
 
     protected void fallDown() {
         stopAllActions();
+
+        CCAction fallAction = CCRepeatForever.action(CCAnimate.action(this.fallAnimation, true));
+        runAction(fallAction);
+
         CGPoint position = this.getPosition();
         CGSize duckContentSize = this.getContentSize();
 
@@ -105,7 +112,7 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
             while(alive) {
                 CGPoint dogPosition = getParent().getChildByTag(1).getPosition();
                 if(getPosition().y <= dogPosition.y+15) {
-                    if(dogPosition.x -10 < getPosition().x || getPosition().x < dogPosition.x + 30) {
+                    if(dogPosition.x -20 < getPosition().x && getPosition().x < dogPosition.x + 40) {
                         alive = false;
                     }
                 }
