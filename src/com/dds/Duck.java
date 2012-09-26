@@ -105,10 +105,10 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
 		return false;
 	}
 
-    class CheckHitWithDogThread implements Runnable {
-
-        @Override
-        public void run() {
+    class CheckHitWithDogThread implements Runnable 
+    {
+    	public void run() 
+        {
             while(alive) {
                 CGPoint dogPosition = getParent().getChildByTag(1).getPosition();
                 if(getPosition().y <= dogPosition.y+15) {

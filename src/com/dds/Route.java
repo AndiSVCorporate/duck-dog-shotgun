@@ -13,6 +13,7 @@ public class Route
 	
 	private int hor;
 	private double stepSize; // Value based on screen size (screen width / x -> x = amount of horizontal steps)
+	private int step = 0; // Current position
 	
 	private Point[] stops;
 	
@@ -72,6 +73,48 @@ public class Route
 	public double px2dp(double dpi, double px)
 	{
 		return px / (dpi / 160);
+	}
+	
+	public Point next()
+	{
+		if (step < getStops().length)
+		{
+			step++;
+			return getStops()[step];
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
+	public double getTotalDistance()
+	{
+		double dis = 0;
+		
+		Point[] s = getStops();
+		for (int i = 0; i < s.length - 1; i++)
+		{
+			Point p1 = s[i];
+			Point p2 = s[i + 1];
+			
+			dis += Math.sqrt(Math.abs(Math.pow(p1.x - p2.x, 2)) + Math.abs(Math.pow(p1.y - p2.y, 2)));
+		}
+		
+		return dis;
+	}
+	
+	public double getDistanceToNextPoint()
+	{
+		Point[] s = getStops();
+		if (step < s.length)
+		{
+			return Math.sqrt(Math.abs(Math.pow(s[step].x - s[step + 1].x, 2)) + Math.abs(Math.pow(s[step].y - s[step + 1].y, 2))); 
+		}
+		else 
+		{
+			return 0;
+		}
 	}
 	
 	public String toString()
