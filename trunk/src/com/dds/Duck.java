@@ -33,6 +33,10 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
         CGSize winSize = CCDirector.sharedDirector().displaySize();
         int y = (int) (winSize.height/1.3);
 
+        this.setScaleX(GameLayer.scale);
+
+        this.setScaleY(GameLayer.scale);
+
         setPosition(winSize.width + (duckContentSize.width / 2.0f), y);
 
         CCAction flyAction = CCRepeatForever.action(CCAnimate.action(flyAnimation, true));
@@ -112,7 +116,7 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
             while(alive) {
                 CGPoint dogPosition = getParent().getChildByTag(1).getPosition();
                 if(getPosition().y <= dogPosition.y+15) {
-                    if(dogPosition.x -20 < getPosition().x && getPosition().x < dogPosition.x + 40) {
+                    if(dogPosition.x -50 < getPosition().x && getPosition().x < dogPosition.x + 50) {
                         alive = false;
                     }
                 }

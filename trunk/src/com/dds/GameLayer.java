@@ -4,6 +4,7 @@ import android.view.MotionEvent;
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
 import org.cocos2d.nodes.*;
+import org.cocos2d.types.CGPoint;
 import org.cocos2d.types.CGSize;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ public class GameLayer extends CCLayer {
     protected CCAnimation fallAnimation;
     protected CCAnimation flyAnimation;
     protected ArrayList<CCSpriteFrame> fallSprites;
+
+    public static float scale;
 
     public static CCScene scene()
     {
@@ -43,11 +46,18 @@ public class GameLayer extends CCLayer {
 
         CGSize winSize = CCDirector.sharedDirector().displaySize();
 
-        Dog dog = new Dog("dog.png");
-
         CCSprite background = CCSprite.sprite("background.png");
 
-        background.setPosition(winSize.width/2, winSize.height/2);
+        GameLayer.scale = winSize.width/background.getTexture().getWidth();
+
+        background.setScaleX(GameLayer.scale);
+
+        background.setScaleY(GameLayer.scale);
+
+        background.setPosition(CGPoint.make(winSize.width / 2, winSize.height / 2));
+
+        Dog dog = new Dog("dog.png");
+
 
         for(int i = 1; i <= 4; i++)
         {
