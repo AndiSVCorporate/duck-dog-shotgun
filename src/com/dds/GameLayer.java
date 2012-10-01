@@ -22,7 +22,7 @@ public class GameLayer extends CCLayer {
     protected CCAnimation flyAnimation;
     protected ArrayList<CCSpriteFrame> fallSprites;
 
-    public static float scale;
+    public static float scale = 1;
 
     public static CCScene scene()
     {
