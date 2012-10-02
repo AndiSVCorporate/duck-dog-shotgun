@@ -79,7 +79,7 @@ public class GameLayer extends CCLayer {
         this.setIsTouchEnabled(true);
         this.setIsAccelerometerEnabled(true);
 
-        this.schedule("gameLogic", 20.0f);
+        this.schedule("gameLogic", 2.0f);
 
         dog.setTag(1);
 

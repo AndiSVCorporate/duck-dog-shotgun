@@ -68,12 +68,13 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
     {
         CGSize winSize = CCDirector.sharedDirector().displaySize();
         double touchX = e.getX();
-        double touchY = e.getY()+(winSize.height/2);
+//        double touchY = e.getY()+(winSize.height/2);
+        double touchY = winSize.height - e.getY();
         
     	CGPoint pos = getPosition();
     	Log.e("Route", pos.toString() + " - " + touchX + " - " + touchY);
-        if((double) pos.x >= (touchX-90) && (double) pos.x <= (touchX+20)) {
-            if((double) pos.y >= (touchY-20) && (double) pos.y <= (touchY+50)) {
+        if((double) pos.x >= (touchX-30) && (double) pos.x <= (touchX+30)) {
+            if((double) pos.y >= (touchY-20) && (double) pos.y <= (touchY+20)) {
                 GameLayer.score++;
                 fallDown();
             }
@@ -123,7 +124,7 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
 
             runAction(actions);
     	}
-    	else if (!falling)
+    	else
     	{
             removeSelf();
     	}
