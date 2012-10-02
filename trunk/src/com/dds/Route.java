@@ -17,7 +17,6 @@ public class Route
 	private int hor;
 	private double stepSize; // Value based on screen size (screen width / x -> x = amount of horizontal steps)
 	private int step = 0; // Current position
-	
 	private Point[] stops;
 	
 	public Route(int s)
@@ -68,7 +67,7 @@ public class Route
 			}
 			else if (x == (int) ((vert - 1) * GameLayer.dp2px(metrics.densityDpi, stepSize)))
 			{
-				x = -50;
+				x += 50;
 				y = (int) (r.nextInt(hor) * GameLayer.dp2px(metrics.densityDpi, stepSize));
 			}
 			
@@ -121,6 +120,34 @@ public class Route
 		if (hasNext())
 		{
 			return Math.sqrt(Math.abs(Math.pow(s[step].x - s[step + 1].x, 2)) + Math.abs(Math.pow(s[step].y - s[step + 1].y, 2))); 
+		}
+		else 
+		{
+			return 0;
+		}
+	}
+	
+	public double getDirectionToNextPoint()
+	{
+		Point[] s = getStops();
+		if (hasNext())
+		{
+			double dir;
+			try
+			{
+				dir = Math.toDegrees(Math.atan((s[step].x - s[step + 1].x) / (s[step].y - s[step + 1].y))); 
+			}
+			catch (ArithmeticException e)
+			{
+				dir = 0;
+			}
+			
+			if (s[step].x - s[step + 1].x < 0)
+			{
+				dir += 180;
+			}
+			
+			return dir;
 		}
 		else 
 		{

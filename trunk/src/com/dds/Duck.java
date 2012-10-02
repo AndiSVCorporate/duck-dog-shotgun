@@ -54,6 +54,10 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
 
         // Determine speed of the target        
         float duration = (float) (route.getDistanceToNextPoint() / distance * actualDuration);
+        float direction = (float) route.getDirectionToNextPoint();
+//        setRotation(direction);
+        setFlipX(direction > 90 && direction < 270);
+        Log.e("Route", "Rotation: " + direction);
         Point p = route.next();
 
         // Create the actions
@@ -76,7 +80,6 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
         double touchY = winSize.height - e.getY();
         
     	CGPoint pos = getPosition();
-    	Log.e("Route", pos.toString() + " - " + touchX + " - " + touchY);
         if((double) pos.x >= (touchX-GameLayer.dp2px(metrics.densityDpi, 10)) && (double) pos.x <= (touchX+GameLayer.dp2px(metrics.densityDpi, 40))) {
             if((double) pos.y >= (touchY-GameLayer.dp2px(metrics.densityDpi, 30)) && (double) pos.y <= (touchY+GameLayer.dp2px(metrics.densityDpi, 30))) {
                 GameLayer.score++;
@@ -86,7 +89,8 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
         return true;
     }
 
-    protected void fallDown() {
+    protected void fallDown() 
+    {
     	if (!falling)
     	{
 	        stopAllActions();
@@ -119,6 +123,8 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
             CGSize duckContentSize = this.getContentSize();
     		 // Determine speed of the target        
             float duration = (float) (route.getDistanceToNextPoint() / distance * actualDuration);
+            float direction = (float) route.getDirectionToNextPoint();
+            setFlipX(direction > 90 && direction < 270);
             Point p = route.next();
 
             // Create the actions
