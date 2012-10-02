@@ -30,16 +30,16 @@ public class Route
 		int height = metrics.heightPixels;
 		int width = metrics.widthPixels;
 		
-		stepSize = px2dp(metrics.densityDpi, width) / vert;
-		hor = (int) (px2dp(metrics.densityDpi, height) / 2 / stepSize);
+		stepSize = GameLayer.px2dp(metrics.densityDpi, width) / vert;
+		hor = (int) (GameLayer.px2dp(metrics.densityDpi, height) / 2 / stepSize);
 		
 		// Start position
 		Random r = new Random();
-		int x = (int) (Math.min(vert - 1, Math.max(0, r.nextInt(vert + hor * 2) - hor)) * dp2px(metrics.densityDpi, stepSize));
+		int x = (int) (Math.min(vert - 1, Math.max(0, r.nextInt(vert + hor * 2) - hor)) * GameLayer.dp2px(metrics.densityDpi, stepSize));
 		int y = 0;
-		if (x == 0 || x == (int) ((vert - 1) * dp2px(metrics.densityDpi, stepSize)))
+		if (x == 0 || x == (int) ((vert - 1) * GameLayer.dp2px(metrics.densityDpi, stepSize)))
 		{
-			y = (int) (r.nextInt(hor) * dp2px(metrics.densityDpi, stepSize));
+			y = (int) (r.nextInt(hor) * GameLayer.dp2px(metrics.densityDpi, stepSize));
 		}
 		
 		stops = new Point[s + 2];
@@ -50,8 +50,8 @@ public class Route
 		{
 			while (x == stops[i].x && y == stops[i].y)
 			{
-				x = (int) (r.nextInt(vert) * dp2px(metrics.densityDpi, stepSize));
-				y = (int) (r.nextInt(hor) * dp2px(metrics.densityDpi, stepSize));
+				x = (int) (r.nextInt(vert) * GameLayer.dp2px(metrics.densityDpi, stepSize));
+				y = (int) (r.nextInt(hor) * GameLayer.dp2px(metrics.densityDpi, stepSize));
 				stops[i + 1] = new Point(x, y);
 			}
 		}
@@ -59,17 +59,17 @@ public class Route
 		// End position
 		while (x == stops[s].x && y == stops[s].y)
 		{
-			x = (int) (Math.min(vert - 1, Math.max(0, r.nextInt(vert + hor * 2) - hor)) * dp2px(metrics.densityDpi, stepSize));
+			x = (int) (Math.min(vert - 1, Math.max(0, r.nextInt(vert + hor * 2) - hor)) * GameLayer.dp2px(metrics.densityDpi, stepSize));
 			y = -50;
 			if (x == 0)
 			{
 				x = -50;
-				y = (int) (r.nextInt(hor) * dp2px(metrics.densityDpi, stepSize));
+				y = (int) (r.nextInt(hor) * GameLayer.dp2px(metrics.densityDpi, stepSize));
 			}
-			else if (x == (int) ((vert - 1) * dp2px(metrics.densityDpi, stepSize)))
+			else if (x == (int) ((vert - 1) * GameLayer.dp2px(metrics.densityDpi, stepSize)))
 			{
 				x = -50;
-				y = (int) (r.nextInt(hor) * dp2px(metrics.densityDpi, stepSize));
+				y = (int) (r.nextInt(hor) * GameLayer.dp2px(metrics.densityDpi, stepSize));
 			}
 			
 			stops[s + 1] = new Point(x, y);
@@ -79,16 +79,6 @@ public class Route
 	public Point[] getStops()
 	{
 		return stops;
-	}
-	
-	public double px2dp(double dpi, double px)
-	{
-		return px / (dpi / 160);
-	}
-	
-	public double dp2px(double dpi, double dp)
-	{
-		return dp * (dpi / 160);
 	}
 	
 	public boolean hasNext()

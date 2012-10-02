@@ -12,7 +12,9 @@ import org.cocos2d.nodes.*;
 import org.cocos2d.protocols.CCTouchDelegateProtocol;
 import org.cocos2d.types.CGPoint;
 
+import android.content.Context;
 import android.graphics.Point;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import org.cocos2d.types.CGSize;
@@ -66,6 +68,8 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
     
     public boolean ccTouchesBegan(MotionEvent e)
     {
+    	Context c = CCDirector.theApp;
+		DisplayMetrics metrics = c.getResources().getDisplayMetrics();
         CGSize winSize = CCDirector.sharedDirector().displaySize();
         double touchX = e.getX();
 //        double touchY = e.getY()+(winSize.height/2);
@@ -73,8 +77,8 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
         
     	CGPoint pos = getPosition();
     	Log.e("Route", pos.toString() + " - " + touchX + " - " + touchY);
-        if((double) pos.x >= (touchX-30) && (double) pos.x <= (touchX+30)) {
-            if((double) pos.y >= (touchY-20) && (double) pos.y <= (touchY+20)) {
+        if((double) pos.x >= (touchX-GameLayer.dp2px(metrics.densityDpi, 10)) && (double) pos.x <= (touchX+GameLayer.dp2px(metrics.densityDpi, 40))) {
+            if((double) pos.y >= (touchY-GameLayer.dp2px(metrics.densityDpi, 25)) && (double) pos.y <= (touchY+GameLayer.dp2px(metrics.densityDpi, 25))) {
                 GameLayer.score++;
                 fallDown();
             }
