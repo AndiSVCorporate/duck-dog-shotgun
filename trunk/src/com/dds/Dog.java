@@ -1,6 +1,7 @@
 package com.dds;
 
 import android.util.Log;
+import org.cocos2d.actions.interval.CCMoveTo;
 import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.nodes.CCSprite;
 import org.cocos2d.types.CGPoint;
@@ -19,7 +20,7 @@ import android.hardware.SensorManager;
 public class Dog extends CCSprite implements SensorEventListener 
 {
     protected CGSize winSize;
-    public static int lives = 5;
+    public static int health = 5;
 
     public Dog(String path) 
     {
@@ -60,14 +61,22 @@ public class Dog extends CCSprite implements SensorEventListener
         int speed;
 
         speed = (int) (8 / (1 / Math.abs(f1)));
+//        speed = (int) (120 * (1 / Math.abs(f1)));
 
         if(f1 < -0.8 && !(position.x > winSize.getWidth() - this.getContentSize().getWidth()/2))
         {
             this.setPosition(this.getPosition().x+speed, this.getPosition().y);
+//            this.stopAllActions();
+//            CCMoveTo actionMove = CCMoveTo.action(0.1f, CGPoint.ccp(this.getPosition().x+speed, this.getPosition().y));
+//            runAction(actionMove);
+
         }
         else if(f1 > 0.8 && !(position.x < 0 + getContentSize().width/2))
         {
             this.setPosition(this.getPosition().x-speed, this.getPosition().y);
+//            this.stopAllActions();
+//            CCMoveTo actionMove = CCMoveTo.action(0.1f, CGPoint.ccp(this.getPosition().x-speed, this.getPosition().y));
+//            runAction(actionMove);
         }
     }
 }

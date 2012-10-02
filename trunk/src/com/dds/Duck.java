@@ -92,8 +92,7 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
     }
     
     public void spriteMoveFinished() {
-        Dog.lives--;
-        removeSelf();
+        this.removeSelf();
     }
 
 	public boolean ccTouchesCancelled(MotionEvent e) 
@@ -121,6 +120,9 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
                     if(dogPosition.x -50 < getPosition().x && getPosition().x < dogPosition.x + 50) {
                         alive = false;
                         GameLayer.updateScore();
+                    }
+                    else if(getPosition().y < 0) {
+                        Dog.health--;
                     }
                 }
             }
