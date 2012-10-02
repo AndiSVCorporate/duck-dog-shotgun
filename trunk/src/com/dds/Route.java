@@ -2,6 +2,9 @@ package com.dds;
 
 import java.util.Random;
 
+import org.cocos2d.nodes.CCDirector;
+import org.cocos2d.types.CGSize;
+
 import android.content.Context;
 import android.graphics.Point;
 import android.util.DisplayMetrics;
@@ -17,9 +20,12 @@ public class Route
 	
 	private Point[] stops;
 	
-	public Route(Context c, int s)
+	public Route(int s)
 	{
+		Context c = CCDirector.theApp;
 		DisplayMetrics metrics = c.getResources().getDisplayMetrics();
+		
+		//CGSize winSize = CCDirector.sharedDirector().displaySize();
 		
 		int height = metrics.heightPixels;
 		int width = metrics.widthPixels;
@@ -29,11 +35,11 @@ public class Route
 		
 		// Start position
 		Random r = new Random();
-		int x = Math.min(vert - 1, Math.max(0, r.nextInt(vert + hor * 2) - hor));
+		int x = (int) (Math.min(vert - 1, Math.max(0, r.nextInt(vert + hor * 2) - hor)) * dp2px(metrics.densityDpi, stepSize));
 		int y = 0;
-		if (x == 0 || x == vert - 1)
+		if (x == 0 || x == (int) ((vert - 1) * dp2px(metrics.densityDpi, stepSize)))
 		{
-			y = r.nextInt(hor);
+			y = (int) (r.nextInt(hor) * dp2px(metrics.densityDpi, stepSize));
 		}
 		
 		stops = new Point[s + 2];
@@ -44,8 +50,8 @@ public class Route
 		{
 			while (x == stops[i].x && y == stops[i].y)
 			{
-				x = r.nextInt(vert);
-				y = r.nextInt(hor);
+				x = (int) (r.nextInt(vert) * dp2px(metrics.densityDpi, stepSize));
+				y = (int) (r.nextInt(hor) * dp2px(metrics.densityDpi, stepSize));
 				stops[i + 1] = new Point(x, y);
 			}
 		}
@@ -53,16 +59,21 @@ public class Route
 		// End position
 		while (x == stops[s].x && y == stops[s].y)
 		{
-			x = Math.min(vert - 1, Math.max(0, r.nextInt(vert + hor * 2) - hor));
-			y = 0;
-			if (x == 0 || x == vert - 1)
+			x = (int) (Math.min(vert - 1, Math.max(0, r.nextInt(vert + hor * 2) - hor)) * dp2px(metrics.densityDpi, stepSize));
+			y = -50;
+			if (x == 0)
 			{
-				y = r.nextInt(hor);
+				x = -50;
+				y = (int) (r.nextInt(hor) * dp2px(metrics.densityDpi, stepSize));
+			}
+			else if (x == (int) ((vert - 1) * dp2px(metrics.densityDpi, stepSize)))
+			{
+				x = -50;
+				y = (int) (r.nextInt(hor) * dp2px(metrics.densityDpi, stepSize));
 			}
 			
 			stops[s + 1] = new Point(x, y);
 		}
-		Log.e("Route", toString());
 	}
 	
 	public Point[] getStops()
@@ -75,9 +86,19 @@ public class Route
 		return px / (dpi / 160);
 	}
 	
+	public double dp2px(double dpi, double dp)
+	{
+		return dp * (dpi / 160);
+	}
+	
+	public boolean hasNext()
+	{
+		return (step < getStops().length - 1);
+	}
+	
 	public Point next()
 	{
-		if (step < getStops().length)
+		if (hasNext())
 		{
 			step++;
 			return getStops()[step];
@@ -107,7 +128,7 @@ public class Route
 	public double getDistanceToNextPoint()
 	{
 		Point[] s = getStops();
-		if (step < s.length)
+		if (hasNext())
 		{
 			return Math.sqrt(Math.abs(Math.pow(s[step].x - s[step + 1].x, 2)) + Math.abs(Math.pow(s[step].y - s[step + 1].y, 2))); 
 		}
