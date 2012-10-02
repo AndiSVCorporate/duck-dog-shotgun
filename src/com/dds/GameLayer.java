@@ -1,6 +1,7 @@
 package com.dds;
 
 import android.content.pm.LabeledIntent;
+import android.util.Log;
 import android.view.MotionEvent;
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
  * Time: 17:04
  */
 public class GameLayer extends CCLayer {
+
     protected CCSpriteSheet duckSpriteSheet;
     protected CCSpriteSheet fallDuckSpriteSheet;
     protected ArrayList<CCSpriteFrame> flySprites;
@@ -24,6 +26,7 @@ public class GameLayer extends CCLayer {
     protected CCAnimation flyAnimation;
     protected ArrayList<CCSpriteFrame> fallSprites;
     protected static CCLabel scoreLabel;
+    protected static CCLabel livesLabel;
 
     public static int score = 0;
 
@@ -83,16 +86,22 @@ public class GameLayer extends CCLayer {
         this.addChild(background);
         this.addChild(dog);
 
-        //make scorelabel
-
-        CGSize dimensions = CGSize.make(250, 100);
-        CCLabel.TextAlignment alignment = CCLabel.TextAlignment.LEFT;
+        //make labels
 
         scoreLabel = CCLabel.makeLabel("Score: " + GameLayer.score, "Arial", FONT_SIZE);
         scoreLabel.setColor(ccColor3B.ccBLACK);
-        scoreLabel.setPosition(winSize.width/5, (int)(winSize.height*0.95));
+        scoreLabel.setPosition(winSize.width/6, (int)(winSize.height*0.95));
+
+        livesLabel = CCLabel.makeLabel("Health: " + Dog.health, "Arial", FONT_SIZE);
+        livesLabel.setColor(ccColor3B.ccBLACK);
+        livesLabel.setPosition(winSize.width/6, (int)(winSize.height*0.90));
 
         addChild(scoreLabel);
+        addChild(livesLabel);
+
+//        CheckLivesThread checkThread = new CheckLivesThread();
+//        Thread t = new Thread(checkThread);
+//        t.start();
     }
 
     public void gameLogic(float dt)
@@ -128,7 +137,29 @@ public class GameLayer extends CCLayer {
         GameLayer.scoreLabel.setString("Score: " + GameLayer.score);
     }
 
-    public static void gameOver() {
+    public void gameOver() {
+        CGSize winSize = CCDirector.sharedDirector().displaySize();
 
+        this.stopAllActions();
+
+        for(CCNode node : this.getChildren())
+        {
+            node.stopAllActions();
+        }
+        CCLabel gameOverLabel = CCLabel.makeLabel("Game Over", "Arial", 72);
+        gameOverLabel.setColor(ccColor3B.ccRED);
+        gameOverLabel.setPosition(winSize.width/2, winSize.height/2);
+        this.addChild(gameOverLabel);
+    }
+
+    class CheckLivesThread implements Runnable
+    {
+        public void run()
+        {
+            while(Dog.health > 0) {
+
+            }
+            gameOver();
+        }
     }
 }
