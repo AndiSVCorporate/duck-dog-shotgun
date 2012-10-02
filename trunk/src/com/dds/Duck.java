@@ -63,6 +63,7 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
     	CGPoint pos = getPosition();
         if((double) pos.x >= (touchX-90) && (double) pos.x <= (touchX+20)) {
             if((double) pos.y >= (touchY-20) && (double) pos.y <= (touchY+50)) {
+                GameLayer.score++;
                 fallDown();
             }
         }
@@ -91,6 +92,7 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
     }
     
     public void spriteMoveFinished() {
+        Dog.lives--;
         removeSelf();
     }
 
@@ -118,6 +120,7 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
                 if(getPosition().y <= dogPosition.y+15) {
                     if(dogPosition.x -50 < getPosition().x && getPosition().x < dogPosition.x + 50) {
                         alive = false;
+                        GameLayer.updateScore();
                     }
                 }
             }
