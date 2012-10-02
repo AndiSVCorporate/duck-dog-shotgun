@@ -103,6 +103,16 @@ public class GameLayer extends CCLayer {
 //        Thread t = new Thread(checkThread);
 //        t.start();
     }
+    
+	public static double px2dp(double dpi, double px)
+	{
+		return px / (dpi / 160);
+	}
+	
+	public static double dp2px(double dpi, double dp)
+	{
+		return dp * (dpi / 160);
+	}
 
     public void gameLogic(float dt)
     {
