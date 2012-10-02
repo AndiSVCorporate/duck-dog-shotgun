@@ -19,6 +19,7 @@ import android.hardware.SensorManager;
 public class Dog extends CCSprite implements SensorEventListener 
 {
     protected CGSize winSize;
+    public static int lives = 5;
 
     public Dog(String path) 
     {

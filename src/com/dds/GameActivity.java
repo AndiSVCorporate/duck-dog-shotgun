@@ -43,7 +43,7 @@ public class GameActivity extends Activity {
 
         // show FPS
         // set false to disable FPS display, but don't delete fps_images.png!!
-        CCDirector.sharedDirector().setDisplayFPS(true);
+        CCDirector.sharedDirector().setDisplayFPS(false);
 
         // frames per second
         CCDirector.sharedDirector().setAnimationInterval(1.0f / 80);

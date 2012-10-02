@@ -1,11 +1,13 @@
 package com.dds;
 
+import android.content.pm.LabeledIntent;
 import android.view.MotionEvent;
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
 import org.cocos2d.nodes.*;
 import org.cocos2d.types.CGPoint;
 import org.cocos2d.types.CGSize;
+import org.cocos2d.types.ccColor3B;
 
 import java.util.ArrayList;
 
@@ -21,11 +23,14 @@ public class GameLayer extends CCLayer {
     protected CCAnimation fallAnimation;
     protected CCAnimation flyAnimation;
     protected ArrayList<CCSpriteFrame> fallSprites;
+    protected static CCLabel scoreLabel;
+
+    public static int score = 0;
 
     public static float scale = 1;
+    public static final float FONT_SIZE = 45;
 
-    public static CCScene scene()
-    {
+    public static CCScene scene() {
         CCScene returnScene = CCScene.node();
 
         CCLayer innerLayer = new GameLayer();
@@ -77,6 +82,17 @@ public class GameLayer extends CCLayer {
 
         this.addChild(background);
         this.addChild(dog);
+
+        //make scorelabel
+
+        CGSize dimensions = CGSize.make(250, 100);
+        CCLabel.TextAlignment alignment = CCLabel.TextAlignment.LEFT;
+
+        scoreLabel = CCLabel.makeLabel("Score: " + GameLayer.score, "Arial", FONT_SIZE);
+        scoreLabel.setColor(ccColor3B.ccBLACK);
+        scoreLabel.setPosition(winSize.width/5, (int)(winSize.height*0.95));
+
+        addChild(scoreLabel);
     }
 
     public void gameLogic(float dt)
@@ -105,5 +121,14 @@ public class GameLayer extends CCLayer {
     public void finalize() throws Throwable {
         super.finalize();
         CCTextureCache.purgeSharedTextureCache();
+    }
+
+    public static void updateScore() {
+        GameLayer.score++;
+        GameLayer.scoreLabel.setString("Score: " + GameLayer.score);
+    }
+
+    public static void gameOver() {
+
     }
 }
