@@ -1,7 +1,5 @@
 package com.dds;
 
-import android.util.Log;
-import org.cocos2d.actions.interval.CCMoveTo;
 import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.nodes.CCSprite;
 import org.cocos2d.types.CGPoint;
