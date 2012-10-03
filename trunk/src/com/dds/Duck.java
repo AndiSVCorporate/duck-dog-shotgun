@@ -170,6 +170,12 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
                         Dog.health--;
                     }
                 }
+
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             spriteMoveFinished();
         }

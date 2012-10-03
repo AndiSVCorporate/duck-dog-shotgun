@@ -167,7 +167,11 @@ public class GameLayer extends CCLayer {
         public void run()
         {
             while(Dog.health > 0) {
-
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
             gameOver();
         }
