@@ -25,8 +25,8 @@ public class GameLayer extends CCLayer {
     protected CCAnimation fallAnimation;
     protected CCAnimation flyAnimation;
     protected ArrayList<CCSpriteFrame> fallSprites;
-    protected static CCLabel scoreLabel;
-    protected static CCLabel livesLabel;
+    protected static Label scoreLabel;
+    protected static Label livesLabel;
 
     public static int score = 0;
 
@@ -88,11 +88,11 @@ public class GameLayer extends CCLayer {
 
         //make labels
 
-        scoreLabel = CCLabel.makeLabel("Score: " + GameLayer.score, "Arial", FONT_SIZE);
+        scoreLabel = Label.makeLabel("Score: " + GameLayer.score, "Arial", FONT_SIZE);
         scoreLabel.setColor(ccColor3B.ccBLACK);
         scoreLabel.setPosition(winSize.width/6, (int)(winSize.height*0.95));
 
-        livesLabel = CCLabel.makeLabel("Health: " + Dog.health, "Arial", FONT_SIZE);
+        livesLabel = Label.makeLabel("Health: " + Dog.health, "Arial", FONT_SIZE);
         livesLabel.setColor(ccColor3B.ccBLACK);
         livesLabel.setPosition(winSize.width/6, (int)(winSize.height*0.90));
 
@@ -156,7 +156,7 @@ public class GameLayer extends CCLayer {
         {
             node.stopAllActions();
         }
-        CCLabel gameOverLabel = CCLabel.makeLabel("Game Over", "Arial", 72);
+        Label gameOverLabel = Label.makeLabel("Game Over", "Arial", 72);
         gameOverLabel.setColor(ccColor3B.ccRED);
         gameOverLabel.setPosition(winSize.width/2, winSize.height/2);
         this.addChild(gameOverLabel);
