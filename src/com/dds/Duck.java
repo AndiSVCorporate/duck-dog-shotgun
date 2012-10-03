@@ -109,7 +109,7 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
 	
 	        runAction(actions);
 	
-	        CheckHitWithDogThread checkThread = new CheckHitWithDogThread(this);
+	        CheckHitWithDogThread checkThread = new CheckHitWithDogThread();
 	        Thread t = new Thread(checkThread);
 	        t.start();
     	}
@@ -157,19 +157,12 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
 
     class CheckHitWithDogThread implements Runnable 
     {
-    	private Duck duck;
-    	
-    	public CheckHitWithDogThread(Duck d)
-    	{
-    		duck = d;
-    	}
-    	
     	public void run() 
         {
             while(alive && getParent() != null) {
-                CGPoint dogPosition = duck.getParent().getChildByTag(1).getPosition();
-                if(duck.getPosition().y <= dogPosition.y+15) {
-                    if(dogPosition.x -50 < duck.getPosition().x && duck.getPosition().x < dogPosition.x + 50) {
+                CGPoint dogPosition = getParent().getChildByTag(1).getPosition();
+                if(getPosition().y <= dogPosition.y+15) {
+                    if(dogPosition.x -50 < getPosition().x && getPosition().x < dogPosition.x + 50) {
                         alive = false;
                         GameLayer.updateScore();
                     }
