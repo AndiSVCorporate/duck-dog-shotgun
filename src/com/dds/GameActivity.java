@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+
 import org.cocos2d.layers.CCScene;
 import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.opengl.CCGLSurfaceView;
@@ -15,7 +16,7 @@ import org.cocos2d.opengl.CCGLSurfaceView;
  */
 public class GameActivity extends Activity {
 
-    private CCGLSurfaceView mGLSurfaceView;
+    protected static CCGLSurfaceView mGLSurfaceView;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,12 +35,12 @@ public class GameActivity extends Activity {
     public void onStart() {
         super.onStart();
 
-        this.mGLSurfaceView = new CCGLSurfaceView(this);
+        GameActivity.mGLSurfaceView = new CCGLSurfaceView(this);
 
-        setContentView(this.mGLSurfaceView);
+        setContentView(GameActivity.mGLSurfaceView);
 
         // attach the OpenGL view to a window
-        CCDirector.sharedDirector().attachInView(this.mGLSurfaceView);
+        CCDirector.sharedDirector().attachInView(GameActivity.mGLSurfaceView);
 
         // show FPS
         // set false to disable FPS display, but don't delete fps_images.png!!
