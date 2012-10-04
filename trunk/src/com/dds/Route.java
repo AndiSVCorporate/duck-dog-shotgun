@@ -27,16 +27,16 @@ public class Route
 		int height = metrics.heightPixels;
 		int width = metrics.widthPixels;
 		
-		stepSize = GameLayer.px2dp(metrics.densityDpi, width) / vert;
-		hor = (int) (GameLayer.px2dp(metrics.densityDpi, height) / 2 / stepSize);
+		stepSize = GameLayer.px2dp(width) / vert;
+		hor = (int) (GameLayer.px2dp(height) / 2 / stepSize);
 		
 		// Start position
 		Random r = new Random();
-		int x = (int) (Math.min(vert - 1, Math.max(0, r.nextInt(vert + hor * 2) - hor)) * GameLayer.dp2px(metrics.densityDpi, stepSize));
+		int x = (int) (Math.min(vert - 1, Math.max(0, r.nextInt(vert + hor * 2) - hor)) * GameLayer.dp2px(stepSize));
 		int y = 0;
-		if (x == 0 || x == (int) ((vert - 1) * GameLayer.dp2px(metrics.densityDpi, stepSize)))
+		if (x == 0 || x == (int) ((vert - 1) * GameLayer.dp2px(stepSize)))
 		{
-			y = (int) (r.nextInt(hor) * GameLayer.dp2px(metrics.densityDpi, stepSize));
+			y = (int) (r.nextInt(hor) * GameLayer.dp2px(stepSize));
 		}
 		
 		stops = new Point[s + 2];
@@ -47,8 +47,8 @@ public class Route
 		{
 			while (x == stops[i].x && y == stops[i].y)
 			{
-				x = (int) (r.nextInt(vert) * GameLayer.dp2px(metrics.densityDpi, stepSize));
-				y = (int) (r.nextInt(hor) * GameLayer.dp2px(metrics.densityDpi, stepSize));
+				x = (int) (r.nextInt(vert) * GameLayer.dp2px(stepSize));
+				y = (int) (r.nextInt(hor) * GameLayer.dp2px(stepSize));
 				stops[i + 1] = new Point(x, y);
 			}
 		}
@@ -56,17 +56,17 @@ public class Route
 		// End position
 		while (x == stops[s].x && y == stops[s].y)
 		{
-			x = (int) (Math.min(vert - 1, Math.max(0, r.nextInt(vert + hor * 2) - hor)) * GameLayer.dp2px(metrics.densityDpi, stepSize));
+			x = (int) (Math.min(vert - 1, Math.max(0, r.nextInt(vert + hor * 2) - hor)) * GameLayer.dp2px(stepSize));
 			y = -50;
 			if (x == 0)
 			{
 				x = -50;
-				y = (int) (r.nextInt(hor) * GameLayer.dp2px(metrics.densityDpi, stepSize));
+				y = (int) (r.nextInt(hor) * GameLayer.dp2px(stepSize));
 			}
-			else if (x == (int) ((vert - 1) * GameLayer.dp2px(metrics.densityDpi, stepSize)))
+			else if (x == (int) ((vert - 1) * GameLayer.dp2px(stepSize)))
 			{
 				x += 50;
-				y = (int) (r.nextInt(hor) * GameLayer.dp2px(metrics.densityDpi, stepSize));
+				y = (int) (r.nextInt(hor) * GameLayer.dp2px(stepSize));
 			}
 			
 			stops[s + 1] = new Point(x, y);

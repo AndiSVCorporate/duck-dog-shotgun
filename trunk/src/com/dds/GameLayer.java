@@ -1,5 +1,6 @@
 package com.dds;
 
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
@@ -69,7 +70,7 @@ public class GameLayer extends CCLayer {
 
         background.setPosition(CGPoint.make(winSize.width / 2, winSize.height / 2));
 
-        Dog dog = new Dog("dog.png");
+        Dog dog = new Dog("panda.png");
 
 
         for(int i = 1; i <= 4; i++) {
@@ -95,14 +96,16 @@ public class GameLayer extends CCLayer {
         t.start();
     }
     
-	public static double px2dp(double dpi, double px)
+	public static double px2dp(double px)
 	{
-		return px / (dpi / 160);
+		DisplayMetrics metrics = CCDirector.theApp.getResources().getDisplayMetrics();
+		return px / (metrics.densityDpi / 160);
 	}
 	
-	public static double dp2px(double dpi, double dp)
+	public static double dp2px(double dp)
 	{
-		return dp * (dpi / 160);
+		DisplayMetrics metrics = CCDirector.theApp.getResources().getDisplayMetrics();
+		return dp * (metrics.densityDpi / 160);
 	}
 
     public void gameLogic(float dt)
