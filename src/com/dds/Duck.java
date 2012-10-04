@@ -3,7 +3,6 @@ package com.dds;
 import org.cocos2d.actions.base.CCAction;
 import org.cocos2d.actions.base.CCRepeatForever;
 import org.cocos2d.actions.instant.CCCallFunc;
-import org.cocos2d.actions.instant.CCCallFuncN;
 import org.cocos2d.actions.interval.CCAnimate;
 import org.cocos2d.actions.interval.CCMoveTo;
 import org.cocos2d.actions.interval.CCSequence;
@@ -79,10 +78,9 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
 //        double touchY = e.getY()+(winSize.height/2);
         double touchY = winSize.height - e.getY();
         
-    	CGPoint pos = getPosition();
-        if((double) pos.x >= (touchX-GameLayer.dp2px(metrics.densityDpi, 10)) && (double) pos.x <= (touchX+GameLayer.dp2px(metrics.densityDpi, 40))) {
-            if((double) pos.y >= (touchY-GameLayer.dp2px(metrics.densityDpi, 30)) && (double) pos.y <= (touchY+GameLayer.dp2px(metrics.densityDpi, 30))) {
-                GameLayer.score++;
+    	CGPoint pos = this.getPosition();
+        if((double) pos.x >= (touchX-GameLayer.dp2px(metrics.densityDpi, 8)) && (double) pos.x <= (touchX+GameLayer.dp2px(metrics.densityDpi, 40))) {
+            if((double) pos.y >= (touchY-GameLayer.dp2px(metrics.densityDpi, 50)) && (double) pos.y <= (touchY+GameLayer.dp2px(metrics.densityDpi, 60))) {
                 fallDown();
             }
         }
@@ -91,10 +89,10 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
 
     protected void fallDown() 
     {
-    	if (!falling)
+    	if (!this.falling)
     	{
 	        stopAllActions();
-	        falling = true;
+	        this.falling = true;
 	
 	        CCAction fallAction = CCRepeatForever.action(CCAnimate.action(this.fallAnimation, true));
 	        runAction(fallAction);
@@ -117,15 +115,15 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
     
     public void spriteMoveFinished() 
     {
-    	if (route.hasNext() && !falling)
+    	if (route.hasNext() && !this.falling)
     	{
     		CGSize winSize = CCDirector.sharedDirector().displaySize();
             CGSize duckContentSize = this.getContentSize();
     		 // Determine speed of the target        
-            float duration = (float) (route.getDistanceToNextPoint() / distance * actualDuration);
-            float direction = (float) route.getDirectionToNextPoint();
+            float duration = (float) (this.route.getDistanceToNextPoint() / this.distance * this.actualDuration);
+            float direction = (float) this.route.getDirectionToNextPoint();
             setFlipX(direction > 90 && direction < 270);
-            Point p = route.next();
+            Point p = this.route.next();
 
             // Create the actions
             CCMoveTo actionMove = CCMoveTo.action(duration, CGPoint.ccp(p.x, winSize.height - p.y - (duckContentSize.height / 2.0f)));
@@ -159,15 +157,18 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
     {
     	public void run() 
         {
+            boolean check = true;
+
             while(alive && getParent() != null) {
                 CGPoint dogPosition = getParent().getChildByTag(1).getPosition();
                 if(getPosition().y <= dogPosition.y+15) {
                     if(dogPosition.x -50 < getPosition().x && getPosition().x < dogPosition.x + 50) {
                         alive = false;
-                        GameLayer.updateScore();
+                        LabelLayer.update(false);
                     }
-                    else if(getPosition().y < 0) {
-                        Dog.health--;
+                    else if(getPosition().y < 0 && check) {
+                        LabelLayer.update(true);
+                        check = false;
                     }
                 }
 
