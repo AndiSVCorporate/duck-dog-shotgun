@@ -1,7 +1,5 @@
 package com.dds;
 
-import android.content.pm.LabeledIntent;
-import android.util.Log;
 import android.view.MotionEvent;
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
@@ -25,25 +23,32 @@ public class GameLayer extends CCLayer {
     protected CCAnimation fallAnimation;
     protected CCAnimation flyAnimation;
     protected ArrayList<CCSpriteFrame> fallSprites;
-    protected static Label scoreLabel;
-    protected static Label livesLabel;
+
+    public static boolean gamePlaying = true;
 
     public static int score = 0;
 
     public static float scale = 1;
-    public static final float FONT_SIZE = 45;
+
 
     public static CCScene scene() {
         CCScene returnScene = CCScene.node();
 
         CCLayer innerLayer = new GameLayer();
 
+        CCLayer labelLayer = new LabelLayer();
+
+        labelLayer.setTag(1);
+
         returnScene.addChild(innerLayer);
+        returnScene.addChild(labelLayer);
 
         return returnScene;
     }
 
     public GameLayer() {
+        scheduleUpdate();
+
         CCSpriteFrameCache.sharedSpriteFrameCache().addSpriteFrames("duck_sprite.plist");
         this.duckSpriteSheet = CCSpriteSheet.spriteSheet("duck_sprite.png");
         CCSpriteFrameCache.sharedSpriteFrameCache().addSpriteFrames("duck_falling.plist");
@@ -67,8 +72,7 @@ public class GameLayer extends CCLayer {
         Dog dog = new Dog("dog.png");
 
 
-        for(int i = 1; i <= 4; i++)
-        {
+        for(int i = 1; i <= 4; i++) {
             this.flySprites.add(CCSpriteFrameCache.sharedSpriteFrameCache().getSpriteFrame("xhdpi_retro" + i + ".png"));
             this.fallSprites.add(CCSpriteFrameCache.sharedSpriteFrameCache().getSpriteFrame("falling_duck" + i + ".png"));
         }
@@ -86,22 +90,9 @@ public class GameLayer extends CCLayer {
         this.addChild(background);
         this.addChild(dog);
 
-        //make labels
-
-        scoreLabel = Label.makeLabel("Score: " + GameLayer.score, "Arial", FONT_SIZE);
-        scoreLabel.setColor(ccColor3B.ccBLACK);
-        scoreLabel.setPosition(winSize.width/6, (int)(winSize.height*0.95));
-
-        livesLabel = Label.makeLabel("Health: " + Dog.health, "Arial", FONT_SIZE);
-        livesLabel.setColor(ccColor3B.ccBLACK);
-        livesLabel.setPosition(winSize.width/6, (int)(winSize.height*0.90));
-
-        addChild(scoreLabel);
-        addChild(livesLabel);
-
-//        CheckLivesThread checkThread = new CheckLivesThread();
-//        Thread t = new Thread(checkThread);
-//        t.start();
+        CheckLivesThread checkThread = new CheckLivesThread();
+        Thread t = new Thread(checkThread);
+        t.start();
     }
     
 	public static double px2dp(double dpi, double px)
@@ -121,8 +112,10 @@ public class GameLayer extends CCLayer {
 
     protected void addTarget()
     {
-        Duck duck = new Duck(this.flySprites.get(0), this.flyAnimation, this.fallAnimation);
-        addChild(duck);
+        if(GameLayer.gamePlaying) {
+            Duck duck = new Duck(this.flySprites.get(0), this.flyAnimation, this.fallAnimation);
+            addChild(duck);
+        }
     }
 
     public boolean ccTouchesBegan(MotionEvent event) {
@@ -142,9 +135,10 @@ public class GameLayer extends CCLayer {
         CCTextureCache.purgeSharedTextureCache();
     }
 
-    public static void updateScore() {
-        GameLayer.score++;
-        GameLayer.scoreLabel.setString("Score: " + GameLayer.score);
+    public void update(float time) {
+        if(!GameLayer.gamePlaying) {
+            gameOver();
+        }
     }
 
     public void gameOver() {
@@ -156,9 +150,10 @@ public class GameLayer extends CCLayer {
         {
             node.stopAllActions();
         }
+
         Label gameOverLabel = Label.makeLabel("Game Over", "Arial", 72);
         gameOverLabel.setColor(ccColor3B.ccRED);
-        gameOverLabel.setPosition(winSize.width/2, winSize.height/2);
+        gameOverLabel.setPosition(winSize.width / 2, winSize.height / 2);
         this.addChild(gameOverLabel);
     }
 
@@ -168,12 +163,13 @@ public class GameLayer extends CCLayer {
         {
             while(Dog.health > 0) {
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(200);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
             }
-            gameOver();
+            GameLayer.gamePlaying = false;
         }
     }
 }
