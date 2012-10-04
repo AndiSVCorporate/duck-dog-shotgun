@@ -3,12 +3,10 @@ package com.dds;
 import java.util.Random;
 
 import org.cocos2d.nodes.CCDirector;
-import org.cocos2d.types.CGSize;
 
 import android.content.Context;
 import android.graphics.Point;
 import android.util.DisplayMetrics;
-import android.util.Log;
 
 public class Route 
 {

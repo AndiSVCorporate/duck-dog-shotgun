@@ -14,7 +14,6 @@ import org.cocos2d.types.CGPoint;
 import android.content.Context;
 import android.graphics.Point;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import org.cocos2d.types.CGSize;
 
@@ -56,7 +55,6 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
         float direction = (float) route.getDirectionToNextPoint();
 //        setRotation(direction);
         setFlipX(direction > 90 && direction < 270);
-        Log.e("Route", "Rotation: " + direction);
         Point p = route.next();
 
         // Create the actions
