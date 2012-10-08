@@ -58,25 +58,17 @@ public class Dog extends CCSprite implements SensorEventListener
 
         int speed;
 
-        speed = (int) (8 / (1 / Math.abs(f1)));
-//        speed = (int) (120 * (1 / Math.abs(f1)));
+        speed = (int) (GameLayer.dp2px((8/1.5)) / (1 / Math.abs(f1)));
 
         if(GameLayer.gamePlaying)
         {
             if(f1 < -0.8 && !(position.x > winSize.getWidth() - this.getContentSize().getWidth()/2))
             {
                 this.setPosition(this.getPosition().x+speed, this.getPosition().y);
-    //            this.stopAllActions();
-    //            CCMoveTo actionMove = CCMoveTo.action(0.1f, CGPoint.ccp(this.getPosition().x+speed, this.getPosition().y));
-    //            runAction(actionMove);
-
             }
             else if(f1 > 0.8 && !(position.x < 0 + getContentSize().width/2))
             {
                 this.setPosition(this.getPosition().x-speed, this.getPosition().y);
-    //            this.stopAllActions();
-    //            CCMoveTo actionMove = CCMoveTo.action(0.1f, CGPoint.ccp(this.getPosition().x-speed, this.getPosition().y));
-    //            runAction(actionMove);
             }
         }
     }
