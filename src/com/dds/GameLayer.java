@@ -25,7 +25,7 @@ import java.util.Random;
  * Time: 17:04
  */
 public class GameLayer extends CCLayer implements SensorEventListener {
-
+    protected BulletLayer bulletLayer;
     protected CCSpriteSheet duckSpriteSheet;
     protected CCSpriteSheet fallDuckSpriteSheet;
     protected CCSpriteSheet bloodSpriteSheet;
@@ -50,19 +50,23 @@ public class GameLayer extends CCLayer implements SensorEventListener {
     public static CCScene scene() {
         CCScene returnScene = CCScene.node();
 
-        CCLayer innerLayer = new GameLayer();
+        BulletLayer bulletLayer = new BulletLayer();
+        CCLayer innerLayer = new GameLayer(bulletLayer);
 
         CCLayer labelLayer = new LabelLayer();
 
         labelLayer.setTag(1);
 
+
         returnScene.addChild(innerLayer);
         returnScene.addChild(labelLayer);
+        returnScene.addChild(bulletLayer);
 
         return returnScene;
     }
 
-    public GameLayer() {
+    public GameLayer(BulletLayer bulletLayer) {
+        this.bulletLayer = bulletLayer;
         scheduleUpdate();
 
         CCSpriteFrameCache.sharedSpriteFrameCache().addSpriteFrames("duck_sprite.plist");
@@ -88,7 +92,7 @@ public class GameLayer extends CCLayer implements SensorEventListener {
 
         background.setPosition(CGPoint.make(winSize.width / 2, winSize.height / 2));
 
-        Dog dog = new Dog("raccoon.png");
+        Dog dog = new Dog("tiger.png");
 
         for(int i = 1; i <= 4; i++) {
             this.flySprites.add(CCSpriteFrameCache.sharedSpriteFrameCache().getSpriteFrame("xhdpi_retro" + i + ".png"));
@@ -216,6 +220,7 @@ public class GameLayer extends CCLayer implements SensorEventListener {
                 if(reloadShakes == 2) {
                     bullets = 7;
                     reloadShakes=0;
+                    bulletLayer.buildBulletBar();
                 }
             }
         }

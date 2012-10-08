@@ -81,10 +81,8 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
                     fallDown();
                 }
             }
-
-            GameLayer.bullets--;
         }
-        return true;
+        return false;
     }
 
     protected void fallDown() 
@@ -145,6 +143,9 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
 
 	public boolean ccTouchesEnded(MotionEvent e) 
 	{
+        if(GameLayer.bullets > 0) {
+            GameLayer.bullets--;
+        }
 		return false;
 	}
 
