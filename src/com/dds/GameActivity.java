@@ -1,7 +1,6 @@
 package com.dds;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -76,8 +75,10 @@ public class GameActivity extends Activity {
 
         CCDirector.sharedDirector().end();
     }
-
-    public void onBackPressed() {
-
+    
+    public void onBackPressed()
+    {
+    	super.onBackPressed();
+    	CCDirector.sharedDirector().replaceScene(GameMenu.scene());
     }
 }

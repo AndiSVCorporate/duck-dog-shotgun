@@ -3,6 +3,7 @@ package com.dds;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,6 +15,7 @@ public class MainActivity extends Activity
 {
 
     protected static CCGLSurfaceView mGLSurfaceView;
+    protected int mode = 0;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -35,8 +37,10 @@ public class MainActivity extends Activity
     }
 
     public void startGame(View view) {
-        Intent intent = new Intent(this, GameActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, GameActivity.class);
+//        startActivity(intent);
+    	CCDirector.sharedDirector().replaceScene(GameLayer.scene());
+    	mode = 1;
     }
 
     public void onStart() {
@@ -56,14 +60,21 @@ public class MainActivity extends Activity
         // frames per second
         CCDirector.sharedDirector().setAnimationInterval(1.0f / 80);
 
-        CCScene scene = GameMenu.scene();
-
         // Make the Scene active
-        CCDirector.sharedDirector().runWithScene(scene);
+        CCDirector.sharedDirector().runWithScene(GameMenu.scene());
     }
 
     public void onBackPressed() {
-        onDestroy();
+    	if (mode == 0)
+        {
+    		onDestroy();
+    		finish();
+        }
+    	else if (mode == 1)
+    	{
+    		CCDirector.sharedDirector().replaceScene(GameMenu.scene());
+    		mode = 0;
+    	}
     }
 
     @Override
@@ -76,7 +87,7 @@ public class MainActivity extends Activity
     @Override
     public void onResume() {
         super.onResume();
-
+        
         CCDirector.sharedDirector().resume();
     }
 
