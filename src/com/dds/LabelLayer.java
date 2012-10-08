@@ -3,9 +3,6 @@ package com.dds;
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.nodes.CCLabel;
-import org.cocos2d.nodes.CCNode;
-import org.cocos2d.nodes.CCTextureCache;
-import org.cocos2d.opengl.CCTexture2D;
 import org.cocos2d.types.CGSize;
 import org.cocos2d.types.ccColor3B;
 
