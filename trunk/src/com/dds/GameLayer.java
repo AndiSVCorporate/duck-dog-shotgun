@@ -1,6 +1,10 @@
 package com.dds;
 
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import org.cocos2d.actions.instant.CCCallFunc;
 import org.cocos2d.actions.interval.CCFadeOut;
@@ -20,7 +24,7 @@ import java.util.Random;
  * Date: 14-09-12
  * Time: 17:04
  */
-public class GameLayer extends CCLayer {
+public class GameLayer extends CCLayer implements SensorEventListener {
 
     protected CCSpriteSheet duckSpriteSheet;
     protected CCSpriteSheet fallDuckSpriteSheet;
@@ -31,14 +35,16 @@ public class GameLayer extends CCLayer {
     protected ArrayList<CCSpriteFrame> fallSprites;
     protected static ArrayList<CCSpriteFrame> bloodSprites;
 
-
-    protected static CCSprite blood;
+    protected float lastFValue = 0;
 
     public static boolean gamePlaying = true;
 
     public static int score = 0;
 
     public static float scale = 1;
+
+    public static int bullets = 7;
+    private int reloadShakes = 0;
 
 
     public static CCScene scene() {
@@ -105,10 +111,6 @@ public class GameLayer extends CCLayer {
 
         this.addChild(background);
         this.addChild(dog);
-
-        CheckLivesThread checkThread = new CheckLivesThread();
-        Thread t = new Thread(checkThread);
-        t.start();
     }
     
 	public static double px2dp(double px)
@@ -157,6 +159,9 @@ public class GameLayer extends CCLayer {
         if(!GameLayer.gamePlaying) {
             gameOver();
         }
+        if(Dog.health <= 0) {
+            GameLayer.gamePlaying = false;
+        }
     }
 
     public void gameOver() {
@@ -169,7 +174,7 @@ public class GameLayer extends CCLayer {
             node.stopAllActions();
         }
 
-        Label gameOverLabel = Label.makeLabel("Game Over", "Arial", 72);
+        Label gameOverLabel = Label.makeLabel("Game Over", "Sans Serif", 72);
         gameOverLabel.setColor(ccColor3B.ccRED);
         gameOverLabel.setPosition(winSize.width / 2, winSize.height / 2);
         this.addChild(gameOverLabel);
@@ -194,19 +199,26 @@ public class GameLayer extends CCLayer {
         ((CCNode) sender).removeSelf();
     }
 
-    class CheckLivesThread implements Runnable
-    {
-        public void run()
-        {
-            while(Dog.health > 0) {
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+    public void onAccuracyChanged(Sensor s, int i) {}
 
-            }
-            GameLayer.gamePlaying = false;
+    public void onSensorChanged(SensorEvent event)
+    {
+        if(event.sensor.getType() == 1)
+        {
+            doReload(event.values[0], event.values[1], event.values[2]);
         }
+    }
+
+    protected void doReload(float f1, float f2, float f3) {
+        if(f2 < 0 || f2 > 20) {
+            if(Math.abs(lastFValue - f2) > 10) {
+                reloadShakes++;
+                if(reloadShakes == 2) {
+                    bullets = 7;
+                    reloadShakes=0;
+                }
+            }
+        }
+        lastFValue = f2;
     }
 }
