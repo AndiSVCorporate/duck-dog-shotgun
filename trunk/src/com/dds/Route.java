@@ -22,8 +22,6 @@ public class Route
 		Context c = CCDirector.theApp;
 		DisplayMetrics metrics = c.getResources().getDisplayMetrics();
 		
-		//CGSize winSize = CCDirector.sharedDirector().displaySize();
-		
 		int height = metrics.heightPixels;
 		int width = metrics.widthPixels;
 		

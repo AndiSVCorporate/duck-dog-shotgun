@@ -20,11 +20,6 @@ public class MainActivity extends Activity
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        setTheme(R.style.DarkTheme);
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.main);
-
         super.onCreate(savedInstanceState);
 
         // set the window status, no tile, full screen and don't sleep
@@ -34,13 +29,6 @@ public class MainActivity extends Activity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-    }
-
-    public void startGame(View view) {
-//        Intent intent = new Intent(this, GameActivity.class);
-//        startActivity(intent);
-    	CCDirector.sharedDirector().replaceScene(GameLayer.scene());
-    	mode = 1;
     }
 
     public void onStart() {

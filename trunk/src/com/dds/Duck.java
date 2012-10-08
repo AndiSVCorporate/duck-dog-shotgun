@@ -68,11 +68,8 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
     
     public boolean ccTouchesBegan(MotionEvent e)
     {
-    	Context c = CCDirector.theApp;
-		DisplayMetrics metrics = c.getResources().getDisplayMetrics();
         CGSize winSize = CCDirector.sharedDirector().displaySize();
         double touchX = e.getX();
-//        double touchY = e.getY()+(winSize.height/2);
         double touchY = winSize.height - e.getY();
         
     	CGPoint pos = this.getPosition();
