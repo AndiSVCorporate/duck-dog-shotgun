@@ -82,7 +82,7 @@ public class GameLayer extends CCLayer {
 
         background.setPosition(CGPoint.make(winSize.width / 2, winSize.height / 2));
 
-        Dog dog = new Dog("panda.png");
+        Dog dog = new Dog("raccoon.png");
 
         for(int i = 1; i <= 4; i++) {
             this.flySprites.add(CCSpriteFrameCache.sharedSpriteFrameCache().getSpriteFrame("xhdpi_retro" + i + ".png"));
