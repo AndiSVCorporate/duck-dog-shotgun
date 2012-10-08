@@ -4,6 +4,7 @@ import org.cocos2d.actions.base.CCAction;
 import org.cocos2d.actions.base.CCRepeatForever;
 import org.cocos2d.actions.instant.CCCallFunc;
 import org.cocos2d.actions.interval.CCAnimate;
+import org.cocos2d.actions.interval.CCFadeOut;
 import org.cocos2d.actions.interval.CCMoveTo;
 import org.cocos2d.actions.interval.CCSequence;
 import org.cocos2d.events.CCTouchDispatcher;
@@ -16,6 +17,8 @@ import android.graphics.Point;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import org.cocos2d.types.CGSize;
+
+import java.util.Random;
 
 /**
  * @author Wouter
@@ -38,14 +41,12 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
         CCTouchDispatcher.sharedDispatcher().addDelegate(this, 0);
         CGSize duckContentSize = this.getContentSize();
         CGSize winSize = CCDirector.sharedDirector().displaySize();
-        int y = (int) (winSize.height/1.3);
 
         this.setScaleX(GameLayer.scale);
 
         this.setScaleY(GameLayer.scale);
 
         Point start = route.getStops()[0];
-//        setPosition(winSize.width + (duckContentSize.width / 2.0f), y);
         setPosition(start.x, winSize.height - start.y - (duckContentSize.height / 2.0f));
         
         CCAction flyAction = CCRepeatForever.action(CCAnimate.action(flyAnimation, true));
@@ -53,12 +54,10 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
         // Determine speed of the target        
         float duration = (float) (route.getDistanceToNextPoint() / distance * actualDuration);
         float direction = (float) route.getDirectionToNextPoint();
-//        setRotation(direction);
         setFlipX(direction > 90 && direction < 270);
         Point p = route.next();
 
         // Create the actions
-//        CCMoveTo actionMove = CCMoveTo.action(duration, CGPoint.ccp(-duckContentSize.width / 2.0f, y));
         CCMoveTo actionMove = CCMoveTo.action(duration, CGPoint.ccp(p.x, winSize.height - p.y - (duckContentSize.height / 2.0f)));
         CCCallFunc actionMoveDone = CCCallFunc.action(this, "spriteMoveFinished");
         CCSequence actions = CCSequence.actions(actionMove, actionMoveDone);
@@ -79,6 +78,7 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
     	CGPoint pos = this.getPosition();
         if((double) pos.x >= (touchX-GameLayer.dp2px(8)) && (double) pos.x <= (touchX+GameLayer.dp2px(40))) {
             if((double) pos.y >= (touchY-GameLayer.dp2px(50)) && (double) pos.y <= (touchY+GameLayer.dp2px(60))) {
+                ((GameLayer) getParent()).bleed(this.getPosition());
                 fallDown();
             }
         }

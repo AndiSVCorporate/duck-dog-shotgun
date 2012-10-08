@@ -2,6 +2,9 @@ package com.dds;
 
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
+import org.cocos2d.actions.instant.CCCallFunc;
+import org.cocos2d.actions.interval.CCFadeOut;
+import org.cocos2d.actions.interval.CCSequence;
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
 import org.cocos2d.nodes.*;
@@ -10,6 +13,7 @@ import org.cocos2d.types.CGSize;
 import org.cocos2d.types.ccColor3B;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * @author Wouter
@@ -20,10 +24,15 @@ public class GameLayer extends CCLayer {
 
     protected CCSpriteSheet duckSpriteSheet;
     protected CCSpriteSheet fallDuckSpriteSheet;
+    protected CCSpriteSheet bloodSpriteSheet;
     protected ArrayList<CCSpriteFrame> flySprites;
     protected CCAnimation fallAnimation;
     protected CCAnimation flyAnimation;
     protected ArrayList<CCSpriteFrame> fallSprites;
+    protected static ArrayList<CCSpriteFrame> bloodSprites;
+
+
+    protected static CCSprite blood;
 
     public static boolean gamePlaying = true;
 
@@ -54,9 +63,12 @@ public class GameLayer extends CCLayer {
         this.duckSpriteSheet = CCSpriteSheet.spriteSheet("duck_sprite.png");
         CCSpriteFrameCache.sharedSpriteFrameCache().addSpriteFrames("duck_falling.plist");
         this.fallDuckSpriteSheet = CCSpriteSheet.spriteSheet("duck_falling.png");
+        CCSpriteFrameCache.sharedSpriteFrameCache().addSpriteFrames("blood_sprite.plist");
+        this.bloodSpriteSheet = CCSpriteSheet.spriteSheet("blood_sprite.png");
 
         this.flySprites = new ArrayList<CCSpriteFrame>();
         this.fallSprites = new ArrayList<CCSpriteFrame>();
+        GameLayer.bloodSprites = new ArrayList<CCSpriteFrame>();
 
         CGSize winSize = CCDirector.sharedDirector().displaySize();
 
@@ -72,10 +84,13 @@ public class GameLayer extends CCLayer {
 
         Dog dog = new Dog("panda.png");
 
-
         for(int i = 1; i <= 4; i++) {
             this.flySprites.add(CCSpriteFrameCache.sharedSpriteFrameCache().getSpriteFrame("xhdpi_retro" + i + ".png"));
             this.fallSprites.add(CCSpriteFrameCache.sharedSpriteFrameCache().getSpriteFrame("falling_duck" + i + ".png"));
+            if(i != 4)
+            {
+                GameLayer.bloodSprites.add(CCSpriteFrameCache.sharedSpriteFrameCache().getSpriteFrame("blood" + i + ".png"));
+            }
         }
 
         this.flyAnimation = CCAnimation.animation("fly", 0.09f, this.flySprites);
@@ -158,6 +173,25 @@ public class GameLayer extends CCLayer {
         gameOverLabel.setColor(ccColor3B.ccRED);
         gameOverLabel.setPosition(winSize.width / 2, winSize.height / 2);
         this.addChild(gameOverLabel);
+    }
+
+    protected void bleed(CGPoint position) {
+        Random r = new Random();
+        CCSprite blood = CCSprite.sprite(GameLayer.bloodSprites.get(r.nextInt(3)));
+
+        CCFadeOut bleedOut = CCFadeOut.action(1f);
+        CCCallFunc deleteBlood = CCCallFunc.action(blood, "deleteBlood");
+        CCSequence action = CCSequence.actions(bleedOut, deleteBlood);
+
+        blood.setPosition(position);
+
+        blood.runAction(action);
+
+        addChild(blood);
+    }
+
+    protected void deleteBlood(Object sender) {
+        ((CCNode) sender).removeSelf();
     }
 
     class CheckLivesThread implements Runnable
