@@ -221,7 +221,7 @@ public class GameLayer extends CCLayer implements SensorEventListener {
                 if(reloadShakes == 2) {
                     bullets = 7;
                     reloadShakes=0;
-                    bulletLayer.buildBulletBar();
+                    bulletLayer.reload = true;
                     bulletLayer.removeChildByTag(10, true);
                 }
             }

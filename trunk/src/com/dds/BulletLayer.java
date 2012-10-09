@@ -19,6 +19,8 @@ import java.util.List;
  * Time: 16:30
  */
 public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
+    public boolean reload = false;
+
     public BulletLayer() {
         scheduleUpdate();
 
@@ -47,6 +49,7 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
             bulletSprite.setTag(i);
             addChild(bulletSprite);
         }
+        this.reload = false;
     }
 
     public synchronized boolean ccTouchesBegan(MotionEvent e)
@@ -65,8 +68,8 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
                 CGPoint pos = ((Duck) child).getPosition();
 
                 if (GameLayer.bullets > 0) {
-                    if ((double) pos.x >= (touchX - GameLayer.dp2px(20)) && (double) pos.x <= (touchX + GameLayer.dp2px(40))) {
-                        if ((double) pos.y >= (touchY - GameLayer.dp2px(70)) && (double) pos.y <= (touchY + GameLayer.dp2px(90))) {
+                    if ((double) pos.x >= (touchX - GameLayer.dp2px(30)) && (double) pos.x <= (touchX + GameLayer.dp2px(40))) {
+                        if ((double) pos.y >= (touchY - GameLayer.dp2px(80)) && (double) pos.y <= (touchY + GameLayer.dp2px(100))) {
                             gameLayer.bleed(((Duck) child).getPosition());
                             ((Duck) child).fallDown();
                         }
@@ -88,7 +91,7 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
                     CGSize winSize = CCDirector.sharedDirector().displaySize();
                     CCLabel reloadLabel = CCLabel.makeLabel("Shake to reload!", "Arial", 72);
                     reloadLabel.setTag(10);
-                reloadLabel.setPosition(winSize.width / 2, winSize.height / 2);
+                    reloadLabel.setPosition(winSize.width / 2, winSize.height / 2);
                     addChild(reloadLabel);
                 break;
             case 1: removeChildByTag(2, true);
@@ -104,6 +107,11 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
             case 6: removeChildByTag(7, true);
             default:
                 break;
+        }
+
+        if(reload)
+        {
+            buildBulletBar();
         }
     }
 }
