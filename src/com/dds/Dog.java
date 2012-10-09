@@ -20,6 +20,8 @@ public class Dog extends CCSprite implements SensorEventListener
     protected CGSize winSize;
     public static int health = 5;
 
+    public static String playerImage;
+
     public Dog(String path) 
     {
         super(path);
