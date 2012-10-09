@@ -12,6 +12,7 @@ import org.cocos2d.actions.interval.CCSequence;
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
 import org.cocos2d.nodes.*;
+import org.cocos2d.sound.SoundEngine;
 import org.cocos2d.types.CGPoint;
 import org.cocos2d.types.CGSize;
 import org.cocos2d.types.ccColor3B;
@@ -67,6 +68,22 @@ public class GameLayer extends CCLayer implements SensorEventListener {
     }
 
     public GameLayer(BulletLayer bulletLayer) {
+        //load all the sounds
+
+        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.bof1);
+//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.bof2);
+//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.eenden1);
+//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.eenden2);
+//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.eenden3);
+//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.goose1);
+//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.goose2);
+//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.goose3);
+        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.reload);
+//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.shot1);
+//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.shot2);
+        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.shot3);
+        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.splat);
+
         this.bulletLayer = bulletLayer;
         scheduleUpdate();
 
@@ -93,7 +110,7 @@ public class GameLayer extends CCLayer implements SensorEventListener {
 
         background.setPosition(CGPoint.make(winSize.width / 2, winSize.height / 2));
 
-        Dog dog = new Dog("tiger.png");
+        Dog dog = new Dog(Dog.playerImage);
 
         for(int i = 1; i <= 4; i++) {
             this.flySprites.add(CCSpriteFrameCache.sharedSpriteFrameCache().getSpriteFrame("xhdpi_retro" + i + ".png"));
@@ -223,6 +240,7 @@ public class GameLayer extends CCLayer implements SensorEventListener {
                     reloadShakes=0;
                     bulletLayer.reload = true;
                     bulletLayer.removeChildByTag(10, true);
+                    SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.reload);
                 }
             }
         }

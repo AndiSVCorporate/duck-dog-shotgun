@@ -10,6 +10,7 @@ import org.cocos2d.actions.interval.CCSequence;
 import org.cocos2d.events.CCTouchDispatcher;
 import org.cocos2d.nodes.*;
 import org.cocos2d.protocols.CCTouchDelegateProtocol;
+import org.cocos2d.sound.SoundEngine;
 import org.cocos2d.types.CGPoint;
 
 import android.content.Context;
@@ -136,6 +137,7 @@ public class Duck extends CCSprite
                     if(dogPosition.x -50 < getPosition().x && getPosition().x < dogPosition.x + 50) {
                         alive = false;
                         LabelLayer.update(false);
+                        SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.bof1);
                     }
                     else if(getPosition().y < 0 && check) {
                         LabelLayer.update(true);

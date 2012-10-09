@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.opengl.CCGLSurfaceView;
+import org.cocos2d.sound.SoundEngine;
 
 public class MainActivity extends Activity
 {
@@ -34,12 +35,13 @@ public class MainActivity extends Activity
         }
         
         Log.e("Highscore", read("highscore.txt"));
-        
+
+        Dog.playerImage = "dog.png";
+
         // set the window status, no tile, full screen and don't sleep
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
     }
 
     public void onStart() 

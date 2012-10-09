@@ -6,11 +6,10 @@ import org.cocos2d.events.CCTouchDispatcher;
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.nodes.*;
 import org.cocos2d.protocols.CCTouchDelegateProtocol;
+import org.cocos2d.sound.SoundEngine;
 import org.cocos2d.types.CGPoint;
 import org.cocos2d.types.CGSize;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -62,6 +61,10 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
         double touchX = e.getX();
         double touchY = winSize.height - e.getY();
 
+        if(GameLayer.bullets > 0) {
+            SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.shot3);
+        }
+
         for(int i = 0; i < children.size(); i++) {
             Object child = children.get(i);
             if (child instanceof Duck) {
@@ -72,6 +75,7 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
                         if ((double) pos.y >= (touchY - GameLayer.dp2px(80)) && (double) pos.y <= (touchY + GameLayer.dp2px(100))) {
                             gameLayer.bleed(((Duck) child).getPosition());
                             ((Duck) child).fallDown();
+                            SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.splat);
                         }
                     }
                 }
