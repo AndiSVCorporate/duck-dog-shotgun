@@ -55,6 +55,7 @@ public class GameLayer extends CCLayer implements SensorEventListener {
 
         CCLayer labelLayer = new LabelLayer();
 
+        innerLayer.setTag(2);
         labelLayer.setTag(1);
 
 
