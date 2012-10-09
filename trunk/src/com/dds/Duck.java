@@ -120,7 +120,7 @@ public class Duck extends CCSprite
     public void update(float time) {
         if(!alive)
         {
-            setVisible(false);
+            removeSelf();
         }
     }
 

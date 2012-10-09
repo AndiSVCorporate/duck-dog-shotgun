@@ -215,13 +215,14 @@ public class GameLayer extends CCLayer implements SensorEventListener {
     }
 
     protected void doReload(float f1, float f2, float f3) {
-        if(f2 < 0 || f2 > 20) {
+        if(f2 < 0 || f2 > 18) {
             if(Math.abs(lastFValue - f2) > 10) {
                 reloadShakes++;
                 if(reloadShakes == 2) {
                     bullets = 7;
                     reloadShakes=0;
                     bulletLayer.buildBulletBar();
+                    bulletLayer.removeChildByTag(10, true);
                 }
             }
         }

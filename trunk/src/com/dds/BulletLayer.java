@@ -51,8 +51,6 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
 
     public synchronized boolean ccTouchesBegan(MotionEvent e)
     {
-        Log.e("begin", "begin " + e.toString());
-
         GameLayer gameLayer = (GameLayer) getParent().getChildByTag(2);
 
         List children = gameLayer.getChildren();
@@ -67,8 +65,8 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
                 CGPoint pos = ((Duck) child).getPosition();
 
                 if (GameLayer.bullets > 0) {
-                    if ((double) pos.x >= (touchX - GameLayer.dp2px(8)) && (double) pos.x <= (touchX + GameLayer.dp2px(40))) {
-                        if ((double) pos.y >= (touchY - GameLayer.dp2px(50)) && (double) pos.y <= (touchY + GameLayer.dp2px(60))) {
+                    if ((double) pos.x >= (touchX - GameLayer.dp2px(20)) && (double) pos.x <= (touchX + GameLayer.dp2px(40))) {
+                        if ((double) pos.y >= (touchY - GameLayer.dp2px(70)) && (double) pos.y <= (touchY + GameLayer.dp2px(90))) {
                             gameLayer.bleed(((Duck) child).getPosition());
                             ((Duck) child).fallDown();
                         }
@@ -80,7 +78,6 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
         if(GameLayer.bullets > 0) {
             GameLayer.bullets--;
         }
-        Log.e("end", "end" + e.toString());
 
         return false;
     }
@@ -88,6 +85,11 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
     public void update(float time) {
         switch (GameLayer.bullets) {
             case 0: removeAllChildren(true);
+                    CGSize winSize = CCDirector.sharedDirector().displaySize();
+                    CCLabel reloadLabel = CCLabel.makeLabel("Shake to reload!", "Arial", 72);
+                    reloadLabel.setTag(10);
+                reloadLabel.setPosition(winSize.width / 2, winSize.height / 2);
+                    addChild(reloadLabel);
                 break;
             case 1: removeChildByTag(2, true);
                 break;
