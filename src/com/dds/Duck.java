@@ -25,7 +25,7 @@ import java.util.Random;
  * Date: 17-09-12
  * Time: 11:53
  */
-public class Duck extends CCSprite implements CCTouchDelegateProtocol 
+public class Duck extends CCSprite
 {
     protected boolean alive = true;
     protected CCAnimation fallAnimation;
@@ -36,9 +36,9 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
 
     public Duck(CCSpriteFrame frame, CCAnimation flyAnimation, CCAnimation fallAnimation) {
         super(frame);
+        scheduleUpdate();
         this.fallAnimation = fallAnimation;
 
-        CCTouchDispatcher.sharedDispatcher().addDelegate(this, 0);
         CGSize duckContentSize = this.getContentSize();
         CGSize winSize = CCDirector.sharedDirector().displaySize();
 
@@ -64,25 +64,6 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
 
         runAction(actions);
         runAction(flyAction);
-    }
-    
-    public boolean ccTouchesBegan(MotionEvent e)
-    {
-        CGSize winSize = CCDirector.sharedDirector().displaySize();
-        double touchX = e.getX();
-        double touchY = winSize.height - e.getY();
-        
-    	CGPoint pos = this.getPosition();
-
-        if(GameLayer.bullets > 0) {
-            if((double) pos.x >= (touchX-GameLayer.dp2px(8)) && (double) pos.x <= (touchX+GameLayer.dp2px(40))) {
-                if((double) pos.y >= (touchY-GameLayer.dp2px(50)) && (double) pos.y <= (touchY+GameLayer.dp2px(60))) {
-                    ((GameLayer) getParent()).bleed(this.getPosition());
-                    fallDown();
-                }
-            }
-        }
-        return false;
     }
 
     protected void fallDown() 
@@ -117,7 +98,7 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
     	{
     		CGSize winSize = CCDirector.sharedDirector().displaySize();
             CGSize duckContentSize = this.getContentSize();
-    		 // Determine speed of the target        
+    		 // Determine speed of the target
             float duration = (float) (this.route.getDistanceToNextPoint() / this.distance * this.actualDuration);
             float direction = (float) this.route.getDirectionToNextPoint();
             setFlipX(direction > 90 && direction < 270);
@@ -132,27 +113,16 @@ public class Duck extends CCSprite implements CCTouchDelegateProtocol
     	}
     	else
     	{
-            removeSelf();
+            alive = false;
     	}
     }
-    
-	public boolean ccTouchesCancelled(MotionEvent e) 
-	{
-		return false;
-	}
 
-	public boolean ccTouchesEnded(MotionEvent e) 
-	{
-        if(GameLayer.bullets > 0) {
-            GameLayer.bullets--;
+    public void update(float time) {
+        if(!alive)
+        {
+            setVisible(false);
         }
-		return false;
-	}
-
-	public boolean ccTouchesMoved(MotionEvent e) 
-	{
-		return false;
-	}
+    }
 
     class CheckHitWithDogThread implements Runnable 
     {
