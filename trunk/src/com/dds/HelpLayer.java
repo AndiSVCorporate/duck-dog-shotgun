@@ -30,16 +30,19 @@ public class HelpLayer extends CCLayer implements CCTouchDelegateProtocol {
     }
 
     public HelpLayer() {
+        CGSize winSize = CCDirector.sharedDirector().winSize();
+
         String texty = "The purpose of Birdy Boom is to shoot and catch as much birds as you can. " +
                 "To shoot the birds, simply tap on the birds with your finger. To catch the falling birds tilt your device to move " +
-                "the catching animal. Tap the screen to go to the menu.";
+                "the catching animal. You'll lose health if you miss a bird with the animal or wait long enough for the bird to fly away. " +
+                "Tap the screen to go to the menu.";
 
         CCTouchDispatcher.sharedDispatcher().addDelegate(this, 0);
 
-        CGSize dimensions = CGSize.make(600, 450);
+        CGSize dimensions = CGSize.make(600, 650);
 
         CCLabel helpLabel = CCLabel.makeLabel(texty, dimensions, CCLabel.TextAlignment.LEFT,"Arial", 40);
-        helpLabel.setPosition((float) GameLayer.dp2px(230), (float) GameLayer.dp2px(400));
+        helpLabel.setPosition((float)(winSize.width/1.95), (float)(winSize.height/2.1));
 
         helpLabel.setScale(GameLayer.scale);
 

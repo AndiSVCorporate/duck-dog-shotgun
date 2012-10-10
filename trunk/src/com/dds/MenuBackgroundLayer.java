@@ -17,7 +17,8 @@ public class MenuBackgroundLayer extends CCLayer {
     public  MenuBackgroundLayer() {
         CCSprite background = CCSprite.sprite("cabin.png");
 
-        background.setScale(GameLayer.scale);
+        background.setScaleY(GameLayer.scale);
+        background.setScaleX(GameLayer.scale);
 
         background.setPosition(CGPoint.make(winSize.width / 2, winSize.height / 2));
         background.setTag(122);

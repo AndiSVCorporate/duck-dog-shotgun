@@ -83,6 +83,14 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
                             count++;
                         }
                     }
+                } else if(child instanceof Dog) {
+                    CGPoint pos = ((Dog) child).getPosition();
+                    if (GameLayer.bullets > 0) {
+                        if (pos.x >= touchX - ((Dog) child).getContentSize().width / 2 && pos.x <= touchX + ((Dog) child).getContentSize().width / 2 && pos.y >= touchY - ((Dog) child).getContentSize().height / 2 && pos.y <= touchY + ((Dog) child).getContentSize().height / 2) {
+                            SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.splat);
+                            GameLayer.gamePlaying = false;
+                        }
+                    }
                 }
             }
 
