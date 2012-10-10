@@ -18,18 +18,9 @@ public final class R {
     }
     public static final class raw {
         public static final int bof1=0x7f040000;
-        public static final int bof2=0x7f040001;
-        public static final int eenden1=0x7f040002;
-        public static final int eenden2=0x7f040003;
-        public static final int eenden3=0x7f040004;
-        public static final int goose1=0x7f040005;
-        public static final int goose2=0x7f040006;
-        public static final int goose3=0x7f040007;
-        public static final int reload=0x7f040008;
-        public static final int shot1=0x7f040009;
-        public static final int shot2=0x7f04000a;
-        public static final int shot3=0x7f04000b;
-        public static final int splat=0x7f04000c;
+        public static final int reload=0x7f040001;
+        public static final int shot3=0x7f040002;
+        public static final int splat=0x7f040003;
     }
     public static final class string {
         public static final int app_name=0x7f050000;
