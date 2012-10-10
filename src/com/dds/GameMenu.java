@@ -30,11 +30,13 @@ public class GameMenu extends CCMenu {
     	
         CCScene returnScene = CCScene.node();
 
-        CCMenu gameMenu = new GameMenu();
-
         CCLayer backgroundLayer = new MenuBackgroundLayer();
 
+        GameMenu gameMenu = new GameMenu();
+
         backgroundLayer.addChild(gameMenu);
+
+        gameMenu.buildScoreBar();
 
         returnScene.addChild(backgroundLayer);
 
@@ -43,14 +45,15 @@ public class GameMenu extends CCMenu {
 
     public GameMenu() {
         super();
-        
+        CGSize winSize = CCDirector.sharedDirector().winSize();
+
+        this.schedule("updateScore", 1f);
+
         playGameMenuItem = CCMenuItemImage.item("button.png", "button_pressed.png", this, "startGame");
         playGameMenuItem.setPosition(playGameMenuItem.getPosition().x, (float) (playGameMenuItem.getPosition().y+GameLayer.dp2px(20)));
         CCLabel playLabel = CCLabel.makeLabel("Play Game", "Arial", 40f);
         playLabel.setPosition(playGameMenuItem.getContentSize().width / 2, playGameMenuItem.getContentSize().height / 2);
         playLabel.setTag(1);
-
-        CGSize winSize = CCDirector.sharedDirector().winSize();
 
         GameLayer.scale = winSize.width/720;
         playGameMenuItem.setScale(GameLayer.scale);
@@ -72,6 +75,7 @@ public class GameMenu extends CCMenu {
 
         helpMenuItem = CCMenuItemImage.item("button.png", "button_pressed.png", this, "startHelp");
         helpMenuItem.setPosition(selectPlayerMenuItem.getPosition().x, (float) (selectPlayerMenuItem.getPosition().y - helpMenuItem.getContentSize().height - GameLayer.dp2px(10)));
+        helpMenuItem.setScale(GameLayer.scale);
         addChild(helpMenuItem);
 
         CCLabel helpLabel = CCLabel.makeLabel("Help", "Arial", 40f);
@@ -80,6 +84,31 @@ public class GameMenu extends CCMenu {
 
         helpMenuItem.addChild(helpLabel);
 
+    }
+
+    public void buildScoreBar() {
+        getParent().removeChildByTag(102, false);
+        getParent().removeChildByTag(101, true);
+        CGSize winSize = CCDirector.sharedDirector().winSize();
+        int highscore = Integer.parseInt(((MainActivity) CCDirector.sharedDirector().getActivity()).read("highscore.dds").equals("") ? "0" : ((MainActivity) CCDirector.sharedDirector().getActivity()).read("highscore.dds"));
+        int overall = Integer.parseInt(((MainActivity) CCDirector.sharedDirector().getActivity()).read("overall.dds").equals("") ? "0" : ((MainActivity) CCDirector.sharedDirector().getActivity()).read("overall.dds"));
+
+        CCLabel highscoreLabel = CCLabel.makeLabel("Highscore: "+highscore, "Arial", 27);
+        highscoreLabel.setPosition(winSize.width/6, (winSize.height/20)*19);
+        highscoreLabel.setScale(GameLayer.scale);
+        highscoreLabel.setTag(101);
+
+        CCLabel overallScoreLabel = CCLabel.makeLabel("Total birds: "+overall, "Arial", 27);
+        overallScoreLabel.setPosition(winSize.width/6, (winSize.height/20)*18);
+        overallScoreLabel.setScale(GameLayer.scale);
+        overallScoreLabel.setTag(102);
+
+        getParent().addChild(highscoreLabel);
+        getParent().addChild(overallScoreLabel);
+    }
+
+    public void updateScore(float dt) {
+        buildScoreBar();
     }
 
     public void startGame(Object id) {

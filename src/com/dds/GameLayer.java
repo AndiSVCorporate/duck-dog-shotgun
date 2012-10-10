@@ -107,7 +107,8 @@ public class GameLayer extends CCLayer implements SensorEventListener {
 
         GameLayer.scale = winSize.width/background.getTexture().getWidth();
 
-        background.setScale(GameLayer.scale);
+        background.setScaleY(GameLayer.scale);
+        background.setScaleX(GameLayer.scale);
 
         background.setPosition(CGPoint.make(winSize.width / 2, winSize.height / 2));
 
@@ -183,6 +184,10 @@ public class GameLayer extends CCLayer implements SensorEventListener {
         for(CCNode node : this.getChildren())
         {
             node.stopAllActions();
+        }
+
+        if(bulletLayer.getChildByTag(10) != null) {
+            bulletLayer.removeChildByTag(10, true);
         }
 
         Label gameOverLabel = Label.makeLabel("Game Over", "Sans Serif", 72);

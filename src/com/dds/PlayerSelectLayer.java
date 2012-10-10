@@ -1,10 +1,10 @@
 package com.dds;
 
-import android.util.Log;
 import android.view.MotionEvent;
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
 import org.cocos2d.nodes.CCDirector;
+import org.cocos2d.nodes.CCLabel;
 import org.cocos2d.nodes.CCNode;
 import org.cocos2d.nodes.CCSprite;
 import org.cocos2d.protocols.CCTouchDelegateProtocol;
@@ -15,8 +15,8 @@ import java.util.List;
 
 /**
  * @author Wouter
- *         Date: 09-10-12
- *         Time: 17:18
+ * Date: 09-10-12
+ * Time: 17:18
  */
 public class PlayerSelectLayer extends CCLayer implements CCTouchDelegateProtocol {
 	private static int pointsRequired = 150;
@@ -41,6 +41,11 @@ public class PlayerSelectLayer extends CCLayer implements CCTouchDelegateProtoco
 
         CGSize winSize = CCDirector.sharedDirector().winSize();
 
+        CCLabel label = CCLabel.makeLabel("Every extra 150 catched birds is worth a new animal.", "Arial", 25);
+        label.setScale(GameLayer.scale);
+        label.setPosition((float)(winSize.width/2), (float)((winSize.height/22)*21));
+        addChild(label);
+
         int x = (int) (winSize.width / 2);
 
         for(int i = 0; i < 4; i++) {
@@ -62,7 +67,7 @@ public class PlayerSelectLayer extends CCLayer implements CCTouchDelegateProtoco
             }
             
             int overall = Integer.parseInt(((MainActivity) CCDirector.sharedDirector().getActivity()).read("overall.dds"));
-            Log.e("DDS", "Overall: " + overall);
+
             if (overall < 3 * pointsRequired - i * pointsRequired)
             {
             	animal.setOpacity(125);
