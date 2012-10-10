@@ -24,10 +24,10 @@ public class LabelLayer extends CCLayer {
         CGSize winSize = CCDirector.sharedDirector().displaySize();
 
         //make labels
-        scoreLabel = CCLabel.makeLabel("Score: " + GameLayer.score, "Arial", FONT_SIZE);
+        scoreLabel = CCLabel.makeLabel("" + GameLayer.score, "Arial", FONT_SIZE);
         scoreLabel.setColor(ccColor3B.ccBLACK);
         scoreLabel.setScale(GameLayer.scale);
-        scoreLabel.setPosition(winSize.width / 6, (int) (winSize.height * 0.95));
+        scoreLabel.setPosition((winSize.width / 6)*5, (int) (GameLayer.dp2px(582)));
         scoreLabel.setTag(23);
 
         addChild(scoreLabel);
@@ -37,8 +37,6 @@ public class LabelLayer extends CCLayer {
     }
 
     public void buildHealthBar() {
-        removeAllChildren(true);
-
         //make bar with how many bullets left
         CCSprite healthSprite = CCSprite.sprite("heart.png");
         healthSprite.setScale(GameLayer.scale);
@@ -46,7 +44,7 @@ public class LabelLayer extends CCLayer {
         int spaceBetweenHearts = (int) (60 * GameLayer.scale);
 
         int x = (int) (10 * GameLayer.scale);
-        int y = (int) (1200 * GameLayer.scale);
+        int y = (int) (GameLayer.dp2px(582));
 
         for(int i = 1; i <= Dog.health; i++) {
             if(i != 1) {
@@ -64,7 +62,7 @@ public class LabelLayer extends CCLayer {
         return LabelLayer.instance;
     }
 
-    public static void update(Boolean healthUpdate) {
+    public static void updateVariables(Boolean healthUpdate) {
         if(healthUpdate)
         {
             Dog.health--;
@@ -76,7 +74,7 @@ public class LabelLayer extends CCLayer {
     }
 
     public void update(float time) {
-        scoreLabel.setString("Score: " + GameLayer.score);
+        scoreLabel.setString("" + GameLayer.score);
 
         switch (Dog.health) {
             case 0: removeChildByTag(1, true);

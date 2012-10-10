@@ -25,6 +25,9 @@ public class PlayerSelectLayer extends CCLayer implements CCTouchDelegateProtoco
         CCScene scene = CCScene.node();
 
         CCLayer playerSelectLayer = new PlayerSelectLayer();
+        CCLayer background = new MenuBackgroundLayer();
+
+        scene.addChild(background);
 
         scene.addChild(playerSelectLayer);
 

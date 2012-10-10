@@ -41,7 +41,7 @@ public class GameLayer extends CCLayer implements SensorEventListener {
     public static boolean gamePlaying;
     
     private static int count = 0;
-    private static float spawnTime = 2.0f;
+    private static float spawnTime = 3.0f;
 
     public static int score = 0;
 
@@ -104,9 +104,7 @@ public class GameLayer extends CCLayer implements SensorEventListener {
 
         GameLayer.scale = winSize.width/background.getTexture().getWidth();
 
-        background.setScaleX(GameLayer.scale);
-
-        background.setScaleY(GameLayer.scale);
+        background.setScale(GameLayer.scale);
 
         background.setPosition(CGPoint.make(winSize.width / 2, winSize.height / 2));
 
@@ -235,19 +233,21 @@ public class GameLayer extends CCLayer implements SensorEventListener {
     }
 
     protected void doReload(float f1, float f2, float f3) {
-        if(f2 < 0 || f2 > 18) {
-            if(Math.abs(lastFValue - f2) > 10) {
-                reloadShakes++;
-                if(reloadShakes == 2) {
-                    bullets = 7;
-                    reloadShakes=0;
-                    bulletLayer.reload = true;
-                    bulletLayer.removeChildByTag(10, true);
-                    SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.reload);
+        if(GameLayer.gamePlaying) {
+            if(f2 < 0 || f2 > 18) {
+                if(Math.abs(lastFValue - f2) > 10) {
+                    reloadShakes++;
+                    if(reloadShakes == 2) {
+                        bullets = 7;
+                        reloadShakes=0;
+                        bulletLayer.reload = true;
+                        bulletLayer.removeChildByTag(10, true);
+                        SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.reload);
+                    }
                 }
             }
+            lastFValue = f2;
         }
-        lastFValue = f2;
     }
     
     public void difficulty(float dr) 
