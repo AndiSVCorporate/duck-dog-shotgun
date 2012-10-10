@@ -5,6 +5,10 @@ import org.cocos2d.layers.CCScene;
 import org.cocos2d.menus.*;
 import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.nodes.CCLabel;
+import org.cocos2d.nodes.CCNode;
+import org.cocos2d.nodes.CCSprite;
+import org.cocos2d.nodes.CCTextureCache;
+import org.cocos2d.opengl.CCTexture2D;
 import org.cocos2d.types.CGSize;
 
 import android.util.Log;
@@ -15,8 +19,8 @@ import android.util.Log;
  * Time: 12:45
  */
 public class GameMenu extends CCMenu {
-	protected CCMenuItemImage playGameMenuItem;
-    protected CCMenuItemImage selectPlayerMenuItem;
+	protected CCMenuItem playGameMenuItem;
+    protected CCMenuItem selectPlayerMenuItem;
     protected CCMenuItemImage helpMenuItem;
     
     private CCLabel playLabel;
@@ -40,8 +44,9 @@ public class GameMenu extends CCMenu {
     public GameMenu() {
         super();
 
-        this.schedule("updateLabel", 0.1f);
-
+//        this.schedule("updateLabel", 0.1f);
+        scheduleUpdate();
+        
         playGameMenuItem = CCMenuItemImage.item("button.png", "button_pressed.png", this, "startGame");
         playLabel = CCLabel.makeLabel("Play Game", "Arial", 40f);
         playLabel.setPosition(playGameMenuItem.getContentSize().width/2, playGameMenuItem.getContentSize().height/2);
@@ -55,11 +60,11 @@ public class GameMenu extends CCMenu {
         playGameMenuItem.addChild(playLabel);
 
         addChild(playGameMenuItem);
-
+        
         selectPlayerMenuItem = CCMenuItemImage.item("button.png", "button_pressed.png", this, "selectPlayer");
         selectPlayerMenuItem.setScale(GameLayer.scale);
 
-        choosePlayerLabel = CCLabel.makeLabel("Select Player", "Arial", 40f);
+        choosePlayerLabel = CCLabel.makeLabel("Select Animal", "Arial", 40f);
         choosePlayerLabel.setPosition(selectPlayerMenuItem.getContentSize().width/2, (float)((selectPlayerMenuItem.getContentSize().height/2)+GameLayer.dp2px(20)));
         choosePlayerLabel.setTag(1);
 
@@ -89,7 +94,7 @@ public class GameMenu extends CCMenu {
         playGameMenuItem.addChild(playLabel);
 
         selectPlayerMenuItem.removeChildByTag(1, true);
-        choosePlayerLabel = CCLabel.makeLabel("Select Player", "Arial", 40f);
+        choosePlayerLabel = CCLabel.makeLabel("Select Animal", "Arial", 40f);
         choosePlayerLabel.setPosition(selectPlayerMenuItem.getContentSize().width / 2, selectPlayerMenuItem.getContentSize().height / 2);
         choosePlayerLabel.setTag(1);
 
@@ -104,22 +109,25 @@ public class GameMenu extends CCMenu {
         helpMenuItem.addChild(helpLabel);
 
     }
+    
+    public void update(float t)
+    {
+    	playLabel.setString("Play Game");
+    	choosePlayerLabel.setString("Select Animal");
+    }
 
     public void startGame(Object id) {
-        CCDirector.sharedDirector().end();
-        CCDirector.sharedDirector().runWithScene(GameLayer.scene());
+    	CCDirector.sharedDirector().pushScene(GameLayer.scene());
     	((MainActivity) CCDirector.sharedDirector().getActivity()).mode = 1;
     }
 
     public void selectPlayer(Object id) {
-        CCDirector.sharedDirector().end();
-        CCDirector.sharedDirector().runWithScene(PlayerSelectLayer.scene());
-        ((MainActivity) CCDirector.sharedDirector().getActivity()).mode = 2;
+        CCDirector.sharedDirector().pushScene(PlayerSelectLayer.scene());
+        ((MainActivity) CCDirector.sharedDirector().getActivity()).mode = 1;
     }
 
     public void startHelp(Object id) {
-        CCDirector.sharedDirector().end();
-        CCDirector.sharedDirector().runWithScene(HelpLayer.scene());
-        ((MainActivity) CCDirector.sharedDirector().getActivity()).mode = 2;
+        CCDirector.sharedDirector().pushScene(HelpLayer.scene());
+        ((MainActivity) CCDirector.sharedDirector().getActivity()).mode = 1;
     }
 }

@@ -8,11 +8,15 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import android.app.Activity;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Window;
 import android.view.WindowManager;
+
+import org.cocos2d.events.CCTouchDispatcher;
 import org.cocos2d.nodes.CCDirector;
+import org.cocos2d.nodes.CCTextureCache;
 import org.cocos2d.opengl.CCGLSurfaceView;
 
 
@@ -37,6 +41,8 @@ public class MainActivity extends Activity
 
         // set the window status, no tile, full screen and don't sleep
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        // be able to change the mediavolume
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
@@ -75,16 +81,10 @@ public class MainActivity extends Activity
     		write("overall.dds", Integer.parseInt(read("overall.dds") == "" ? "0" : read("overall.dds")) + GameLayer.score + "");
     		GameLayer.reset();
     		
-            CCDirector.sharedDirector().purgeCachedData();
-            CCDirector.sharedDirector().end();
-            
-            CCDirector.sharedDirector().runWithScene(GameMenu.scene());
+    		CCTouchDispatcher.sharedDispatcher().removeAllDelegates();
+    		CCDirector.sharedDirector().popScene();
     		mode = 0;
     	}
-        else if (mode == 2) {
-            CCDirector.sharedDirector().replaceScene(GameMenu.scene());
-            mode = 0;
-        }
     }
 
     @Override
