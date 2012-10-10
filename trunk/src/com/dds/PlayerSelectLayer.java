@@ -36,7 +36,7 @@ public class PlayerSelectLayer extends CCLayer implements CCTouchDelegateProtoco
 
         CGSize winSize = CCDirector.sharedDirector().winSize();
 
-        int x = (int)(winSize.width/2);
+        int x = (int) (winSize.width / 2);
 
         for(int i = 0; i < 4; i++) {
             switch (i) {
@@ -57,8 +57,8 @@ public class PlayerSelectLayer extends CCLayer implements CCTouchDelegateProtoco
             }
 
             animal.setScale(GameLayer.scale);
-
-            animal.setPosition(x, (float) (GameLayer.dp2px(150*i)+GameLayer.dp2px(80)));
+            
+            animal.setPosition(x, (float) (((winSize.height) / 4) * i + animal.getContentSize().height / 2));
             addChild(animal);
         }
     }
