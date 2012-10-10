@@ -10,8 +10,6 @@ import org.cocos2d.nodes.CCSprite;
 import org.cocos2d.types.CCBezierConfig;
 import org.cocos2d.types.CGPoint;
 
-import android.util.Log;
-
 public class Feather extends CCSprite
 {	
 	public Feather(String path)

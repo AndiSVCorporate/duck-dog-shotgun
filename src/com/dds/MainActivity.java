@@ -66,7 +66,10 @@ public class MainActivity extends Activity
 
         // Make the Scene active
         CCDirector.sharedDirector().runWithScene(GameMenu.scene());
-        CCDirector.sharedDirector().pushScene(HelpLayer.scene());
+        if (read("highscore.dds").equals(""))
+        {
+        	CCDirector.sharedDirector().pushScene(HelpLayer.scene());
+        }
     }
 
     public void onBackPressed() 
