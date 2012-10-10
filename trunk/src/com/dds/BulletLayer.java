@@ -18,6 +18,7 @@ import java.util.List;
  */
 public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
     public boolean reload = false;
+    private CCLabel reloadLabel;
 
     public BulletLayer() {
         scheduleUpdate();
@@ -29,6 +30,7 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
 
     public void buildBulletBar() {
         removeAllChildren(true);
+        reloadLabel = null;
         //make bar with how many bullets left
         CCSprite bulletSprite = CCSprite.sprite("bullet.png");
 
@@ -97,13 +99,16 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
 
     public void update(float time) {
         switch (GameLayer.bullets) {
-            case 0: removeAllChildren(true);
-                    CGSize winSize = CCDirector.sharedDirector().displaySize();
-                    CCLabel reloadLabel = CCLabel.makeLabel("Shake to reload!", "Arial", 72);
-                    reloadLabel.setScale(GameLayer.scale);
-                    reloadLabel.setTag(10);
-                    reloadLabel.setPosition(winSize.width / 2, winSize.height / 2);
-                    addChild(reloadLabel);
+            case 0: removeChildByTag(1, true);
+            	if (reloadLabel == null)
+            	{
+	                CGSize winSize = CCDirector.sharedDirector().displaySize();
+	                reloadLabel = CCLabel.makeLabel("Shake to reload!", "Arial", 72);
+	                reloadLabel.setScale(GameLayer.scale);
+	                reloadLabel.setTag(10);
+	                reloadLabel.setPosition(winSize.width / 2, winSize.height / 2);
+	                addChild(reloadLabel);
+            	}
                 break;
             case 1: removeChildByTag(2, true);
                 break;
