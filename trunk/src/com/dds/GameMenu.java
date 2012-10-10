@@ -34,7 +34,6 @@ public class GameMenu extends CCMenu {
         super();
 
         this.schedule("updateLabel", 0.1f);
-//        this.scheduleUpdate(1);
 
         playGameMenuItem = CCMenuItemImage.item("button.png", "button_pressed.png", this, "startGame");
         playLabel = CCLabel.makeLabel("Play Game", "Arial", 40f);
@@ -79,15 +78,6 @@ public class GameMenu extends CCMenu {
 
         selectPlayerMenuItem.addChild(choosePlayerLabel);
     }
-    
-//    public void update(float t)
-//    {
-//    	playLabel.setString("Play Game");
-//    	choosePlayerLabel.setString("Select Player");
-//    	
-//    	playGameMenuItem.setPosition(playGameMenuItem.getPosition());
-//    	selectPlayerMenuItem.setPosition(selectPlayerMenuItem.getPosition());
-//    }
 
     public void startGame(Object id) {
     	CCDirector.sharedDirector().replaceScene(GameLayer.scene());

@@ -106,6 +106,10 @@ public class Duck extends CCSprite
     	}
     	else
     	{
+    		if (!route.hasNext() && !this.falling)
+        	{
+        		Dog.health--;
+        	}
             alive = false;
     	}
     }
