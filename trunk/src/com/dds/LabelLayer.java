@@ -27,7 +27,7 @@ public class LabelLayer extends CCLayer {
         scoreLabel = CCLabel.makeLabel("" + GameLayer.score, "Arial", FONT_SIZE);
         scoreLabel.setColor(ccColor3B.ccBLACK);
         scoreLabel.setScale(GameLayer.scale);
-        scoreLabel.setPosition((winSize.width / 6)*5, (int) (CCDirector.sharedDirector().winSize().height - GameLayer.dp2px(18) - 10));
+        scoreLabel.setPosition((winSize.width / 6)*5, (int) (CCDirector.sharedDirector().winSize().height - GameLayer.dp2px(28)));
         scoreLabel.setTag(23);
 
         addChild(scoreLabel);
@@ -44,7 +44,7 @@ public class LabelLayer extends CCLayer {
 
         int x = (int) (10 * GameLayer.scale);
 //        int y = (int) (GameLayer.dp2px(582));
-        int y = (int) (CCDirector.sharedDirector().winSize().height - GameLayer.dp2px(18) - 10);
+        int y = (int) (CCDirector.sharedDirector().winSize().height - GameLayer.dp2px(28));
 
         for(int i = 1; i <= Dog.health; i++) {
         	healthSprite = CCSprite.sprite("heart.png");
