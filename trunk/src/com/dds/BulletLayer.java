@@ -59,7 +59,6 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
         CGSize winSize = CCDirector.sharedDirector().displaySize();
         double touchX = e.getX();
         double touchY = winSize.height - e.getY();
-    	Log.e("Bullet", "shot at: " + touchX + ", " + touchY);
         
        if(GameLayer.bullets > 0) {
             SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.shot3);
