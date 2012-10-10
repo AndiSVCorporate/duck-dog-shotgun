@@ -158,18 +158,6 @@ public class GameLayer extends CCLayer implements SensorEventListener {
         }
     }
 
-    public boolean ccTouchesBegan(MotionEvent event) {
-        return true;
-    }
-
-    public boolean ccTouchesMoved(MotionEvent event) {
-        return true;
-    }
-
-    public boolean ccTouchesEnded(MotionEvent event) {
-        return true;
-    }
-
     public void finalize() throws Throwable {
         super.finalize();
         CCTextureCache.purgeSharedTextureCache();

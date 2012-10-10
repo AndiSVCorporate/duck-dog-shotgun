@@ -103,7 +103,7 @@ public class PlayerSelectLayer extends CCLayer implements CCTouchDelegateProtoco
                     default:
                         break;
                 }
-                CCDirector.sharedDirector().replaceScene(GameMenu.scene());
+                CCDirector.sharedDirector().popScene();
             }
         }
 
