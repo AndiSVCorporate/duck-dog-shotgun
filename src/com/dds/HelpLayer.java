@@ -52,6 +52,7 @@ public class HelpLayer extends CCLayer implements CCTouchDelegateProtocol {
     public synchronized boolean ccTouchesBegan(MotionEvent e) {
         CCTouchDispatcher.sharedDispatcher().removeAllDelegates();
         CCDirector.sharedDirector().popScene();
+        ((MainActivity) CCDirector.sharedDirector().getActivity()).mode = 0;
         return false;
     }
 }
