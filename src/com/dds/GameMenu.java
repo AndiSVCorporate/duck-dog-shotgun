@@ -6,6 +6,8 @@ import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.nodes.CCLabel;
 import org.cocos2d.types.CGSize;
 
+import android.util.Log;
+
 /**
  * @author Wouter
  * Date: 04-10-12
@@ -14,6 +16,9 @@ import org.cocos2d.types.CGSize;
 public class GameMenu extends CCMenu {
 	protected CCMenuItemImage playGameMenuItem;
     protected CCMenuItemImage selectPlayerMenuItem;
+    
+    private CCLabel playLabel;
+    private CCLabel choosePlayerLabel;
 	
     public static CCScene scene() {
         CCScene returnScene = CCScene.node();
@@ -29,9 +34,10 @@ public class GameMenu extends CCMenu {
         super();
 
         this.schedule("updateLabel", 0.1f);
+//        this.scheduleUpdate(1);
 
         playGameMenuItem = CCMenuItemImage.item("button.png", "button_pressed.png", this, "startGame");
-        CCLabel playLabel = CCLabel.makeLabel("Play Game", "Arial", 40f);
+        playLabel = CCLabel.makeLabel("Play Game", "Arial", 40f);
         playLabel.setPosition(playGameMenuItem.getContentSize().width/2, playGameMenuItem.getContentSize().height/2);
         playLabel.setTag(1);
 
@@ -42,12 +48,12 @@ public class GameMenu extends CCMenu {
 
         playGameMenuItem.addChild(playLabel);
 
-        addChild(playGameMenuItem, 0);
+        addChild(playGameMenuItem);
 
         selectPlayerMenuItem = CCMenuItemImage.item("button.png", "button_pressed.png", this, "selectPlayer");
         selectPlayerMenuItem.setScale(GameLayer.scale);
 
-        CCLabel choosePlayerLabel = CCLabel.makeLabel("Select Player", "Arial", 40f);
+        choosePlayerLabel = CCLabel.makeLabel("Select Player", "Arial", 40f);
         choosePlayerLabel.setPosition(selectPlayerMenuItem.getContentSize().width/2, selectPlayerMenuItem.getContentSize().height/2);
         choosePlayerLabel.setTag(1);
 
@@ -57,22 +63,31 @@ public class GameMenu extends CCMenu {
 
     }
 
-    public void updateLabel(float dt) {
+    public void updateLabel(float t) {
         playGameMenuItem.removeChildByTag(1, true);
 
-        CCLabel playLabel = CCLabel.makeLabel("Play Game", "Arial", 40f);
+        playLabel = CCLabel.makeLabel("Play Game", "Arial", 40f);
         playLabel.setPosition(playGameMenuItem.getContentSize().width/2, playGameMenuItem.getContentSize().height/2);
         playLabel.setTag(1);
 
         playGameMenuItem.addChild(playLabel);
 
         selectPlayerMenuItem.removeChildByTag(1, true);
-        CCLabel choosePlayerLabel = CCLabel.makeLabel("Select Player", "Arial", 40f);
+        choosePlayerLabel = CCLabel.makeLabel("Select Player", "Arial", 40f);
         choosePlayerLabel.setPosition(selectPlayerMenuItem.getContentSize().width/2, selectPlayerMenuItem.getContentSize().height/2);
         choosePlayerLabel.setTag(1);
 
         selectPlayerMenuItem.addChild(choosePlayerLabel);
     }
+    
+//    public void update(float t)
+//    {
+//    	playLabel.setString("Play Game");
+//    	choosePlayerLabel.setString("Select Player");
+//    	
+//    	playGameMenuItem.setPosition(playGameMenuItem.getPosition());
+//    	selectPlayerMenuItem.setPosition(selectPlayerMenuItem.getPosition());
+//    }
 
     public void startGame(Object id) {
     	CCDirector.sharedDirector().replaceScene(GameLayer.scene());

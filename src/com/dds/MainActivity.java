@@ -73,6 +73,7 @@ public class MainActivity extends Activity
     	{
     		write("highscore.dds", Math.max(GameLayer.score, Integer.parseInt(read("highscore.dds") == "" ? "0" : read("highscore.dds"))) + "");
     		write("overall.dds", Integer.parseInt(read("overall.dds") == "" ? "0" : read("overall.dds")) + GameLayer.score + "");
+    		GameLayer.reset();
     		
             CCDirector.sharedDirector().purgeCachedData();
             CCDirector.sharedDirector().end();

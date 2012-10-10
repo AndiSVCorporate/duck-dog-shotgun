@@ -7,41 +7,41 @@
             <key>blood1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{48,48}}</string>
+                <string>{{2,2},{96,96}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{48,48}}</string>
+                <string>{{0,0},{96,96}}</string>
                 <key>sourceSize</key>
-                <string>{48,48}</string>
+                <string>{96,96}</string>
             </dict>
             <key>blood2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{52,2},{48,48}}</string>
+                <string>{{100,2},{96,96}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{48,48}}</string>
+                <string>{{0,0},{96,96}}</string>
                 <key>sourceSize</key>
-                <string>{48,48}</string>
+                <string>{96,96}</string>
             </dict>
             <key>blood3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,52},{48,48}}</string>
+                <string>{{2,100},{96,96}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{48,48}}</string>
+                <string>{{0,0},{96,96}}</string>
                 <key>sourceSize</key>
-                <string>{48,48}</string>
+                <string>{96,96}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -51,7 +51,7 @@
             <key>realTextureFileName</key>
             <string>blood_sprite.png</string>
             <key>size</key>
-            <string>{128,128}</string>
+            <string>{256,256}</string>
             <key>smartupdate</key>
             <string>$TexturePacker:SmartUpdate:9c1a2f1976ad4d744779f2dfb030b8eb$</string>
             <key>textureFileName</key>

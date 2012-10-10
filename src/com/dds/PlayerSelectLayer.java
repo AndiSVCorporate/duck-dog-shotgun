@@ -1,5 +1,6 @@
 package com.dds;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
@@ -18,6 +19,7 @@ import java.util.List;
  *         Time: 17:18
  */
 public class PlayerSelectLayer extends CCLayer implements CCTouchDelegateProtocol {
+	private static int pointsRequired = 150;
 
     public static CCScene scene() {
         CCScene scene = CCScene.node();
@@ -55,6 +57,13 @@ public class PlayerSelectLayer extends CCLayer implements CCTouchDelegateProtoco
                 default:
                     break;
             }
+            
+            int overall = Integer.parseInt(((MainActivity) CCDirector.sharedDirector().getActivity()).read("overall.dds"));
+            Log.e("DDS", "Overall: " + overall);
+            if (overall < 3 * pointsRequired - i * pointsRequired)
+            {
+            	animal.setOpacity(125);
+            }
 
             animal.setScale(GameLayer.scale);
             
@@ -71,10 +80,10 @@ public class PlayerSelectLayer extends CCLayer implements CCTouchDelegateProtoco
         double touchY = winSize.getHeight() - e.getY();
 
         for(int i = 0; i < children.size(); i++) {
-            CCNode child = children.get(i);
+            CCSprite child = (CCSprite) children.get(i);
             CGPoint pos = child.getPosition();
 
-            if(pos.x <= touchX + (child.getContentSize().width / 2) && pos.x >= touchX - (child.getContentSize().width / 2) && pos.y <= touchY + (child.getContentSize().height / 2) && pos.y >= touchY - (child.getContentSize().height / 2)) {
+            if(child.getOpacity() == 255 && pos.x <= touchX + (child.getContentSize().width / 2) && pos.x >= touchX - (child.getContentSize().width / 2) && pos.y <= touchY + (child.getContentSize().height / 2) && pos.y >= touchY - (child.getContentSize().height / 2)) {
                 switch (i) {
                     case 0:
                         Dog.playerImage = "raccoon.png";

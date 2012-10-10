@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import org.cocos2d.actions.instant.CCCallFunc;
 import org.cocos2d.actions.interval.CCFadeOut;
+import org.cocos2d.actions.interval.CCScaleTo;
 import org.cocos2d.actions.interval.CCSequence;
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
@@ -39,8 +40,8 @@ public class GameLayer extends CCLayer implements SensorEventListener {
 
     public static boolean gamePlaying;
     
-    private int count = 0;
-    private float spawnTime = 2.0f;
+    private static int count = 0;
+    private static float spawnTime = 2.0f;
 
     public static int score = 0;
 
@@ -76,6 +77,8 @@ public class GameLayer extends CCLayer implements SensorEventListener {
     	bullets = 7;
     	Dog.health = 5;
     	gamePlaying = true;
+    	count = 0;
+        spawnTime = 2.0f;
     }
 
     public GameLayer(BulletLayer bulletLayer) {
@@ -201,10 +204,14 @@ public class GameLayer extends CCLayer implements SensorEventListener {
     protected void bleed(CGPoint position) {
         Random r = new Random();
         CCSprite blood = CCSprite.sprite(GameLayer.bloodSprites.get(r.nextInt(3)));
+        blood.setScale(0.5f);
 
+        CCScaleTo scale = CCScaleTo.action(0.5f, 1.0f);
+        scale.setDuration(0.25f);
+        
         CCFadeOut bleedOut = CCFadeOut.action(1f);
         CCCallFunc deleteBlood = CCCallFunc.action(blood, "deleteBlood");
-        CCSequence action = CCSequence.actions(bleedOut, deleteBlood);
+        CCSequence action = CCSequence.actions(scale, bleedOut, deleteBlood);
 
         blood.setPosition(position);
 

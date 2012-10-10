@@ -19,7 +19,7 @@ public class Route
 	
 	public Route(int s)
 	{
-		Context c = CCDirector.theApp;
+		Context c = CCDirector.sharedDirector().getActivity();
 		DisplayMetrics metrics = c.getResources().getDisplayMetrics();
 		
 		int height = metrics.heightPixels;

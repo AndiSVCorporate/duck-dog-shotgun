@@ -26,6 +26,7 @@ public class Duck extends CCSprite
     private double distance = route.getTotalDistance();
     protected static float actualDuration = 7.0f;
     private boolean falling = false;
+    private boolean check = true;
 
     public Duck(CCSpriteFrame frame, CCAnimation flyAnimation, CCAnimation fallAnimation) {
         super(frame);
@@ -65,6 +66,7 @@ public class Duck extends CCSprite
     {
     	if (!this.falling)
     	{
+    		this.schedule("checkHitWithDog");
 	        stopAllActions();
 	        this.falling = true;
 	
@@ -80,10 +82,6 @@ public class Duck extends CCSprite
 	        CCSequence actions = CCSequence.actions(fallToCertainDeath, fellToCertainDeath);
 	
 	        runAction(actions);
-	
-	        CheckHitWithDogThread checkThread = new CheckHitWithDogThread();
-	        Thread t = new Thread(checkThread);
-	        t.start();
     	}
     }
     
@@ -119,33 +117,25 @@ public class Duck extends CCSprite
         }
     }
 
-    class CheckHitWithDogThread implements Runnable 
+    public void checkHitWithDog(float dt) 
     {
-    	public void run() 
-        {
-            boolean check = true;
-
-            while(alive && getParent() != null) {
-                CGPoint dogPosition = getParent().getChildByTag(1).getPosition();
-                if(getPosition().y <= dogPosition.y+15) {
-                    if(dogPosition.x -50 < getPosition().x && getPosition().x < dogPosition.x + 50) {
-                        alive = false;
-                        LabelLayer.update(false);
-                        SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.bof1);
-                    }
-                    else if(getPosition().y < 0 && check) {
-                        LabelLayer.update(true);
-                        check = false;
-                    }
+    	if(alive && getParent() != null) {
+            CGPoint dogPosition = getParent().getChildByTag(1).getPosition();
+            if(getPosition().y <= dogPosition.y+15) {
+                if(dogPosition.x -50 < getPosition().x && getPosition().x < dogPosition.x + 50) {
+                    alive = false;
+                    LabelLayer.update(false);
+                    SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.bof1);
                 }
-
-                try {
-                    Thread.sleep(20);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                else if(getPosition().y < 0 && check) {
+                    LabelLayer.update(true);
+                    check = false;
                 }
             }
-            spriteMoveFinished();
+        }
+        else
+        {
+        	spriteMoveFinished();
         }
     }
 }
