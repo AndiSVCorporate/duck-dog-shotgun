@@ -27,7 +27,7 @@ public class LabelLayer extends CCLayer {
         scoreLabel = CCLabel.makeLabel("" + GameLayer.score, "Arial", FONT_SIZE);
         scoreLabel.setColor(ccColor3B.ccBLACK);
         scoreLabel.setScale(GameLayer.scale);
-        scoreLabel.setPosition((winSize.width / 6)*5, (int) (GameLayer.dp2px(582)));
+        scoreLabel.setPosition((winSize.width / 6)*5, (int) (CCDirector.sharedDirector().winSize().height - GameLayer.dp2px(18) - 10));
         scoreLabel.setTag(23);
 
         addChild(scoreLabel);
@@ -38,18 +38,16 @@ public class LabelLayer extends CCLayer {
 
     public void buildHealthBar() {
         //make bar with how many bullets left
-        CCSprite healthSprite = CCSprite.sprite("heart.png");
-        healthSprite.setScale(GameLayer.scale);
+        CCSprite healthSprite;
 
-        int spaceBetweenHearts = (int) (60 * GameLayer.scale);
+        int spaceBetweenHearts = (int) (GameLayer.dp2px(60) * GameLayer.scale);
 
         int x = (int) (10 * GameLayer.scale);
-        int y = (int) (GameLayer.dp2px(582));
+//        int y = (int) (GameLayer.dp2px(582));
+        int y = (int) (CCDirector.sharedDirector().winSize().height - GameLayer.dp2px(18) - 10);
 
         for(int i = 1; i <= Dog.health; i++) {
-            if(i != 1) {
-                healthSprite = CCSprite.sprite("heart.png");
-            }
+        	healthSprite = CCSprite.sprite("heart.png");
             healthSprite.setPosition(x + (i * spaceBetweenHearts), y);
 
             healthSprite.setScale(GameLayer.scale / 8);
