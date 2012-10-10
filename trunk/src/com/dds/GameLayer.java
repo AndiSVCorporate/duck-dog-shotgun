@@ -38,6 +38,9 @@ public class GameLayer extends CCLayer implements SensorEventListener {
     protected float lastFValue = 0;
 
     public static boolean gamePlaying;
+    
+    private int count = 0;
+    private float spawnTime = 2.0f;
 
     public static int score = 0;
 
@@ -120,7 +123,8 @@ public class GameLayer extends CCLayer implements SensorEventListener {
         this.setIsTouchEnabled(true);
         this.setIsAccelerometerEnabled(true);
 
-        this.schedule("gameLogic", 2.0f);
+        this.schedule("gameLogic", spawnTime);
+        this.schedule("difficulty", 0.2f);
 
         dog.setTag(1);
 
@@ -236,6 +240,23 @@ public class GameLayer extends CCLayer implements SensorEventListener {
             }
         }
         lastFValue = f2;
+    }
+    
+    public void difficulty(float dr) 
+    {
+        if(gamePlaying && Duck.actualDuration > 4.0f && count % 100 == 0) 
+        {
+            Duck.actualDuration -= 0.2f;
+        }
+        
+        if (gamePlaying && spawnTime > 0.7f && count % 50 == 0)
+        {
+        	spawnTime -= 0.1f;
+        	this.unschedule("gameLogic");
+        	this.schedule("gameLogic", spawnTime);
+        }
+        
+    	count++;
     }
 
     private void loadSounds() {
