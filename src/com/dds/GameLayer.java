@@ -37,7 +37,7 @@ public class GameLayer extends CCLayer implements SensorEventListener {
 
     protected float lastFValue = 0;
 
-    public static boolean gamePlaying = true;
+    public static boolean gamePlaying;
 
     public static int score = 0;
 
@@ -72,26 +72,11 @@ public class GameLayer extends CCLayer implements SensorEventListener {
     	score = 0;
     	bullets = 7;
     	Dog.health = 5;
-    	
+    	gamePlaying = true;
     }
 
     public GameLayer(BulletLayer bulletLayer) {
-        //load all the sounds
-
-        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.bof1);
-//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.bof2);
-//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.eenden1);
-//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.eenden2);
-//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.eenden3);
-//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.goose1);
-//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.goose2);
-//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.goose3);
-        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.reload);
-//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.shot1);
-//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.shot2);
-        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.shot3);
-        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.splat);
-
+        loadSounds();
         this.bulletLayer = bulletLayer;
         scheduleUpdate();
 
@@ -160,8 +145,7 @@ public class GameLayer extends CCLayer implements SensorEventListener {
         addTarget();
     }
 
-    protected void addTarget()
-    {
+    protected void addTarget() {
         if(GameLayer.gamePlaying) {
             Duck duck = new Duck(this.flySprites.get(0), this.flyAnimation, this.fallAnimation);
             addChild(duck);
@@ -231,8 +215,7 @@ public class GameLayer extends CCLayer implements SensorEventListener {
 
     public void onAccuracyChanged(Sensor s, int i) {}
 
-    public void onSensorChanged(SensorEvent event)
-    {
+    public void onSensorChanged(SensorEvent event){
         if(event.sensor.getType() == 1)
         {
             doReload(event.values[0], event.values[1], event.values[2]);
@@ -253,5 +236,21 @@ public class GameLayer extends CCLayer implements SensorEventListener {
             }
         }
         lastFValue = f2;
+    }
+
+    private void loadSounds() {
+        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.bof1);
+//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.bof2);
+//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.eenden1);
+//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.eenden2);
+//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.eenden3);
+//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.goose1);
+//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.goose2);
+//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.goose3);
+        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.reload);
+//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.shot1);
+//        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.shot2);
+        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.shot3);
+        SoundEngine.sharedEngine().preloadEffect(CCDirector.sharedDirector().getActivity(), R.raw.splat);
     }
 }
