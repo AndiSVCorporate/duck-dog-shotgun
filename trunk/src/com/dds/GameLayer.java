@@ -48,8 +48,6 @@ public class GameLayer extends CCLayer implements SensorEventListener {
 
     public static int score = 0;
 
-    public static float scale = 1;
-
     public static int bullets = 7;
     private int reloadShakes = 0;
 
@@ -105,10 +103,8 @@ public class GameLayer extends CCLayer implements SensorEventListener {
 
         CCSprite background = CCSprite.sprite("background.png");
 
-        GameLayer.scale = winSize.width/background.getTexture().getWidth();
-
-        background.setScaleY(GameLayer.scale);
-        background.setScaleX(GameLayer.scale);
+        background.setScaleY(MainActivity.scale);
+        background.setScaleX(MainActivity.scale);
 
         background.setPosition(CGPoint.make(winSize.width / 2, winSize.height / 2));
 
@@ -199,18 +195,18 @@ public class GameLayer extends CCLayer implements SensorEventListener {
     protected void bleed(CGPoint position) {
         Random r = new Random();
         CCSprite blood = CCSprite.sprite(GameLayer.bloodSprites.get(r.nextInt(3)));
-        blood.setScale(0.5f * GameLayer.scale);
+        blood.setScale(0.5f * MainActivity.scale);
         
         for (int i = 0; i < 5; i++)
         {
 	        Feather b = Feather.sprite("feather.png");
-	        b.setScale(GameLayer.scale);
+	        b.setScale(MainActivity.scale);
 	        b.setPosition(position);
 	        addChild(b);
 	        b.bezierMove();
         }
         
-        CCScaleTo scale = CCScaleTo.action((0.5f * GameLayer.scale), 1.0f * GameLayer.scale);
+        CCScaleTo scale = CCScaleTo.action((0.5f * MainActivity.scale), 1.0f * MainActivity.scale);
         scale.setDuration(0.25f);
         
         CCFadeOut bleedOut = CCFadeOut.action(1f);

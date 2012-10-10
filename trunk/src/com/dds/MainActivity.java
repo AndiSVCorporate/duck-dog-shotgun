@@ -16,8 +16,9 @@ import android.view.WindowManager;
 
 import org.cocos2d.events.CCTouchDispatcher;
 import org.cocos2d.nodes.CCDirector;
-import org.cocos2d.nodes.CCTextureCache;
+import org.cocos2d.nodes.CCSprite;
 import org.cocos2d.opengl.CCGLSurfaceView;
+import org.cocos2d.types.CGSize;
 
 
 public class MainActivity extends Activity
@@ -25,6 +26,9 @@ public class MainActivity extends Activity
 	public static final String ROOT = Environment.getExternalStorageDirectory() + "/.BirdyBoom/";
     protected static CCGLSurfaceView mGLSurfaceView;
     protected int mode = 0;
+
+    public static float scale = 1;
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)

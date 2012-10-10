@@ -55,15 +55,15 @@ public class GameMenu extends CCMenu {
         playLabel.setPosition(playGameMenuItem.getContentSize().width / 2, playGameMenuItem.getContentSize().height / 2);
         playLabel.setTag(1);
 
-        GameLayer.scale = winSize.width/720;
-        playGameMenuItem.setScale(GameLayer.scale);
+        MainActivity.scale = winSize.width/720;
+        playGameMenuItem.setScale(MainActivity.scale);
 
         playGameMenuItem.addChild(playLabel);
 
         addChild(playGameMenuItem);
         
         selectPlayerMenuItem = CCMenuItemImage.item("button.png", "button_pressed.png", this, "selectPlayer");
-        selectPlayerMenuItem.setScale(GameLayer.scale);
+        selectPlayerMenuItem.setScale(MainActivity.scale);
 
         CCLabel choosePlayerLabel = CCLabel.makeLabel("Select Animal", "Arial", 40f);
         choosePlayerLabel.setPosition(selectPlayerMenuItem.getContentSize().width / 2, (selectPlayerMenuItem.getContentSize().height / 2));
@@ -75,7 +75,7 @@ public class GameMenu extends CCMenu {
 
         helpMenuItem = CCMenuItemImage.item("button.png", "button_pressed.png", this, "startHelp");
         helpMenuItem.setPosition(selectPlayerMenuItem.getPosition().x, (float) (selectPlayerMenuItem.getPosition().y - helpMenuItem.getContentSize().height - GameLayer.dp2px(10)));
-        helpMenuItem.setScale(GameLayer.scale);
+        helpMenuItem.setScale(MainActivity.scale);
         addChild(helpMenuItem);
 
         CCLabel helpLabel = CCLabel.makeLabel("Help", "Arial", 40f);
@@ -95,12 +95,12 @@ public class GameMenu extends CCMenu {
 
         CCLabel highscoreLabel = CCLabel.makeLabel("Highscore: "+highscore, "Arial", 27);
         highscoreLabel.setPosition(winSize.width/6, (winSize.height/20)*19);
-        highscoreLabel.setScale(GameLayer.scale);
+        highscoreLabel.setScale(MainActivity.scale);
         highscoreLabel.setTag(101);
 
         CCLabel overallScoreLabel = CCLabel.makeLabel("Total birds: "+overall, "Arial", 27);
         overallScoreLabel.setPosition(winSize.width/6, (winSize.height/20)*18);
-        overallScoreLabel.setScale(GameLayer.scale);
+        overallScoreLabel.setScale(MainActivity.scale);
         overallScoreLabel.setTag(102);
 
         getParent().addChild(highscoreLabel);

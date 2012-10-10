@@ -34,10 +34,10 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
         //make bar with how many bullets left
         CCSprite bulletSprite = CCSprite.sprite("bullet.png");
 
-        int spaceBetweenBullets = (int) (15 * GameLayer.scale);
+        int spaceBetweenBullets = (int) (15 * MainActivity.scale);
 
         int x = 0;
-        int y = (int) (60 * GameLayer.scale);
+        int y = (int) (60 * MainActivity.scale);
 
         for(int i = 1; i <= GameLayer.bullets; i++) {
             if(i != 1) {
@@ -45,7 +45,7 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
             }
             bulletSprite.setPosition(x+(i*spaceBetweenBullets), y);
 
-            bulletSprite.setScale(GameLayer.scale/8);
+            bulletSprite.setScale(MainActivity.scale/8);
             bulletSprite.setTag(i);
             addChild(bulletSprite);
         }
@@ -114,7 +114,7 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
             	{
 	                CGSize winSize = CCDirector.sharedDirector().displaySize();
 	                reloadLabel = CCLabel.makeLabel("Shake to reload!", "Arial", 72);
-	                reloadLabel.setScale(GameLayer.scale);
+	                reloadLabel.setScale(MainActivity.scale);
 	                reloadLabel.setTag(10);
 	                reloadLabel.setPosition(winSize.width / 2, winSize.height / 2);
 	                addChild(reloadLabel);
