@@ -54,44 +54,46 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
 
     public synchronized boolean ccTouchesBegan(MotionEvent e)
     {
-        GameLayer gameLayer = (GameLayer) getParent().getChildByTag(2);
+        if(GameLayer.gamePlaying) {
+            GameLayer gameLayer = (GameLayer) getParent().getChildByTag(2);
 
-        List children = gameLayer.getChildren();
+            List children = gameLayer.getChildren();
 
-        CGSize winSize = CCDirector.sharedDirector().displaySize();
-        double touchX = e.getX();
-        double touchY = winSize.height - e.getY();
-        
-        if(GameLayer.bullets > 0) {
-            SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.shot3);
-        }
+            CGSize winSize = CCDirector.sharedDirector().displaySize();
+            double touchX = e.getX();
+            double touchY = winSize.height - e.getY();
 
-        int count = 0;
-        for(int i = 0; i < children.size(); i++) {
-            Object child = children.get(i);
-            if (child instanceof Duck) {
-                CGPoint pos = ((Duck) child).getPosition();
-                
-                int shot = 5; // hagel in dp
+            if(GameLayer.bullets > 0) {
+                SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.shot3);
+            }
 
-                if (GameLayer.bullets > 0) {
-                	if (pos.x >= touchX - ((Duck) child).getContentSize().width / 2 - GameLayer.dp2px(shot) && pos.x <= touchX + ((Duck) child).getContentSize().width / 2 + GameLayer.dp2px(shot) && pos.y >= touchY - ((Duck) child).getContentSize().height / 2 - GameLayer.dp2px(shot) && pos.y <= touchY + ((Duck) child).getContentSize().height / 2 + GameLayer.dp2px(shot)) {
-                        gameLayer.bleed(((Duck) child).getPosition());
-                        ((Duck) child).fallDown();
-                        SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.splat);
-                        count++;
+            int count = 0;
+            for(int i = 0; i < children.size(); i++) {
+                Object child = children.get(i);
+                if (child instanceof Duck) {
+                    CGPoint pos = ((Duck) child).getPosition();
+
+                    int shot = 5; // hagel in dp
+
+                    if (GameLayer.bullets > 0) {
+                        if (pos.x >= touchX - ((Duck) child).getContentSize().width / 2 - GameLayer.dp2px(shot) && pos.x <= touchX + ((Duck) child).getContentSize().width / 2 + GameLayer.dp2px(shot) && pos.y >= touchY - ((Duck) child).getContentSize().height / 2 - GameLayer.dp2px(shot) && pos.y <= touchY + ((Duck) child).getContentSize().height / 2 + GameLayer.dp2px(shot)) {
+                            gameLayer.bleed(((Duck) child).getPosition());
+                            ((Duck) child).fallDown();
+                            SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.splat);
+                            count++;
+                        }
                     }
                 }
             }
-        }
-        
-        if (count > 1)
-        {
-        	GameLayer.score += count;
-        }
 
-        if(GameLayer.bullets > 0) {
-            GameLayer.bullets--;
+            if (count > 1)
+            {
+                GameLayer.score += count;
+            }
+
+            if(GameLayer.bullets > 0) {
+                GameLayer.bullets--;
+            }
         }
 
         return false;

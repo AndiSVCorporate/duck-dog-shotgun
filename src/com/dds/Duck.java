@@ -24,7 +24,7 @@ public class Duck extends CCSprite
     protected CCAnimation fallAnimation;
     private Route route = new Route(5);
     private double distance = route.getTotalDistance();
-    protected static float actualDuration = 7.0f;
+    protected static float actualDuration = 10.0f;
     private boolean falling = false;
     private boolean check = true;
 
@@ -128,11 +128,11 @@ public class Duck extends CCSprite
             if(getPosition().y <= dogPosition.y+15) {
                 if(dogPosition.x -50 < getPosition().x && getPosition().x < dogPosition.x + 50) {
                     alive = false;
-                    LabelLayer.update(false);
+                    LabelLayer.updateVariables(false);
                     SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.bof1);
                 }
                 else if(getPosition().y < 0 && check) {
-                    LabelLayer.update(true);
+                    LabelLayer.updateVariables(true);
                     check = false;
                 }
             }
