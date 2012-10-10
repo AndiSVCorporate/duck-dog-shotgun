@@ -59,6 +59,8 @@ public class Duck extends CCSprite
         runAction(flyAction);
     }
 
+    public Duck() {}
+
     protected void fallDown() 
     {
     	if (!this.falling)
