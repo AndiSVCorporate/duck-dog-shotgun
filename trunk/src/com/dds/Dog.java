@@ -57,6 +57,7 @@ public class Dog extends CCSprite implements SensorEventListener
 	public void ccAccelerometerChanged(float f1, float f2, float f3)
     {
         CGPoint position = this.getPosition();
+        CGSize size = CCDirector.sharedDirector().winSize();
 
         int speed;
 
@@ -66,10 +67,10 @@ public class Dog extends CCSprite implements SensorEventListener
             float widthOfDog = this.getContentSize().width * GameLayer.scale;
 
             if(f1 < -0.8 && !(position.x-speed > winSize.getWidth() - (widthOfDog / 2))) {
-                this.setPosition(this.getPosition().x+speed, this.getPosition().y);
+                this.setPosition(Math.min(size.width - (widthOfDog / 2), this.getPosition().x+speed), this.getPosition().y);
             }
             else if(f1 > 0.8 && !(position.x+speed < 0 + (widthOfDog / 2))) {
-                this.setPosition(this.getPosition().x-speed, this.getPosition().y);
+                this.setPosition(Math.max(widthOfDog / 2, this.getPosition().x-speed), this.getPosition().y);
             }
         }
     }
