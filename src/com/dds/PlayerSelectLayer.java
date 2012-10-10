@@ -103,6 +103,7 @@ public class PlayerSelectLayer extends CCLayer implements CCTouchDelegateProtoco
                     default:
                         break;
                 }
+                ((MainActivity) CCDirector.sharedDirector().getActivity()).write("animal.dds", Dog.playerImage);
                 CCDirector.sharedDirector().popScene();
             }
         }

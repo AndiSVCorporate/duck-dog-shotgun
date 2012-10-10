@@ -37,7 +37,7 @@ public class MainActivity extends Activity
         	root.mkdirs();
         }
 
-        Dog.playerImage = "dog.png";
+        Dog.playerImage = read("animal.dds").equals("") ? "dog.png" : read("animal.dds");
 
         // set the window status, no tile, full screen and don't sleep
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -66,19 +66,25 @@ public class MainActivity extends Activity
 
         // Make the Scene active
         CCDirector.sharedDirector().runWithScene(GameMenu.scene());
+        CCDirector.sharedDirector().pushScene(HelpLayer.scene());
     }
 
     public void onBackPressed() 
     {
     	if (mode == 0)
         {
+    		if (read("highscore.dds").equals(""))
+    		{
+    			write("highscore.dds", Math.max(GameLayer.score, Integer.parseInt(read("highscore.dds").equals("") ? "0" : read("highscore.dds"))) + "");
+    			write("overall.dds", (Integer.parseInt(read("overall.dds").equals("") ? "0" : read("overall.dds")) + GameLayer.score) + "");
+    		}
     		onDestroy();
     		finish();
         }
     	else if (mode == 1)
     	{
-    		write("highscore.dds", Math.max(GameLayer.score, Integer.parseInt(read("highscore.dds") == "" ? "0" : read("highscore.dds"))) + "");
-    		write("overall.dds", Integer.parseInt(read("overall.dds") == "" ? "0" : read("overall.dds")) + GameLayer.score + "");
+    		write("highscore.dds", Math.max(GameLayer.score, Integer.parseInt(read("highscore.dds").equals("") ? "0" : read("highscore.dds"))) + "");
+    		write("overall.dds", (Integer.parseInt(read("overall.dds").equals("") ? "0" : read("overall.dds")) + GameLayer.score) + "");
     		GameLayer.reset();
     		
     		CCTouchDispatcher.sharedDispatcher().removeAllDelegates();

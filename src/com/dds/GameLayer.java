@@ -4,8 +4,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import org.cocos2d.actions.instant.CCCallFunc;
+import org.cocos2d.actions.interval.CCBezierTo;
 import org.cocos2d.actions.interval.CCFadeOut;
 import org.cocos2d.actions.interval.CCScaleTo;
 import org.cocos2d.actions.interval.CCSequence;
@@ -13,6 +15,7 @@ import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
 import org.cocos2d.nodes.*;
 import org.cocos2d.sound.SoundEngine;
+import org.cocos2d.types.CCBezierConfig;
 import org.cocos2d.types.CGPoint;
 import org.cocos2d.types.CGSize;
 import org.cocos2d.types.ccColor3B;
@@ -191,9 +194,18 @@ public class GameLayer extends CCLayer implements SensorEventListener {
     protected void bleed(CGPoint position) {
         Random r = new Random();
         CCSprite blood = CCSprite.sprite(GameLayer.bloodSprites.get(r.nextInt(3)));
-        blood.setScale(0.5f);
-
-        CCScaleTo scale = CCScaleTo.action(0.5f, 1.0f);
+        blood.setScale(0.5f * GameLayer.scale);
+        
+        for (int i = 0; i < 5; i++)
+        {
+	        Feather b = Feather.sprite("feather.png");
+	        b.setScale(GameLayer.scale);
+	        b.setPosition(position);
+	        addChild(b);
+	        b.bezierMove();
+        }
+        
+        CCScaleTo scale = CCScaleTo.action((0.5f * GameLayer.scale), 1.0f * GameLayer.scale);
         scale.setDuration(0.25f);
         
         CCFadeOut bleedOut = CCFadeOut.action(1f);
