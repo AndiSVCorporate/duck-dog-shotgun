@@ -40,7 +40,7 @@ public class LabelLayer extends CCLayer {
         //make bar with how many bullets left
         CCSprite healthSprite;
 
-        int spaceBetweenHearts = (int) (GameLayer.dp2px(60) * GameLayer.scale);
+        int spaceBetweenHearts = (int) (60 * GameLayer.scale);
 
         int x = (int) (10 * GameLayer.scale);
 //        int y = (int) (GameLayer.dp2px(582));
