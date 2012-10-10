@@ -72,7 +72,7 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
             if (child instanceof Duck) {
                 CGPoint pos = ((Duck) child).getPosition();
                 
-                int shot = 0; // hagel in dp
+                int shot = 5; // hagel in dp
 
                 if (GameLayer.bullets > 0) {
                 	if (pos.x >= touchX - ((Duck) child).getContentSize().width / 2 - GameLayer.dp2px(shot) && pos.x <= touchX + ((Duck) child).getContentSize().width / 2 + GameLayer.dp2px(shot) && pos.y >= touchY - ((Duck) child).getContentSize().height / 2 - GameLayer.dp2px(shot) && pos.y <= touchY + ((Duck) child).getContentSize().height / 2 + GameLayer.dp2px(shot)) {
