@@ -5,13 +5,7 @@ import org.cocos2d.layers.CCScene;
 import org.cocos2d.menus.*;
 import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.nodes.CCLabel;
-import org.cocos2d.nodes.CCNode;
-import org.cocos2d.nodes.CCSprite;
-import org.cocos2d.nodes.CCTextureCache;
-import org.cocos2d.opengl.CCTexture2D;
 import org.cocos2d.types.CGSize;
-
-import android.util.Log;
 
 /**
  * @author Wouter
@@ -22,11 +16,7 @@ public class GameMenu extends CCMenu {
 	protected CCMenuItem playGameMenuItem;
     protected CCMenuItem selectPlayerMenuItem;
     protected CCMenuItemImage helpMenuItem;
-    
-    private CCLabel playLabel;
-    private CCLabel choosePlayerLabel;
-    private CCLabel helpLabel;
-	
+
     public static CCScene scene() {
         CCScene returnScene = CCScene.node();
 
@@ -43,13 +33,11 @@ public class GameMenu extends CCMenu {
 
     public GameMenu() {
         super();
-
-//        this.schedule("updateLabel", 0.1f);
-        scheduleUpdate();
         
         playGameMenuItem = CCMenuItemImage.item("button.png", "button_pressed.png", this, "startGame");
-        playLabel = CCLabel.makeLabel("Play Game", "Arial", 40f);
-        playLabel.setPosition(playGameMenuItem.getContentSize().width/2, playGameMenuItem.getContentSize().height/2);
+        playGameMenuItem.setPosition(playGameMenuItem.getPosition().x, (float) (playGameMenuItem.getPosition().y+GameLayer.dp2px(20)));
+        CCLabel playLabel = CCLabel.makeLabel("Play Game", "Arial", 40f);
+        playLabel.setPosition(playGameMenuItem.getContentSize().width / 2, playGameMenuItem.getContentSize().height / 2);
         playLabel.setTag(1);
 
         CGSize winSize = CCDirector.sharedDirector().winSize();
@@ -64,8 +52,8 @@ public class GameMenu extends CCMenu {
         selectPlayerMenuItem = CCMenuItemImage.item("button.png", "button_pressed.png", this, "selectPlayer");
         selectPlayerMenuItem.setScale(GameLayer.scale);
 
-        choosePlayerLabel = CCLabel.makeLabel("Select Animal", "Arial", 40f);
-        choosePlayerLabel.setPosition(selectPlayerMenuItem.getContentSize().width/2, (float)((selectPlayerMenuItem.getContentSize().height/2)+GameLayer.dp2px(20)));
+        CCLabel choosePlayerLabel = CCLabel.makeLabel("Select Animal", "Arial", 40f);
+        choosePlayerLabel.setPosition(selectPlayerMenuItem.getContentSize().width / 2, (selectPlayerMenuItem.getContentSize().height / 2));
         choosePlayerLabel.setTag(1);
 
         selectPlayerMenuItem.addChild(choosePlayerLabel);
@@ -76,44 +64,12 @@ public class GameMenu extends CCMenu {
         helpMenuItem.setPosition(selectPlayerMenuItem.getPosition().x, (float) (selectPlayerMenuItem.getPosition().y - helpMenuItem.getContentSize().height - GameLayer.dp2px(10)));
         addChild(helpMenuItem);
 
-        helpLabel = CCLabel.makeLabel("Help", "Arial", 40f);
-        helpLabel.setPosition(helpMenuItem.getContentSize().width/2, helpMenuItem.getContentSize().height/2);
+        CCLabel helpLabel = CCLabel.makeLabel("Help", "Arial", 40f);
+        helpLabel.setPosition(helpMenuItem.getContentSize().width / 2, helpMenuItem.getContentSize().height / 2);
         helpLabel.setTag(1);
 
         helpMenuItem.addChild(helpLabel);
 
-    }
-
-    public void updateLabel(float t) {
-        playGameMenuItem.removeChildByTag(1, true);
-
-        playLabel = CCLabel.makeLabel("Play Game", "Arial", 40f);
-        playLabel.setPosition(playGameMenuItem.getContentSize().width/2, playGameMenuItem.getContentSize().height/2);
-        playLabel.setTag(1);
-
-        playGameMenuItem.addChild(playLabel);
-
-        selectPlayerMenuItem.removeChildByTag(1, true);
-        choosePlayerLabel = CCLabel.makeLabel("Select Animal", "Arial", 40f);
-        choosePlayerLabel.setPosition(selectPlayerMenuItem.getContentSize().width / 2, selectPlayerMenuItem.getContentSize().height / 2);
-        choosePlayerLabel.setTag(1);
-
-        selectPlayerMenuItem.addChild(choosePlayerLabel);
-
-        helpMenuItem.removeChildByTag(1, true);
-
-        helpLabel = CCLabel.makeLabel("Play Game", "Arial", 40f);
-        helpLabel.setPosition(helpMenuItem.getContentSize().width/2, helpMenuItem.getContentSize().height/2);
-        helpLabel.setTag(1);
-
-        helpMenuItem.addChild(helpLabel);
-
-    }
-    
-    public void update(float t)
-    {
-    	playLabel.setString("Play Game");
-    	choosePlayerLabel.setString("Select Animal");
     }
 
     public void startGame(Object id) {
