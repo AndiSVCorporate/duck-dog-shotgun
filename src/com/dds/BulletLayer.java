@@ -60,10 +60,11 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
         double touchX = e.getX();
         double touchY = winSize.height - e.getY();
         
-       if(GameLayer.bullets > 0) {
+        if(GameLayer.bullets > 0) {
             SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.shot3);
         }
 
+        int count = 0;
         for(int i = 0; i < children.size(); i++) {
             Object child = children.get(i);
             if (child instanceof Duck) {
@@ -75,10 +76,16 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
                             gameLayer.bleed(((Duck) child).getPosition());
                             ((Duck) child).fallDown();
                             SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.splat);
+                            count++;
                         }
                     }
                 }
             }
+        }
+        
+        if (count > 1)
+        {
+        	GameLayer.score += count;
         }
 
         if(GameLayer.bullets > 0) {

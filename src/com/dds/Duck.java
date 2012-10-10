@@ -24,7 +24,7 @@ public class Duck extends CCSprite
     protected CCAnimation fallAnimation;
     private Route route = new Route(5);
     private double distance = route.getTotalDistance();
-    private final float actualDuration = 7.0f;
+    protected static float actualDuration = 7.0f;
     private boolean falling = false;
 
     public Duck(CCSpriteFrame frame, CCAnimation flyAnimation, CCAnimation fallAnimation) {
