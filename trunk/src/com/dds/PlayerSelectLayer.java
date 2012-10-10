@@ -74,8 +74,7 @@ public class PlayerSelectLayer extends CCLayer implements CCTouchDelegateProtoco
             CCNode child = children.get(i);
             CGPoint pos = child.getPosition();
 
-            if(((double) pos.x <= touchX && (double) pos.x >= (touchX - GameLayer.dp2px(child.getContentSize().width)))
-                    && (pos.y <= touchY && pos.y >= touchY - GameLayer.dp2px(child.getContentSize().height))) {
+            if(pos.x <= touchX + (child.getContentSize().width / 2) && pos.x >= touchX - (child.getContentSize().width / 2) && pos.y <= touchY + (child.getContentSize().height / 2) && pos.y >= touchY - (child.getContentSize().height / 2)) {
                 switch (i) {
                     case 0:
                         Dog.playerImage = "raccoon.png";
