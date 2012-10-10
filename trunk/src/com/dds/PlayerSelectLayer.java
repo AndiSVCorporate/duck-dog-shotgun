@@ -1,7 +1,6 @@
 package com.dds;
 
 import android.view.MotionEvent;
-import org.cocos2d.actions.grid.CCDeccelAmplitude;
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
 import org.cocos2d.nodes.CCDirector;
@@ -11,7 +10,6 @@ import org.cocos2d.protocols.CCTouchDelegateProtocol;
 import org.cocos2d.types.CGPoint;
 import org.cocos2d.types.CGSize;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

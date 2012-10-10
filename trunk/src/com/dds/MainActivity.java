@@ -10,12 +10,11 @@ import java.io.OutputStreamWriter;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.opengl.CCGLSurfaceView;
-import org.cocos2d.sound.SoundEngine;
+
 
 public class MainActivity extends Activity
 {
@@ -33,7 +32,7 @@ public class MainActivity extends Activity
         	File root = new File(MainActivity.ROOT);
         	root.mkdirs();
         }
-        
+
         Dog.playerImage = "dog.png";
 
         // set the window status, no tile, full screen and don't sleep
@@ -74,7 +73,10 @@ public class MainActivity extends Activity
     	{
     		write("highscore.dds", Math.max(GameLayer.score, Integer.parseInt(read("highscore.dds") == "" ? "0" : read("highscore.dds"))) + "");
     		write("overall.dds", Integer.parseInt(read("overall.dds") == "" ? "0" : read("overall.dds")) + GameLayer.score + "");
-    		CCDirector.sharedDirector().replaceScene(GameMenu.scene());
+    		
+            CCDirector.sharedDirector().purgeCachedData();
+            CCDirector.sharedDirector().end();
+            CCDirector.sharedDirector().runWithScene(GameMenu.scene());
     		mode = 0;
     	}
     }

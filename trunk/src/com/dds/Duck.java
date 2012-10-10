@@ -4,22 +4,14 @@ import org.cocos2d.actions.base.CCAction;
 import org.cocos2d.actions.base.CCRepeatForever;
 import org.cocos2d.actions.instant.CCCallFunc;
 import org.cocos2d.actions.interval.CCAnimate;
-import org.cocos2d.actions.interval.CCFadeOut;
 import org.cocos2d.actions.interval.CCMoveTo;
 import org.cocos2d.actions.interval.CCSequence;
-import org.cocos2d.events.CCTouchDispatcher;
 import org.cocos2d.nodes.*;
-import org.cocos2d.protocols.CCTouchDelegateProtocol;
 import org.cocos2d.sound.SoundEngine;
 import org.cocos2d.types.CGPoint;
 
-import android.content.Context;
 import android.graphics.Point;
-import android.util.DisplayMetrics;
-import android.view.MotionEvent;
 import org.cocos2d.types.CGSize;
-
-import java.util.Random;
 
 /**
  * @author Wouter
