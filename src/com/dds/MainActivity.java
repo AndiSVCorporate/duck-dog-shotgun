@@ -77,7 +77,9 @@ public class MainActivity extends Activity
     		
             CCDirector.sharedDirector().purgeCachedData();
             CCDirector.sharedDirector().end();
+            
             CCDirector.sharedDirector().runWithScene(GameMenu.scene());
+            CCDirector.sharedDirector().replaceScene(GameMenu.scene());
     		mode = 0;
     	}
     }
