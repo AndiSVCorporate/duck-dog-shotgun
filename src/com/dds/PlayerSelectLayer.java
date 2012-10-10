@@ -42,7 +42,7 @@ public class PlayerSelectLayer extends CCLayer implements CCTouchDelegateProtoco
         CGSize winSize = CCDirector.sharedDirector().winSize();
 
         CCLabel label = CCLabel.makeLabel("Every extra 150 catched birds is worth a new animal.", "Arial", 25);
-        label.setScale(GameLayer.scale);
+        label.setScale(MainActivity.scale);
         label.setPosition((float)(winSize.width/2), (float)((winSize.height/22)*21));
         addChild(label);
 
@@ -73,7 +73,7 @@ public class PlayerSelectLayer extends CCLayer implements CCTouchDelegateProtoco
             	animal.setOpacity(125);
             }
 
-            animal.setScale(GameLayer.scale);
+            animal.setScale(MainActivity.scale);
             
             animal.setPosition(x, (float) (((winSize.height) / 4) * i + animal.getContentSize().height / 2));
             addChild(animal);

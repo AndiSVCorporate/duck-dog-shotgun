@@ -44,7 +44,7 @@ public class HelpLayer extends CCLayer implements CCTouchDelegateProtocol {
         CCLabel helpLabel = CCLabel.makeLabel(texty, dimensions, CCLabel.TextAlignment.LEFT,"Arial", 40);
         helpLabel.setPosition((float)(winSize.width/1.95), (float)(winSize.height/2.1));
 
-        helpLabel.setScale(GameLayer.scale);
+        helpLabel.setScale(MainActivity.scale);
 
         addChild(helpLabel);
     }

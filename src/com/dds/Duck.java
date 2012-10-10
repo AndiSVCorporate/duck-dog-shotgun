@@ -36,9 +36,9 @@ public class Duck extends CCSprite
         CGSize duckContentSize = this.getContentSize();
         CGSize winSize = CCDirector.sharedDirector().displaySize();
 
-        this.setScaleX(GameLayer.scale);
+        this.setScaleX(MainActivity.scale);
 
-        this.setScaleY(GameLayer.scale);
+        this.setScaleY(MainActivity.scale);
 
         Point start = route.getStops()[0];
         setPosition(start.x, winSize.height - start.y - (duckContentSize.height / 2.0f));

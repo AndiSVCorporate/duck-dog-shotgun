@@ -26,7 +26,7 @@ public class LabelLayer extends CCLayer {
         //make labels
         scoreLabel = CCLabel.makeLabel("" + GameLayer.score, "Arial", FONT_SIZE);
         scoreLabel.setColor(ccColor3B.ccBLACK);
-        scoreLabel.setScale(GameLayer.scale);
+        scoreLabel.setScale(MainActivity.scale);
         scoreLabel.setPosition((winSize.width / 6)*5, (int) (CCDirector.sharedDirector().winSize().height - GameLayer.dp2px(40)));
         scoreLabel.setTag(23);
 
@@ -40,9 +40,9 @@ public class LabelLayer extends CCLayer {
         //make bar with how many bullets left
         CCSprite healthSprite;
 
-        int spaceBetweenHearts = (int) (60 * GameLayer.scale);
+        int spaceBetweenHearts = (int) (60 * MainActivity.scale);
 
-        int x = (int) (10 * GameLayer.scale);
+        int x = (int) (10 * MainActivity.scale);
 //        int y = (int) (GameLayer.dp2px(582));
         int y = (int) (CCDirector.sharedDirector().winSize().height - GameLayer.dp2px(40));
 
@@ -50,7 +50,7 @@ public class LabelLayer extends CCLayer {
         	healthSprite = CCSprite.sprite("heart.png");
             healthSprite.setPosition(x + (i * spaceBetweenHearts), y);
 
-            healthSprite.setScale(GameLayer.scale / 8);
+            healthSprite.setScale(MainActivity.scale / 8);
             healthSprite.setTag(i);
             addChild(healthSprite);
         }
