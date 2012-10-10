@@ -49,6 +49,7 @@ public class GameLayer extends CCLayer implements SensorEventListener {
 
 
     public static CCScene scene() {
+    	reset();
         CCScene returnScene = CCScene.node();
 
         BulletLayer bulletLayer = new BulletLayer();
@@ -65,6 +66,14 @@ public class GameLayer extends CCLayer implements SensorEventListener {
         returnScene.addChild(bulletLayer);
 
         return returnScene;
+    }
+    
+    public static void reset()
+    {
+    	score = 0;
+    	bullets = 7;
+    	Dog.health = 5;
+    	
     }
 
     public GameLayer(BulletLayer bulletLayer) {

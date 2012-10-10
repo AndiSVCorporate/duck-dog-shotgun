@@ -34,8 +34,6 @@ public class MainActivity extends Activity
         	root.mkdirs();
         }
         
-        Log.e("Highscore", read("highscore.txt"));
-
         Dog.playerImage = "dog.png";
 
         // set the window status, no tile, full screen and don't sleep
@@ -74,6 +72,8 @@ public class MainActivity extends Activity
         }
     	else if (mode == 1)
     	{
+    		write("highscore.dds", Math.max(GameLayer.score, Integer.parseInt(read("highscore.dds") == "" ? "0" : read("highscore.dds"))) + "");
+    		write("overall.dds", Integer.parseInt(read("overall.dds") == "" ? "0" : read("overall.dds")) + GameLayer.score + "");
     		CCDirector.sharedDirector().replaceScene(GameMenu.scene());
     		mode = 0;
     	}
