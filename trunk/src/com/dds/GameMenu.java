@@ -12,12 +12,22 @@ import org.cocos2d.types.CGSize;
  * Date: 04-10-12
  * Time: 12:45
  */
+
+/*
+ * Highscore:
+ * int highscore = Integer.parseInt(((MainActivity) CCDirector.sharedDirector().getActivity()).read("highscore.dds").equals("") ? "0" : ((MainActivity) CCDirector.sharedDirector().getActivity()).read("highscore.dds"));
+ * 
+ * 
+ * Overall:
+ * int overall = Integer.parseInt(((MainActivity) CCDirector.sharedDirector().getActivity()).read("overall.dds").equals("") ? "0" : ((MainActivity) CCDirector.sharedDirector().getActivity()).read("overall.dds"));
+ */
 public class GameMenu extends CCMenu {
 	protected CCMenuItem playGameMenuItem;
     protected CCMenuItem selectPlayerMenuItem;
     protected CCMenuItemImage helpMenuItem;
 
     public static CCScene scene() {
+    	
         CCScene returnScene = CCScene.node();
 
         CCMenu gameMenu = new GameMenu();

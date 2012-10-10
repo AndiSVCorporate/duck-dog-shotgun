@@ -39,7 +39,7 @@ public class HelpLayer extends CCLayer implements CCTouchDelegateProtocol {
         CGSize dimensions = CGSize.make(600, 450);
 
         CCLabel helpLabel = CCLabel.makeLabel(texty, dimensions, CCLabel.TextAlignment.LEFT,"Arial", 40);
-        helpLabel.setPosition(350, 700);
+        helpLabel.setPosition((float) GameLayer.dp2px(230), (float) GameLayer.dp2px(400));
 
         helpLabel.setScale(GameLayer.scale);
 
