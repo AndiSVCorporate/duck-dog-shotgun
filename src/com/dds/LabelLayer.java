@@ -28,11 +28,13 @@ public class LabelLayer extends CCLayer {
         scoreLabel.setColor(ccColor3B.ccBLACK);
         scoreLabel.setPosition(winSize.width/6, (int)(winSize.height*0.95));
         scoreLabel.setTag(23);
+        scoreLabel.setScale(GameLayer.scale);
 
         healthLabel = CCLabel.makeLabel("Health: " + Dog.health, "Arial", FONT_SIZE);
         healthLabel.setColor(ccColor3B.ccBLACK);
         healthLabel.setPosition(winSize.width / 6, (int) (winSize.height * 0.90));
         healthLabel.setTag(24);
+        healthLabel.setScale(GameLayer.scale);
 
         addChild(scoreLabel);
         addChild(healthLabel);

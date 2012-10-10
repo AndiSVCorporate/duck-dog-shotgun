@@ -1,6 +1,5 @@
 package com.dds;
 
-import android.util.Log;
 import android.view.MotionEvent;
 import org.cocos2d.events.CCTouchDispatcher;
 import org.cocos2d.layers.CCLayer;
@@ -95,6 +94,7 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
             case 0: removeAllChildren(true);
                     CGSize winSize = CCDirector.sharedDirector().displaySize();
                     CCLabel reloadLabel = CCLabel.makeLabel("Shake to reload!", "Arial", 72);
+                    reloadLabel.setScale(GameLayer.scale);
                     reloadLabel.setTag(10);
                     reloadLabel.setPosition(winSize.width / 2, winSize.height / 2);
                     addChild(reloadLabel);

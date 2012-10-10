@@ -4,7 +4,6 @@ import org.cocos2d.layers.CCScene;
 import org.cocos2d.menus.*;
 import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.nodes.CCLabel;
-import org.cocos2d.types.CGPoint;
 import org.cocos2d.types.CGSize;
 
 /**
@@ -39,12 +38,14 @@ public class GameMenu extends CCMenu {
         CGSize winSize = CCDirector.sharedDirector().winSize();
 
         GameLayer.scale = winSize.width/720;
+        playGameMenuItem.setScale(GameLayer.scale);
 
         playGameMenuItem.addChild(playLabel);
 
         addChild(playGameMenuItem, 0);
 
         selectPlayerMenuItem = CCMenuItemImage.item("button.png", "button_pressed.png", this, "selectPlayer");
+        selectPlayerMenuItem.setScale(GameLayer.scale);
 
         CCLabel choosePlayerLabel = CCLabel.makeLabel("Select Player", "Arial", 40f);
         choosePlayerLabel.setPosition(selectPlayerMenuItem.getContentSize().width/2, selectPlayerMenuItem.getContentSize().height/2);
