@@ -79,6 +79,7 @@ public class GameLayer extends CCLayer implements SensorEventListener {
     	gamePlaying = true;
     	count = 0;
         spawnTime = 2.0f;
+        Duck.actualDuration = 10.0f;
     }
 
     public GameLayer(BulletLayer bulletLayer) {
