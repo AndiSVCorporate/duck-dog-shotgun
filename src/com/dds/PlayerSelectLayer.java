@@ -1,5 +1,6 @@
 package com.dds;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
@@ -92,7 +93,8 @@ public class PlayerSelectLayer extends CCLayer implements CCTouchDelegateProtoco
             CGPoint pos = child.getPosition();
 
             if(child.getOpacity() == 255 && pos.x <= touchX + (child.getContentSize().width / 2) && pos.x >= touchX - (child.getContentSize().width / 2) && pos.y <= touchY + (child.getContentSize().height / 2) && pos.y >= touchY - (child.getContentSize().height / 2)) {
-                switch (i) {
+            	Log.e("DDS", i + ": " + touchX + ", " + touchY + " - " + pos.toString());
+            	switch (i - 1) {
                     case 0:
                         Dog.playerImage = "raccoon.png";
                         break;
