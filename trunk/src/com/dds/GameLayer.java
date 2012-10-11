@@ -186,7 +186,7 @@ public class GameLayer extends CCLayer implements SensorEventListener {
             bulletLayer.removeChildByTag(10, true);
         }
 
-        Label gameOverLabel = Label.makeLabel("Game Over", "Sans Serif", 72);
+        CCLabel gameOverLabel = CCLabel.makeLabel("Game Over", "Sans Serif", 72);
         gameOverLabel.setColor(ccColor3B.ccRED);
         gameOverLabel.setPosition(winSize.width / 2, winSize.height / 2);
         this.addChild(gameOverLabel);
