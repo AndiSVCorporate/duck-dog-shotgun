@@ -42,6 +42,7 @@ public class GameLayer extends CCLayer implements SensorEventListener {
     protected float lastFValue = 0;
 
     public static boolean gamePlaying;
+    public static boolean isVibrationEnabled;
     
     private static int count = 0;
     private static float spawnTime = 3.0f;

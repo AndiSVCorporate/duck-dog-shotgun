@@ -35,10 +35,15 @@ public class MainActivity extends Activity
     {
         super.onCreate(savedInstanceState);
 
+
         if (!(new File(MainActivity.ROOT)).exists())
         {
-        	File root = new File(MainActivity.ROOT);
-        	root.mkdirs();
+            File root = new File(MainActivity.ROOT);
+            root.mkdirs();
+        }
+
+        if(this.read("settings.dds").equals("")) {
+            this.write("settings.dds", "1");
         }
 
         Dog.playerImage = read("animal.dds").equals("") ? "dog.png" : read("animal.dds");
