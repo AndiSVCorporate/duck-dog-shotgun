@@ -1,5 +1,7 @@
 package com.dds;
 
+import android.content.Context;
+import android.os.Vibrator;
 import android.view.MotionEvent;
 import org.cocos2d.events.CCTouchDispatcher;
 import org.cocos2d.layers.CCLayer;
@@ -19,9 +21,12 @@ import java.util.List;
 public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
     public boolean reload = false;
     private CCLabel reloadLabel;
+    private Vibrator v;
 
     public BulletLayer() {
         scheduleUpdate();
+
+        v = (Vibrator) CCDirector.sharedDirector().getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
         CCTouchDispatcher.sharedDispatcher().addDelegate(this, 0);
 
@@ -65,6 +70,9 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
 
             if(GameLayer.bullets > 0) {
                 SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.shot3);
+                if(GameLayer.isVibrationEnabled) {
+                    v.vibrate(100);
+                }
             }
 
             int count = 0;
@@ -102,6 +110,8 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
             if(GameLayer.bullets > 0) {
                 GameLayer.bullets--;
             }
+        } else {
+            CCDirector.sharedDirector().popScene();
         }
 
         return false;

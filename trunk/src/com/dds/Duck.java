@@ -1,5 +1,7 @@
 package com.dds;
 
+import android.content.Context;
+import android.os.Vibrator;
 import org.cocos2d.actions.base.CCAction;
 import org.cocos2d.actions.base.CCRepeatForever;
 import org.cocos2d.actions.instant.CCCallFunc;
@@ -27,9 +29,14 @@ public class Duck extends CCSprite
     protected static float actualDuration = 10.0f;
     private boolean falling = false;
     private boolean check = true;
+    private Vibrator v;
+
+
 
     public Duck(CCSpriteFrame frame, CCAnimation flyAnimation, CCAnimation fallAnimation) {
         super(frame);
+        v = (Vibrator) CCDirector.sharedDirector().getActivity().getSystemService(Context.VIBRATOR_SERVICE);;
+
         scheduleUpdate();
         this.fallAnimation = fallAnimation;
 
@@ -130,6 +137,10 @@ public class Duck extends CCSprite
                     alive = false;
                     LabelLayer.updateVariables(false);
                     SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.bof1);
+
+                    if(GameLayer.isVibrationEnabled) {
+                        v.vibrate(200);
+                    }
                 }
                 else if(getPosition().y < 0 && check) {
                     LabelLayer.updateVariables(true);

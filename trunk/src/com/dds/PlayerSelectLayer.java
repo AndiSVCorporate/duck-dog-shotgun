@@ -65,8 +65,13 @@ public class PlayerSelectLayer extends CCLayer implements CCTouchDelegateProtoco
                 default:
                     break;
             }
-            
-            int overall = Integer.parseInt(((MainActivity) CCDirector.sharedDirector().getActivity()).read("overall.dds"));
+            int overall;
+
+            if(!((MainActivity) CCDirector.sharedDirector().getActivity()).read("overall.dds").equals("")) {
+                overall = Integer.parseInt(((MainActivity) CCDirector.sharedDirector().getActivity()).read("overall.dds"));
+            } else {
+                overall = 0;
+            }
 
             if (overall < 3 * pointsRequired - i * pointsRequired)
             {
