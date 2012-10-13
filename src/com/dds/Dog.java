@@ -1,9 +1,6 @@
 package com.dds;
 
-import android.content.Context;
-import android.view.Display;
 import android.view.Surface;
-import android.view.WindowManager;
 import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.nodes.CCSprite;
 import org.cocos2d.types.CGPoint;
@@ -54,11 +51,8 @@ public class Dog extends CCSprite implements SensorEventListener
 	{
         if(event.sensor.getType() == 1)
         {
-            WindowManager windowManager = (WindowManager)CCDirector.sharedDirector().getActivity().getSystemService(Context.WINDOW_SERVICE);
-            Display display = windowManager.getDefaultDisplay();
-
             float x, y;
-            switch (display.getRotation()) {
+            switch (GameLayer.rotation) {
                 case Surface.ROTATION_90:
                     x = -event.values[1];
                     y = event.values[0];
