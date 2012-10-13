@@ -1,17 +1,11 @@
 package com.dds;
 
-import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
-import android.view.MotionEvent;
 import android.view.Surface;
-import android.view.WindowManager;
 import org.cocos2d.actions.instant.CCCallFunc;
-import org.cocos2d.actions.interval.CCBezierTo;
 import org.cocos2d.actions.interval.CCFadeOut;
 import org.cocos2d.actions.interval.CCScaleTo;
 import org.cocos2d.actions.interval.CCSequence;
@@ -19,7 +13,6 @@ import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
 import org.cocos2d.nodes.*;
 import org.cocos2d.sound.SoundEngine;
-import org.cocos2d.types.CCBezierConfig;
 import org.cocos2d.types.CGPoint;
 import org.cocos2d.types.CGSize;
 import org.cocos2d.types.ccColor3B;
@@ -42,6 +35,8 @@ public class GameLayer extends CCLayer implements SensorEventListener {
     protected CCAnimation flyAnimation;
     protected ArrayList<CCSpriteFrame> fallSprites;
     protected static ArrayList<CCSpriteFrame> bloodSprites;
+
+    public static int rotation;
 
     protected float lastFValue = 0;
 
@@ -234,12 +229,9 @@ public class GameLayer extends CCLayer implements SensorEventListener {
     public void onSensorChanged(SensorEvent event){
         if(event.sensor.getType() == 1)
         {
-            WindowManager windowManager = (WindowManager)CCDirector.sharedDirector().getActivity().getSystemService(Context.WINDOW_SERVICE);
-            Display display = windowManager.getDefaultDisplay();
-
             float x, y;
 
-            switch (display.getRotation()) {
+            switch (GameLayer.rotation) {
                 case Surface.ROTATION_90:
                     x = -event.values[1];
                     y = event.values[0];

@@ -8,17 +8,17 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
 
 import org.cocos2d.events.CCTouchDispatcher;
 import org.cocos2d.nodes.CCDirector;
-import org.cocos2d.nodes.CCSprite;
 import org.cocos2d.opengl.CCGLSurfaceView;
-import org.cocos2d.types.CGSize;
 
 
 public class MainActivity extends Activity
@@ -53,6 +53,10 @@ public class MainActivity extends Activity
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        GameLayer.rotation = display.getRotation();
     }
 
     public void onStart() 

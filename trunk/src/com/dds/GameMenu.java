@@ -2,6 +2,7 @@ package com.dds;
 
 import android.content.Context;
 import android.os.Vibrator;
+import android.widget.Toast;
 import org.cocos2d.layers.CCLayer;
 import org.cocos2d.layers.CCScene;
 import org.cocos2d.menus.*;
@@ -30,6 +31,8 @@ public class GameMenu extends CCMenu {
 
     private Vibrator v;
 
+    private Toast toast;
+
     public static CCScene scene() {
     	
         CCScene returnScene = CCScene.node();
@@ -49,6 +52,12 @@ public class GameMenu extends CCMenu {
 
     public GameMenu() {
         super();
+        Context context = CCDirector.sharedDirector().getActivity().getApplicationContext();
+        CharSequence text = "Make sure that in your system settings vibration isn't turned down low.";
+        int duration = Toast.LENGTH_LONG;
+
+        toast = Toast.makeText(context, text, duration);
+
         v = (Vibrator) CCDirector.sharedDirector().getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
         CGSize winSize = CCDirector.sharedDirector().winSize();
@@ -160,6 +169,7 @@ public class GameMenu extends CCMenu {
             ((MainActivity)CCDirector.sharedDirector().getActivity()).write("settings.dds", "0");
         } else {
             ((MainActivity)CCDirector.sharedDirector().getActivity()).write("settings.dds", "1");
+            toast.show();
             v.vibrate(200);
         }
 
