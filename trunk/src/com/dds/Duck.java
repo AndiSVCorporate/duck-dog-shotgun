@@ -128,7 +128,7 @@ public class Duck extends CCSprite
         }
     }
 
-    public void checkHitWithDog(float dt) 
+    public void checkHitWithDog(float dt)
     {
     	if(alive && getParent() != null) {
             CGPoint dogPosition = getParent().getChildByTag(1).getPosition();
@@ -139,7 +139,8 @@ public class Duck extends CCSprite
                     SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.bof1);
 
                     if(GameLayer.isVibrationEnabled) {
-                        v.vibrate(200);
+                        long[] pattern = { 230, 100 };
+                        v.vibrate(pattern, -1);
                     }
                 }
                 else if(getPosition().y < 0 && check) {

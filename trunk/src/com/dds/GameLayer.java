@@ -265,8 +265,8 @@ public class GameLayer extends CCLayer implements SensorEventListener {
 
     protected void doReload(float f1, float f2, float f3) {
         if(GameLayer.gamePlaying) {
-            if(f2 < 0 || f2 > 18) {
-                if(Math.abs(lastFValue - f2) > 10) {
+            if(f2 < 0 || f2 > 16) {
+                if(Math.abs(lastFValue - f2) > 9) {
                     reloadShakes++;
                     if(reloadShakes == 2) {
                         bullets = 7;
