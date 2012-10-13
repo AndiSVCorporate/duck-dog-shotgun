@@ -112,6 +112,7 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
             }
         } else {
             CCDirector.sharedDirector().popScene();
+            ((MainActivity)CCDirector.sharedDirector().getActivity()).mode = 0;
         }
 
         return false;

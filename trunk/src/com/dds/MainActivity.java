@@ -35,7 +35,6 @@ public class MainActivity extends Activity
     {
         super.onCreate(savedInstanceState);
 
-
         if (!(new File(MainActivity.ROOT)).exists())
         {
             File root = new File(MainActivity.ROOT);

@@ -96,7 +96,7 @@ public class GameMenu extends CCMenu {
         vibrationMenuToggle.setScale(MainActivity.scale);
         addChild(vibrationMenuToggle);
 
-        CCLabel vibrationLabel = (GameLayer.isVibrationEnabled ? CCLabel.makeLabel("Vibration on", "Arial", 40f) : CCLabel.makeLabel("Vibration off", "Arial", 40f));
+        CCLabel vibrationLabel = (GameLayer.isVibrationEnabled ? CCLabel.makeLabel("Vibration is on", "Arial", 40f) : CCLabel.makeLabel("Vibration is off", "Arial", 40f));
         vibrationLabel.setPosition(vibrationMenuToggle.getContentSize().width / 2, vibrationMenuToggle.getContentSize().height / 2);
         vibrationLabel.setTag(1);
         vibrationMenuToggle.addChild(vibrationLabel);
@@ -129,7 +129,7 @@ public class GameMenu extends CCMenu {
         if(lastValueOfVibration != GameLayer.isVibrationEnabled) {
             vibrationMenuToggle.removeChildByTag(1, true);
 
-            CCLabel vibrationLabel = (GameLayer.isVibrationEnabled ? CCLabel.makeLabel("Vibration on", "Arial", 40f) : CCLabel.makeLabel("Vibration off", "Arial", 40f));
+            CCLabel vibrationLabel = (GameLayer.isVibrationEnabled ? CCLabel.makeLabel("Vibration is on", "Arial", 40f) : CCLabel.makeLabel("Vibration is off", "Arial", 40f));
             vibrationLabel.setPosition(vibrationMenuToggle.getContentSize().width / 2, vibrationMenuToggle.getContentSize().height / 2);
             vibrationLabel.setTag(1);
             vibrationMenuToggle.addChild(vibrationLabel);

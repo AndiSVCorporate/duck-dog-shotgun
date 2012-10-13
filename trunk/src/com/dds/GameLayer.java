@@ -1,11 +1,15 @@
 package com.dds;
 
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
+import android.view.Surface;
+import android.view.WindowManager;
 import org.cocos2d.actions.instant.CCCallFunc;
 import org.cocos2d.actions.interval.CCBezierTo;
 import org.cocos2d.actions.interval.CCFadeOut;
@@ -230,7 +234,32 @@ public class GameLayer extends CCLayer implements SensorEventListener {
     public void onSensorChanged(SensorEvent event){
         if(event.sensor.getType() == 1)
         {
-            doReload(event.values[0], event.values[1], event.values[2]);
+            WindowManager windowManager = (WindowManager)CCDirector.sharedDirector().getActivity().getSystemService(Context.WINDOW_SERVICE);
+            Display display = windowManager.getDefaultDisplay();
+
+            float x, y;
+
+            switch (display.getRotation()) {
+                case Surface.ROTATION_90:
+                    x = -event.values[1];
+                    y = event.values[0];
+                    break;
+                case Surface.ROTATION_180:
+                    x = event.values[0];
+                    y = -event.values[1];
+                    break;
+                case Surface.ROTATION_270:
+                    x = event.values[1];
+                    y = -event.values[0];
+                    break;
+                case Surface.ROTATION_0:
+                default:
+                    x = event.values[0];
+                    y = event.values[1];
+                    break;
+            }
+
+            doReload(x, y, event.values[2]);
         }
     }
 

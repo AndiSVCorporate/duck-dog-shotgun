@@ -1,5 +1,9 @@
 package com.dds;
 
+import android.content.Context;
+import android.view.Display;
+import android.view.Surface;
+import android.view.WindowManager;
 import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.nodes.CCSprite;
 import org.cocos2d.types.CGPoint;
@@ -48,12 +52,36 @@ public class Dog extends CCSprite implements SensorEventListener
 
 	public void onSensorChanged(SensorEvent event) 
 	{
-		if(event.sensor.getType() == 1)
+        if(event.sensor.getType() == 1)
         {
-            ccAccelerometerChanged(event.values[0], event.values[1], event.values[2]);
+            WindowManager windowManager = (WindowManager)CCDirector.sharedDirector().getActivity().getSystemService(Context.WINDOW_SERVICE);
+            Display display = windowManager.getDefaultDisplay();
+
+            float x, y;
+            switch (display.getRotation()) {
+                case Surface.ROTATION_90:
+                    x = -event.values[1];
+                    y = event.values[0];
+                    break;
+                case Surface.ROTATION_180:
+                    x = event.values[0];
+                    y = -event.values[1];
+                    break;
+                case Surface.ROTATION_270:
+                    x = event.values[1];
+                    y = -event.values[0];
+                    break;
+                case Surface.ROTATION_0:
+                default:
+                    x = event.values[0];
+                    y = event.values[1];
+                    break;
+            }
+
+            ccAccelerometerChanged(x, y, event.values[2]);
         }
 	}
-	
+
 	public void ccAccelerometerChanged(float f1, float f2, float f3)
     {
         CGPoint position = this.getPosition();
