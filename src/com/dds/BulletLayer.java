@@ -71,7 +71,8 @@ public class BulletLayer extends CCLayer implements CCTouchDelegateProtocol {
             if(GameLayer.bullets > 0) {
                 SoundEngine.sharedEngine().playEffect(CCDirector.sharedDirector().getActivity(), R.raw.shot3);
                 if(GameLayer.isVibrationEnabled) {
-                    v.vibrate(100);
+                    long[] pattern = { 100, 100 };
+                    v.vibrate(pattern, -1);
                 }
             }
 
